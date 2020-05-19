@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:votingmobile/localization/translation_strings/translation_strings.dart';
 
 class Translations {
   final Locale locale;
@@ -9,16 +11,5 @@ class Translations {
     return Localizations.of<Translations>(context, Translations);
   }
 
-  static Map<String, Map<String, String>> _localizedValues = {
-    'en': {
-      'title': 'Hello World',
-    },
-    'pl': {
-      'title': 'Witaj Świecie',
-    },
-  };
-
-  String get title {
-    return _localizedValues[locale.languageCode]['title'];
-  }
+  String get title => GetIt.instance.get<TranslationStrings>().appTitle;
 }
