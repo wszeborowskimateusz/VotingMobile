@@ -3,4 +3,7 @@ import 'package:votingmobile/localization/translation_strings/translation_string
 class TranslationStringsPl implements TranslationStrings {
   @override
   String get appTitle => "Głosowanie";
+
+  @override
+  String get settings => "Ustawienia";
 }

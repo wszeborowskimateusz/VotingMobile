@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/localization/translation_strings/translation_strings.dart';
 import 'package:votingmobile/localization/translation_strings/translation_strings_pl.dart';
 import 'package:votingmobile/localization/translation_strings/translation_strings_en.dart';
@@ -32,7 +33,14 @@ class TranslationsDelegate extends LocalizationsDelegate<Translations> {
 
   @override
   Future<Translations> load(Locale locale) {
-    return SynchronousFuture<Translations>(Translations(locale));
+    if (locale != null) {
+      locator.allowReassignment = true;
+      locator.registerLazySingleton<TranslationStrings>(
+          () => getTranslationsForLocale(locale));
+      locator.allowReassignment = false;
+      return SynchronousFuture<Translations>(Translations(locale));
+    }
+    return null;
   }
 
   @override

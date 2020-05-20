@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:votingmobile/common/locator/locator.dart';
 
 abstract class TranslationStrings {
   static TranslationStrings of(BuildContext context) {
-    return GetIt.instance.get<TranslationStrings>();
+    return locator.get<TranslationStrings>();
   }
 
   String get appTitle;
+
+  String get settings;
 }

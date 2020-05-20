@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/localization/translation_strings/translation_strings.dart';
 
 class Translations {
@@ -11,5 +11,7 @@ class Translations {
     return Localizations.of<Translations>(context, Translations);
   }
 
-  String get title => GetIt.instance.get<TranslationStrings>().appTitle;
+  String get title => locator.get<TranslationStrings>().appTitle;
+
+  String get settings => locator.get<TranslationStrings>().settings;
 }
