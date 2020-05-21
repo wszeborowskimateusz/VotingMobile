@@ -6,4 +6,7 @@ class TranslationStringsEn implements TranslationStrings {
 
   @override
   String get settings => "Settings";
+
+  @override
+  String get language => "Language";
 }

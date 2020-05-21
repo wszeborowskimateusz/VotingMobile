@@ -5,6 +5,7 @@ class MainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CommonLayout(
+      displayLeftIcon: false,
       body: Container(
         child: SingleChildScrollView(
           child: Placeholder(

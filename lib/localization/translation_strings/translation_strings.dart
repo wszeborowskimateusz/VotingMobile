@@ -9,4 +9,6 @@ abstract class TranslationStrings {
   String get appTitle;
 
   String get settings;
+
+  String get language;
 }

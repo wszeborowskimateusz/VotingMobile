@@ -4,8 +4,9 @@ import 'package:votingmobile/common/ui/settings/settings_page.dart';
 class CommonLayout extends StatelessWidget {
   final Widget body;
   final Widget rightIcon;
+  final bool displayLeftIcon;
 
-  const CommonLayout({@required this.body, this.rightIcon});
+  const CommonLayout({@required this.body, this.rightIcon, this.displayLeftIcon = true});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class CommonLayout extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: Navigator.of(context).canPop()
+          leading: displayLeftIcon
               ? IconButton(
                   icon: Icon(Icons.arrow_back),
                   onPressed: () => Navigator.pop(context),

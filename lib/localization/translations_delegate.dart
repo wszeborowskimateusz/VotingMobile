@@ -6,9 +6,12 @@ import 'package:votingmobile/localization/translation_strings/translation_string
 import 'package:votingmobile/localization/translation_strings/translation_strings_en.dart';
 import 'package:votingmobile/localization/translations.dart';
 
-final List<Locale> supportedLocales = [
-  const Locale('en'),
-  const Locale('pl'),
+const Locale englishLocale = Locale('en');
+const Locale polishLocale = Locale('pl');
+
+const List<Locale> supportedLocales = [
+  englishLocale,
+  polishLocale,
 ];
 
 final Locale defaultLocale = Locale('en');

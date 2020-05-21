@@ -6,4 +6,7 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get settings => "Ustawienia";
+
+  @override
+  String get language => "Język";
 }
