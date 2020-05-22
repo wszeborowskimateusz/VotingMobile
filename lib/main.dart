@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:votingmobile/common/backend/locale_repository.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/ui/main_widget.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
 
-void main() {
-  registerDependencies();
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
-      .then((_) {
-    runApp(HomePage());
-  });
+  await registerDependencies();
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+  runApp(HomePage());
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+
+   static void setLocale(BuildContext context, Locale newLocale) {
+    _HomePageState state =
+      context.findRootAncestorStateOfType<_HomePageState>();
+    
+    state.setState(() {
+      state.selectedLocale = newLocale;
+    });
+  }
+}
+
+class _HomePageState extends State<HomePage> {
+  Locale selectedLocale = locator.get<LocaleRepository>().selectedLocale;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,14 +40,7 @@ class HomePage extends StatelessWidget {
         locator.get<TranslationsDelegate>(),
       ],
       supportedLocales: supportedLocales,
-      localeResolutionCallback: (locale, supportedLocales) {
-        final bool isLocaleSupported = supportedLocales.any((supportedLocale) =>
-            supportedLocale.languageCode == locale.languageCode);
-
-        final Locale pickedLocale = isLocaleSupported ? locale : defaultLocale;
-
-        return pickedLocale;
-      },
+      locale: selectedLocale,
       title: 'Flutter Demo',
       theme: ThemeData(
         textTheme: Theme.of(context).textTheme.apply(

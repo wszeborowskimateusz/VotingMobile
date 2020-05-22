@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:votingmobile/common/backend/locale_repository.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/ui/common_route.dart';
 import 'package:votingmobile/common/ui/settings/rolling_switch.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
+import 'package:votingmobile/main.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -44,7 +46,8 @@ class _SettingPageState extends State<SettingPage> {
         Padding(
           padding: const EdgeInsets.only(top: 16.0),
           child: RollingSwitch(
-            value: Translations.of(context).locale != englishLocale,
+            value:
+                locator.get<LocaleRepository>().selectedLocale == englishLocale,
             textOn: 'English',
             textOff: 'Polski',
             colorOn: Colors.blueAccent[700],
@@ -57,16 +60,17 @@ class _SettingPageState extends State<SettingPage> {
                 initialized = true;
                 // Skip initial change (due to animation)
               } else {
-                setState(() {
-                  locator
-                      .get<TranslationsDelegate>()
-                      .load(_valueToLocaleMap[state]);
-                });
+                onLocaleChanged(_valueToLocaleMap[state]);
               }
             },
           ),
         ),
       ],
     );
+  }
+
+  void onLocaleChanged(Locale newLocale) async {
+    await locator.get<LocaleRepository>().setLocale(newLocale);
+    HomePage.setLocale(context, newLocale);
   }
 }
