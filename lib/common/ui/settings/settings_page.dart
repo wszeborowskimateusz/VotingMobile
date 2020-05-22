@@ -26,44 +26,48 @@ class _SettingPageState extends State<SettingPage> {
       displayRightIcon: false,
       title: Translations.of(context).settings,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Divider(),
-          _buildLocaleSettings(context),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Divider(),
+              _buildLocaleSettings(context),
+              Divider(),
+            ],
+          ),
         ],
       ),
     );
   }
 
   Widget _buildLocaleSettings(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Text(
           Translations.of(context).language,
           style: Theme.of(context).textTheme.headline5,
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 16.0),
-          child: RollingSwitch(
-            value:
-                locator.get<LocaleRepository>().selectedLocale == englishLocale,
-            textOn: 'English',
-            textOff: 'Polski',
-            colorOn: Colors.blueAccent[700],
-            colorOff: Colors.redAccent[700],
-            iconOnPath: "assets/images/gb.svg",
-            iconOffPath: "assets/images/pl.svg",
-            textSize: 16.0,
-            onChanged: (bool state) {
-              if (!initialized) {
-                initialized = true;
-                // Skip initial change (due to animation)
-              } else {
-                onLocaleChanged(_valueToLocaleMap[state]);
-              }
-            },
-          ),
+        RollingSwitch(
+          value:
+              locator.get<LocaleRepository>().selectedLocale == englishLocale,
+          textOn: 'English',
+          textOff: 'Polski',
+          colorOn: Colors.blueAccent[700],
+          colorOff: Colors.redAccent[700],
+          iconOnPath: "assets/images/gb.svg",
+          iconOffPath: "assets/images/pl.svg",
+          textSize: 16.0,
+          onChanged: (bool state) {
+            if (!initialized) {
+              initialized = true;
+              // Skip initial change (due to animation)
+            } else {
+              onLocaleChanged(_valueToLocaleMap[state]);
+            }
+          },
         ),
       ],
     );

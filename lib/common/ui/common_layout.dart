@@ -6,7 +6,11 @@ class CommonLayout extends StatelessWidget {
   final Widget rightIcon;
   final bool displayLeftIcon;
 
-  const CommonLayout({@required this.body, this.rightIcon, this.displayLeftIcon = true});
+  const CommonLayout({
+    @required this.body,
+    this.rightIcon,
+    this.displayLeftIcon = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class CommonLayout extends StatelessWidget {
                       ),
                     );
                   },
-                  color: Colors.blue,
+                  color: Color(0xff4169E1),
                 )
           ],
         ),
