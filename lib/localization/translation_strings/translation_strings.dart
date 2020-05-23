@@ -19,4 +19,10 @@ abstract class TranslationStrings {
   String get noVotings;
 
   String get noVotingsHistory;
+
+  String get voteInFavor;
+
+  String get voteAgainst;
+
+  String get voteHold;
 }

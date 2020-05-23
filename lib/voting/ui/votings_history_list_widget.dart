@@ -5,21 +5,15 @@ import 'package:votingmobile/voting/ui/multiple_choice_voting_results_box.dart';
 import 'package:votingmobile/voting/ui/vote_button.dart';
 import 'package:votingmobile/voting/ui/voting_results_box.dart';
 
-class VotingsListWidget extends StatelessWidget {
-  final List<Voting> votings;
+class VotingsHistoryListWidget extends StatelessWidget {
+  final List<Voting> historyVotings;
   final Voting activeVoting;
 
-  VotingsListWidget(this.votings)
-      : activeVoting = votings.firstWhere(
-            (element) => element.status == VotingStatus.DURING_VOTING,
-            orElse: () => null);
+  VotingsHistoryListWidget({@required this.historyVotings, this.activeVoting});
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Handle empty list - display info that user needs to wait for the start of
-    // the first voting
-    final List<Voting> pastVotings = votings.toList()..remove(activeVoting);
-    if (activeVoting == null && pastVotings.isEmpty) {
+    if (activeVoting == null && historyVotings.isEmpty) {
       return Center(
         child: Text(
           Translations.of(context).noVotings,
@@ -30,8 +24,9 @@ class VotingsListWidget extends StatelessWidget {
     }
 
     return Stack(children: [
-      if (pastVotings.isNotEmpty) _VotingsHistory(pastVotings: pastVotings),
-      if (pastVotings.isEmpty)
+      if (historyVotings.isNotEmpty)
+        _VotingsHistory(historyVotings: historyVotings),
+      if (historyVotings.isEmpty)
         Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
@@ -61,10 +56,10 @@ class VotingsListWidget extends StatelessWidget {
 class _VotingsHistory extends StatelessWidget {
   const _VotingsHistory({
     Key key,
-    @required this.pastVotings,
+    @required this.historyVotings,
   }) : super(key: key);
 
-  final List<Voting> pastVotings;
+  final List<Voting> historyVotings;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +67,7 @@ class _VotingsHistory extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
+          padding: const EdgeInsets.only(bottom: 8.0, left: 16.0),
           child: Text(
             Translations.of(context).votingsHistory,
             style: Theme.of(context)
@@ -84,10 +79,10 @@ class _VotingsHistory extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) {
-              final Voting voting = pastVotings[index];
+              final Voting voting = historyVotings[index];
               return Container(
                 margin: const EdgeInsets.symmetric(vertical: 16.0).copyWith(
-                    bottom: index == pastVotings.length - 1 ? 100 : 16),
+                    bottom: index == historyVotings.length - 1 ? 100 : 16),
                 child: voting.cardinality == VotingCardinality.MULTIPLE_CHOICE
                     ? MultipleChoiceVotingResultsBox(voting: voting)
                     : VotingResultsBox(
@@ -96,7 +91,7 @@ class _VotingsHistory extends StatelessWidget {
                       ),
               );
             },
-            itemCount: pastVotings.length,
+            itemCount: historyVotings.length,
           ),
         ),
       ],

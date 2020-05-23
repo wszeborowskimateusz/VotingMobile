@@ -9,7 +9,7 @@ class CommonRoute extends StatelessWidget {
   const CommonRoute({
     @required this.title,
     @required this.child,
-    this.displayRightIcon = true,
+    this.displayRightIcon = false,
   });
 
   @override
@@ -20,6 +20,7 @@ class CommonRoute extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(

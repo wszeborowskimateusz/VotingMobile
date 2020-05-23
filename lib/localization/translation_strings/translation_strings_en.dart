@@ -21,4 +21,13 @@ class TranslationStringsEn implements TranslationStrings {
 
   @override
   String get noVotingsHistory => "No Votings History";
+
+  @override
+  String get voteAgainst => "Against";
+
+  @override
+  String get voteHold => "Hold";
+
+  @override
+  String get voteInFavor => "In favor";
 }

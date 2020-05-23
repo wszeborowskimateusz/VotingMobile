@@ -32,4 +32,13 @@ class Translations implements TranslationStrings {
   @override
   String get noVotingsHistory =>
       locator.get<TranslationStrings>().noVotingsHistory;
+
+  @override
+  String get voteAgainst => locator.get<TranslationStrings>().voteAgainst;
+
+  @override
+  String get voteHold => locator.get<TranslationStrings>().voteHold;
+
+  @override
+  String get voteInFavor => locator.get<TranslationStrings>().voteInFavor;
 }

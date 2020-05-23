@@ -23,7 +23,6 @@ class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
     return CommonRoute(
-      displayRightIcon: false,
       title: Translations.of(context).settings,
       child: Column(
         mainAxisSize: MainAxisSize.max,

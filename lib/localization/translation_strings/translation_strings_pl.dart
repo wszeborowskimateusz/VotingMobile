@@ -21,4 +21,13 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get noVotingsHistory => "Brak poprzednich głosowań";
+  
+  @override
+  String get voteAgainst => "Przeciw";
+
+  @override
+  String get voteHold => "Wstrzymaj się";
+
+  @override
+  String get voteInFavor => "Za";
 }
