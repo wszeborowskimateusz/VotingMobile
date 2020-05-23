@@ -28,14 +28,9 @@ class _SettingPageState extends State<SettingPage> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Divider(),
-              _buildLocaleSettings(context),
-              Divider(),
-            ],
-          ),
+          Divider(),
+          _buildLocaleSettings(context),
+          Divider(),
         ],
       ),
     );

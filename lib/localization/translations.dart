@@ -19,4 +19,10 @@ class Translations implements TranslationStrings {
 
   @override
   String get language => locator.get<TranslationStrings>().language;
+
+  @override
+  String get vote => locator.get<TranslationStrings>().vote;
+
+  @override
+  String get votingsHistory => locator.get<TranslationStrings>().votingsHistory;
 }

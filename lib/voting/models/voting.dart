@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import 'package:votingmobile/voting/models/voting_option.dart';
+import 'package:votingmobile/voting/models/voting_results.dart';
 
 class Voting extends Equatable {
   final int id;
@@ -11,10 +12,9 @@ class Voting extends Equatable {
   final bool secrecy;
   final VotingStatus status;
   final List<VotingOption> options;
-  final int threshold;
-  final int electionLeadId;
+  final List<VotingResults> results;
 
-  const Voting({
+  Voting({
     @required this.id,
     @required this.name,
     @required this.majority,
@@ -22,9 +22,13 @@ class Voting extends Equatable {
     @required this.secrecy,
     @required this.status,
     @required this.options,
-    this.threshold,
-    @required this.electionLeadId,
-  });
+    this.results,
+  }) {
+    if (status == VotingStatus.FINISHED) {
+      assert(results != null && results.isNotEmpty,
+          "When voting is finished it should have result");
+    }
+  }
 
   @override
   List<Object> get props => [
@@ -35,8 +39,7 @@ class Voting extends Equatable {
         secrecy,
         status,
         options,
-        threshold,
-        electionLeadId,
+        results,
       ];
 }
 

@@ -11,4 +11,8 @@ abstract class TranslationStrings {
   String get settings;
 
   String get language;
+
+  String get vote;
+
+  String get votingsHistory;
 }

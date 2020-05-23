@@ -9,4 +9,10 @@ class TranslationStringsEn implements TranslationStrings {
 
   @override
   String get language => "Language";
+
+  @override
+  String get vote => "Vote";
+
+  @override
+  String get votingsHistory => "Votings History";
 }
