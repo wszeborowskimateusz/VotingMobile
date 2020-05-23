@@ -15,4 +15,10 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get votingsHistory => "Historia Głosowań";
+
+  @override
+  String get noVotings => "Poczekaj aż przewodniczący rozpocznie głosowanie";
+
+  @override
+  String get noVotingsHistory => "Brak poprzednich głosowań";
 }

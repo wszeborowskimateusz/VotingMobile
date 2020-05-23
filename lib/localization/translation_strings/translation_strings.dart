@@ -15,4 +15,8 @@ abstract class TranslationStrings {
   String get vote;
 
   String get votingsHistory;
+
+  String get noVotings;
+
+  String get noVotingsHistory;
 }

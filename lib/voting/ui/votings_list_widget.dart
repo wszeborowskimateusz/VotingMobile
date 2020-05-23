@@ -22,7 +22,7 @@ class VotingsListWidget extends StatelessWidget {
     if (activeVoting == null && pastVotings.isEmpty) {
       return Center(
         child: Text(
-          "Poczekaj aż przewodniczący rozpocznie głosowanie",
+          Translations.of(context).noVotings,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headline4,
         ),
@@ -38,7 +38,7 @@ class VotingsListWidget extends StatelessWidget {
             Expanded(
               child: Center(
                 child: Text(
-                  "Brak poprzednich głosowań",
+                  Translations.of(context).noVotingsHistory,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline4,
                 ),

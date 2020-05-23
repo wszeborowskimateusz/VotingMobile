@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:votingmobile/common/backend/locale_repository.dart';
 import 'package:votingmobile/common/backend/user_repository.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
-import 'package:votingmobile/voting/backend/voting_repository.dart';
+import 'package:votingmobile/voting/backend/votings_repository.dart';
 
 GetIt locator = GetIt.instance;
 

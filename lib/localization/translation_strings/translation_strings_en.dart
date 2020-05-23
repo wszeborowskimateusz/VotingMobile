@@ -15,4 +15,10 @@ class TranslationStringsEn implements TranslationStrings {
 
   @override
   String get votingsHistory => "Votings History";
+
+  @override
+  String get noVotings => "Wait for the election lead to start a voting";
+
+  @override
+  String get noVotingsHistory => "No Votings History";
 }

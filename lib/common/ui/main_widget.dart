@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/ui/common_layout.dart';
-import 'package:votingmobile/voting/backend/voting_repository.dart';
+import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/ui/votings_list_widget.dart';
 
 class MainWidget extends StatelessWidget {
