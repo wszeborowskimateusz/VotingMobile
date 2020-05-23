@@ -30,8 +30,8 @@ class _VotePageState extends State<VotePage> {
     super.initState();
     // TODO: Swap assets path when icons are ready
     incidentTypeList = [
-      RadioModel(false, "assets/images/gb.svg",
-          widget.inFavorTranslation, Colors.green),
+      RadioModel(false, "assets/images/gb.svg", widget.inFavorTranslation,
+          Colors.green),
       RadioModel(false, "assets/images/sspg_logo.svg",
           widget.againstTranslation, Colors.red),
       RadioModel(false, "assets/images/pl.svg", widget.holdTranslation,
@@ -45,6 +45,7 @@ class _VotePageState extends State<VotePage> {
   Widget build(BuildContext context) {
     final Voting activeVoting = locator.get<VotingsRepository>().activeVoting;
     return CommonRoute(
+      withSmallerFontSize: true,
       title: activeVoting.name,
       displayRightIcon: true,
       child: Expanded(

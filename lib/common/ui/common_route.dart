@@ -5,15 +5,18 @@ class CommonRoute extends StatelessWidget {
   final Widget child;
   final String title;
   final bool displayRightIcon;
+  final bool withSmallerFontSize;
 
   const CommonRoute({
     @required this.title,
     @required this.child,
     this.displayRightIcon = false,
+    this.withSmallerFontSize = false,
   });
 
   @override
   Widget build(BuildContext context) {
+    final TextTheme theme = Theme.of(context).textTheme;
     return CommonLayout(
       // null will get as a default - settings icon
       rightIcon: displayRightIcon ? null : Container(),
@@ -27,9 +30,7 @@ class CommonRoute extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 16.0),
               child: Text(
                 title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4
+                style: (withSmallerFontSize ? theme.headline5 : theme.headline4)
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ),

@@ -28,6 +28,7 @@ class _CustomRadioGroupWidgetState extends State<CustomRadioGroupWidget> {
   Widget _buildRoundRadioGroup() {
     return ListView.builder(
       shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       itemCount: widget.radioList.length,
       itemBuilder: (BuildContext context, int index) {
         return RoundRadioItem(
