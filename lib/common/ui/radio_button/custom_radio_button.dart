@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:votingmobile/common/ui/radio_button/radio_model.dart';
 
-class CustomRadioGroupWidget extends StatefulWidget {
-  final ValueChanged<String> onChanged;
-  final List<RadioModel> radioList;
+class CustomRadioGroupWidget<T> extends StatefulWidget {
+  final ValueChanged<T> onChanged;
+  final List<RadioModel<T>> radioList;
 
   const CustomRadioGroupWidget({Key key, this.radioList, this.onChanged})
       : super(key: key);
 
   @override
-  _CustomRadioGroupWidgetState createState() => _CustomRadioGroupWidgetState();
+  _CustomRadioGroupWidgetState<T> createState() =>
+      _CustomRadioGroupWidgetState<T>();
 }
 
-class _CustomRadioGroupWidgetState extends State<CustomRadioGroupWidget> {
-  String _selectedValue;
+class _CustomRadioGroupWidgetState<T> extends State<CustomRadioGroupWidget<T>> {
+  T _selectedValue;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 2,
       alignment: Alignment.center,
       margin: EdgeInsets.only(top: 8.0, bottom: 32.0),
       child: _buildRoundRadioGroup(),
@@ -32,13 +32,13 @@ class _CustomRadioGroupWidgetState extends State<CustomRadioGroupWidget> {
       physics: NeverScrollableScrollPhysics(),
       itemCount: widget.radioList.length,
       itemBuilder: (BuildContext context, int index) {
-        return RoundRadioItem(
+        return RoundRadioItem<T>(
           widget.radioList[index],
           onTap: () {
             setState(() {
               widget.radioList.forEach((element) => element.isSelected = false);
               widget.radioList[index].isSelected = true;
-              _selectedValue = widget.radioList[index].text;
+              _selectedValue = widget.radioList[index].value;
               _publishSelection(_selectedValue);
             });
           },
@@ -47,18 +47,16 @@ class _CustomRadioGroupWidgetState extends State<CustomRadioGroupWidget> {
     );
   }
 
-  void _publishSelection(selectedValue) {
-    if (widget.onChanged != null) {
-      widget.onChanged(selectedValue);
-    }
+  void _publishSelection(T selectedValue) {
+    widget.onChanged?.call(selectedValue);
   }
 }
 
-class RoundRadioItem extends StatelessWidget {
-  final RadioModel _item;
+class RoundRadioItem<T> extends StatelessWidget {
+  final RadioModel<T> _item;
   final VoidCallback onTap;
 
-  RoundRadioItem(this._item, {this.onTap});
+  const RoundRadioItem(this._item, {this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +81,7 @@ class RoundRadioItem extends StatelessWidget {
                     )
                   : Container(),
               Text(
-                _item.text,
+                _item.displayText,
                 style: TextStyle(
                     color: _item.isSelected ? Colors.white : Colors.black,
                     fontSize: 18.0,

@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:votingmobile/voting/models/voting.dart';
 import 'package:votingmobile/voting/models/voting_option.dart';
+import 'package:votingmobile/common/ui/dots_indicator.dart';
 import 'package:votingmobile/voting/ui/voting_results_box.dart';
 
 class MultipleChoiceVotingResultsBox extends StatefulWidget {
@@ -56,51 +57,8 @@ class _MultipleChoiceVotingResultsBoxState
                 });
               }),
         ),
-        _DotsIndicator(options: widget.voting.options, current: _current),
+        DotsIndicator<VotingOption>(options: widget.voting.options, current: _current),
       ],
     );
   }
-}
-
-class _DotsIndicator extends StatefulWidget {
-  const _DotsIndicator({
-    Key key,
-    @required this.options,
-    @required int current,
-  })  : _current = current,
-        super(key: key);
-
-  final List<VotingOption> options;
-  final int _current;
-
-  @override
-  __DotsIndicatorState createState() => __DotsIndicatorState();
-}
-
-class __DotsIndicatorState extends State<_DotsIndicator>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: widget.options.map((option) {
-        final int index = widget.options.indexOf(option);
-        return Container(
-          width: 8.0,
-          height: 8.0,
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: widget._current == index
-                ? Color.fromRGBO(0, 0, 0, 0.9)
-                : Color.fromRGBO(0, 0, 0, 0.4),
-          ),
-        );
-      }).toList(),
-    );
-  }
-
-  @override
-  bool get wantKeepAlive => true;
 }

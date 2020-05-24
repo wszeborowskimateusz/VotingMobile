@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 
+typedef StringGetter = String Function(BuildContext);
+
 abstract class TranslationStrings {
   static TranslationStrings of(BuildContext context) {
     return locator.get<TranslationStrings>();
@@ -25,4 +27,12 @@ abstract class TranslationStrings {
   String get voteAgainst;
 
   String get voteHold;
+
+  String get voteCancel;
+
+  String get voteAccept;
+
+  String singleVoteInfo(String voteType);
+
+  String multipleVoteInfo(int votedAnswersAmount, int allQuestionsAmount);
 }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
-class RadioModel {
+class RadioModel<T> {
   bool isSelected;
   final String assetPath;
-  final String text;
+  final String displayText;
   final Color selectedColor;
+  final T value;
 
-  RadioModel(this.isSelected, this.assetPath, this.text, this.selectedColor);
+  RadioModel(this.isSelected, this.assetPath, this.displayText, this.selectedColor, this.value);
 }

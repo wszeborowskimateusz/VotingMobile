@@ -9,7 +9,7 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get language => "Język";
-  
+
   @override
   String get vote => "Zagłosuj";
 
@@ -21,7 +21,7 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get noVotingsHistory => "Brak poprzednich głosowań";
-  
+
   @override
   String get voteAgainst => "Przeciw";
 
@@ -30,4 +30,18 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get voteInFavor => "Za";
+
+  @override
+  String multipleVoteInfo(int votedAnswersAmount, int allQuestionsAmount) =>
+      "Czy na pewno chcesz zagłosować na $votedAnswersAmount / $allQuestionsAmount opcji ?";
+
+  @override
+  String singleVoteInfo(String voteType) =>
+      "Czy na pewno chcesz zagłosować: $voteType ?";
+
+  @override
+  String get voteAccept => "Zaakceptuj";
+
+  @override
+  String get voteCancel => "Anuluj";
 }

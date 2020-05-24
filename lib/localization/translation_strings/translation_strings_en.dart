@@ -30,4 +30,18 @@ class TranslationStringsEn implements TranslationStrings {
 
   @override
   String get voteInFavor => "In favor";
+
+  @override
+  String multipleVoteInfo(int votedAnswersAmount, int allQuestionsAmount) =>
+      "Are you sure you want to vote for $votedAnswersAmount / $allQuestionsAmount options ?";
+
+  @override
+  String singleVoteInfo(String voteType) =>
+      "Are you sure you want to vote: $voteType ?";
+
+  @override
+  String get voteAccept => "Accept";
+
+  @override
+  String get voteCancel => "Cancel";
 }

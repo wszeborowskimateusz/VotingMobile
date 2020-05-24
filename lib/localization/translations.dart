@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/localization/translation_strings/translation_strings.dart';
+import 'package:votingmobile/voting/models/vote_type.dart';
 
 class Translations implements TranslationStrings {
   final Locale locale;
@@ -41,4 +42,33 @@ class Translations implements TranslationStrings {
 
   @override
   String get voteInFavor => locator.get<TranslationStrings>().voteInFavor;
+
+  @override
+  String multipleVoteInfo(int votedAnswersAmount, int allQuestionsAmount) =>
+      locator
+          .get<TranslationStrings>()
+          .multipleVoteInfo(votedAnswersAmount, allQuestionsAmount);
+
+  @override
+  String singleVoteInfo(String voteType) =>
+      locator.get<TranslationStrings>().singleVoteInfo(voteType);
+
+  @override
+  String get voteAccept => locator.get<TranslationStrings>().voteAccept;
+
+  @override
+  String get voteCancel => locator.get<TranslationStrings>().voteCancel;
+
+  String getTranslationForVoteType(VoteType voteType) {
+    switch (voteType) {
+      case VoteType.FOR:
+        return voteInFavor;
+      case VoteType.AGAINST:
+        return voteAgainst;
+      case VoteType.HOLD:
+        return voteHold;
+    }
+
+    throw ArgumentError("Given type $voteType is not supported");
+  }
 }

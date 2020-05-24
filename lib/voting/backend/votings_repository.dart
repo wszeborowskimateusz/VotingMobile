@@ -202,10 +202,13 @@ final List<Voting> _testVotings = [
 
 final Voting _testActiveVoting = Voting(
   id: 10,
-  name: "Głosowanie nad kandydaturą Justyny Jodłowskiej na zastępce ds. socjalnych",
+  name: "Czy zgadzasz się ze mną",
   cardinality: VotingCardinality.SINGLE_CHOICE,
   options: [],
   majority: VotingMajority.ABSOLUTE,
   secrecy: false,
-  status: VotingStatus.DURING_VOTING,
+  status: VotingStatus.FINISHED,
+  results: [
+    VotingResults(inFavor: 40, against: 35, hold: 2, wasSuccessful: true)
+  ],
 );
