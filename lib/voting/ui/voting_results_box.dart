@@ -38,8 +38,18 @@ class VotingResultsBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(votingName, style: Theme.of(context).textTheme.bodyText1),
-                Container(height: 5,width: 25, color: votingResults.wasSuccessful ? Colors.green : Colors.red),
+                Text(
+                  votingName,
+                  style: Theme.of(context).textTheme.bodyText1,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Container(
+                    height: 5,
+                    width: 25,
+                    color: votingResults.wasSuccessful
+                        ? Colors.green
+                        : Colors.red),
                 _VotingNumericResults(votingResults: votingResults),
               ],
             ),
@@ -69,7 +79,7 @@ class _VotingNumericResults extends StatelessWidget {
         _buildResultInfo("assets/images/successful.svg", votingResults.inFavor),
         _buildResultInfo(
             "assets/images/unsuccessful.svg", votingResults.against),
-            // TODO: Replace it with question mark
+        // TODO: Replace it with question mark
         _buildResultInfo("assets/images/hold.svg", votingResults.hold),
       ],
     );
@@ -77,7 +87,12 @@ class _VotingNumericResults extends StatelessWidget {
 
   Widget _buildResultInfo(String imagePath, int amountOfVotes) {
     return Row(children: <Widget>[
-      Container(margin: EdgeInsets.only(right: 2.0, bottom: 4.0),child: SvgPicture.asset(imagePath, height: 24,)),
+      Container(
+          margin: EdgeInsets.only(right: 2.0, bottom: 4.0),
+          child: SvgPicture.asset(
+            imagePath,
+            height: 24,
+          )),
       Text(amountOfVotes.toString()),
     ]);
   }

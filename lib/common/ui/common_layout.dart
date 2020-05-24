@@ -14,36 +14,34 @@ class CommonLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: displayLeftIcon
-              ? IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () => Navigator.pop(context),
-                  color: Colors.black,
-                )
-              : null,
-          elevation: 0.0,
-          actions: <Widget>[
-            rightIcon ??
-                IconButton(
-                  icon: Icon(Icons.settings),
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => SettingPage(),
-                      ),
-                    );
-                  },
-                  color: Color(0xff4169E1),
-                )
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        body: body,
+        leading: displayLeftIcon
+            ? IconButton(
+                icon: Icon(Icons.arrow_back),
+                onPressed: () => Navigator.pop(context),
+                color: Colors.black,
+              )
+            : null,
+        elevation: 0.0,
+        actions: <Widget>[
+          rightIcon ??
+              IconButton(
+                icon: Icon(Icons.settings),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => SettingPage(),
+                    ),
+                  );
+                },
+                color: Color(0xff4169E1),
+              )
+        ],
       ),
+      backgroundColor: Colors.white,
+      body: SafeArea(child: body),
     );
   }
 }

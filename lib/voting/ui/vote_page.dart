@@ -30,10 +30,10 @@ class _VotePageState extends State<VotePage> {
     super.initState();
     // TODO: Swap assets path when icons are ready
     incidentTypeList = [
-      RadioModel(false, "assets/images/successful.svg", widget.inFavorTranslation,
-          Colors.greenAccent[700]),
+      RadioModel(false, "assets/images/successful.svg",
+          widget.inFavorTranslation, Color(0xff00B000)),
       RadioModel(false, "assets/images/unsuccessful.svg",
-          widget.againstTranslation, Colors.red),
+          widget.againstTranslation, Color(0xffC00000)),
       RadioModel(false, "assets/images/hold.svg", widget.holdTranslation,
           Colors.blueAccent)
     ];
@@ -46,24 +46,23 @@ class _VotePageState extends State<VotePage> {
     final Voting activeVoting = locator.get<VotingsRepository>().activeVoting;
     return CommonRoute(
       withSmallerFontSize: true,
-      title: activeVoting.name,
       displayRightIcon: true,
       alignTitleCenter: true,
-      child: Expanded(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            CustomRadioGroupWidget(
-              onChanged: getvalue,
-              radioList: incidentTypeList,
-            ),
-            CommonGradientButton(
-                title: Translations.of(context).vote,
-                onPressed: _selectedValue == null ? null : () {}),
-          ],
-        ),
+      title: activeVoting.name,
+      child: CustomRadioGroupWidget(
+        onChanged: getvalue,
+        radioList: incidentTypeList,
       ),
+      bottomSection: CommonGradientButton(
+          title: Translations.of(context).vote,
+          onPressed: _selectedValue == null
+              ? null
+              : () => _onVoteButtonPressed(context)),
     );
+  }
+
+  void _onVoteButtonPressed(BuildContext context) {
+    
   }
 
   void getvalue(String value) {

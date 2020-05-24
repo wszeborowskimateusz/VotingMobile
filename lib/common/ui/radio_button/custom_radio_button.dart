@@ -19,6 +19,7 @@ class _CustomRadioGroupWidgetState extends State<CustomRadioGroupWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: MediaQuery.of(context).size.height / 2,
       alignment: Alignment.center,
       margin: EdgeInsets.only(top: 8.0, bottom: 32.0),
       child: _buildRoundRadioGroup(),
