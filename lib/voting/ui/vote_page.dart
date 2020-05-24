@@ -30,11 +30,11 @@ class _VotePageState extends State<VotePage> {
     super.initState();
     // TODO: Swap assets path when icons are ready
     incidentTypeList = [
-      RadioModel(false, "assets/images/gb.svg", widget.inFavorTranslation,
-          Colors.green),
-      RadioModel(false, "assets/images/sspg_logo.svg",
+      RadioModel(false, "assets/images/successful.svg", widget.inFavorTranslation,
+          Colors.greenAccent[700]),
+      RadioModel(false, "assets/images/unsuccessful.svg",
           widget.againstTranslation, Colors.red),
-      RadioModel(false, "assets/images/pl.svg", widget.holdTranslation,
+      RadioModel(false, "assets/images/hold.svg", widget.holdTranslation,
           Colors.blueAccent)
     ];
   }
@@ -48,6 +48,7 @@ class _VotePageState extends State<VotePage> {
       withSmallerFontSize: true,
       title: activeVoting.name,
       displayRightIcon: true,
+      alignTitleCenter: true,
       child: Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,

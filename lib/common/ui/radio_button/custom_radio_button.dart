@@ -83,7 +83,7 @@ class RoundRadioItem extends StatelessWidget {
                   : Container(),
               Text(
                 _item.text,
-                style: new TextStyle(
+                style: TextStyle(
                     color: _item.isSelected ? Colors.white : Colors.black,
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold),

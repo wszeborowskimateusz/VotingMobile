@@ -6,12 +6,14 @@ class CommonRoute extends StatelessWidget {
   final String title;
   final bool displayRightIcon;
   final bool withSmallerFontSize;
+  final bool alignTitleCenter;
 
   const CommonRoute({
     @required this.title,
     @required this.child,
     this.displayRightIcon = false,
     this.withSmallerFontSize = false,
+    this.alignTitleCenter = false,
   });
 
   @override
@@ -32,6 +34,7 @@ class CommonRoute extends StatelessWidget {
                 title,
                 style: (withSmallerFontSize ? theme.headline5 : theme.headline4)
                     .copyWith(fontWeight: FontWeight.bold),
+                textAlign: alignTitleCenter ? TextAlign.center : TextAlign.left,
               ),
             ),
             child,

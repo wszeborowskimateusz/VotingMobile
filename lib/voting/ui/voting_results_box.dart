@@ -66,17 +66,18 @@ class _VotingNumericResults extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        _buildResultInfo(Icons.sentiment_very_satisfied, votingResults.inFavor),
+        _buildResultInfo("assets/images/successful.svg", votingResults.inFavor),
         _buildResultInfo(
-            Icons.sentiment_very_dissatisfied, votingResults.against),
-        _buildResultInfo(Icons.sentiment_neutral, votingResults.hold),
+            "assets/images/unsuccessful.svg", votingResults.against),
+            // TODO: Replace it with question mark
+        _buildResultInfo("assets/images/hold.svg", votingResults.hold),
       ],
     );
   }
 
-  Widget _buildResultInfo(IconData icon, int amountOfVotes) {
+  Widget _buildResultInfo(String imagePath, int amountOfVotes) {
     return Row(children: <Widget>[
-      Container(margin: EdgeInsets.only(right: 2.0),child: Icon(icon, color: _grey)),
+      Container(margin: EdgeInsets.only(right: 2.0, bottom: 4.0),child: SvgPicture.asset(imagePath, height: 24,)),
       Text(amountOfVotes.toString()),
     ]);
   }
