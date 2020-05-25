@@ -61,4 +61,7 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get username => "Nazwa użytkownika";
+  
+  @override
+  String get logout => "Wyloguj się";
 }

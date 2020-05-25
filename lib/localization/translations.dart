@@ -88,4 +88,7 @@ class Translations implements TranslationStrings {
 
   @override
   String get username => locator.get<TranslationStrings>().username;
+
+  @override
+  String get logout => locator.get<TranslationStrings>().logout;
 }

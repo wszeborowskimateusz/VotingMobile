@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/backend/locale_repository.dart';
 import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_route.dart';
 import 'package:votingmobile/common/ui/settings/rolling_switch.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
+import 'package:votingmobile/login/backend/user_repository.dart';
 import 'package:votingmobile/main.dart';
 
 class SettingPage extends StatefulWidget {
@@ -17,13 +19,14 @@ class _SettingPageState extends State<SettingPage> {
     true: englishLocale,
     false: polishLocale
   };
-
+  final userRepository = locator.get<UserRepository>();
   bool initialized = false;
 
   @override
   Widget build(BuildContext context) {
+    final translations = Translations.of(context);
     return CommonRoute(
-      title: Translations.of(context).settings,
+      title: translations.settings,
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
@@ -32,6 +35,21 @@ class _SettingPageState extends State<SettingPage> {
           Divider(),
         ],
       ),
+      bottomSection: userRepository.isLoggedIn
+          ? CommonGradientButton(
+              title: translations.logout,
+              onPressed: () {
+                userRepository.logout();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                      settings: RouteSettings()),
+                  (_) => false,
+                );
+              },
+            )
+          : null,
     );
   }
 

@@ -49,14 +49,19 @@ class TranslationStringsEn implements TranslationStrings {
   String get login => "Login";
 
   @override
-  String get loginDisclaimer => "Use the credentials received at the begining of the voting session to log in.";
+  String get loginDisclaimer =>
+      "Use the credentials received at the begining of the voting session to log in.";
 
   @override
-  String get loginIncorrectUsernameOrPassword => "Incorrect username or password";
+  String get loginIncorrectUsernameOrPassword =>
+      "Incorrect username or password";
 
   @override
   String get password => "Password";
 
   @override
   String get username => "Username";
+
+  @override
+  String get logout => "Logout";
 }

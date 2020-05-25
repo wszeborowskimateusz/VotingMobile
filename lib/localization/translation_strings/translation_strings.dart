@@ -45,4 +45,6 @@ abstract class TranslationStrings {
   String get loginDisclaimer;
   
   String get loginIncorrectUsernameOrPassword;
+
+  String get logout;
 }
