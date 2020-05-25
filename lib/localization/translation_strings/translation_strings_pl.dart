@@ -44,4 +44,21 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get voteCancel => "Anuluj";
+
+  @override
+  String get login => "Zaloguj się";
+
+  @override
+  String get loginDisclaimer =>
+      "Użyj nazwy użytkownika i hasła otrzymanego na początku posiedzenia.";
+
+  @override
+  String get loginIncorrectUsernameOrPassword =>
+      "Nieprawidłowa nazwa użytkownika lub hasło";
+
+  @override
+  String get password => "Hasło";
+
+  @override
+  String get username => "Nazwa użytkownika";
 }

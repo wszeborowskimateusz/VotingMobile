@@ -35,4 +35,14 @@ abstract class TranslationStrings {
   String singleVoteInfo(String voteType);
 
   String multipleVoteInfo(int votedAnswersAmount, int allQuestionsAmount);
+
+  String get username;
+
+  String get password;
+
+  String get login;
+  
+  String get loginDisclaimer;
+  
+  String get loginIncorrectUsernameOrPassword;
 }

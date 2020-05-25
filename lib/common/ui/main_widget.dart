@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/ui/common_layout.dart';
+import 'package:votingmobile/login/backend/user_repository.dart';
+import 'package:votingmobile/login/ui/login_page.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/ui/votings_history_list_widget.dart';
 
@@ -13,10 +15,12 @@ class MainWidget extends StatelessWidget {
       displayLeftIcon: false,
       body: Padding(
         padding: const EdgeInsets.all(16.0).copyWith(top: 0.0),
-        child: VotingsHistoryListWidget(
-          historyVotings: votingsRepository.getVotingsHistory(),
-          activeVoting: votingsRepository.activeVoting,
-        ),
+        child: locator.get<UserRepository>().isLoggedIn
+            ? VotingsHistoryListWidget(
+                historyVotings: votingsRepository.getVotingsHistory(),
+                activeVoting: votingsRepository.activeVoting,
+              )
+            : LoginPage(),
       ),
     );
   }

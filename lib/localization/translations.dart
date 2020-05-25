@@ -71,4 +71,21 @@ class Translations implements TranslationStrings {
 
     throw ArgumentError("Given type $voteType is not supported");
   }
+
+  @override
+  String get login => locator.get<TranslationStrings>().login;
+
+  @override
+  String get loginDisclaimer =>
+      locator.get<TranslationStrings>().loginDisclaimer;
+
+  @override
+  String get loginIncorrectUsernameOrPassword =>
+      locator.get<TranslationStrings>().loginIncorrectUsernameOrPassword;
+
+  @override
+  String get password => locator.get<TranslationStrings>().password;
+
+  @override
+  String get username => locator.get<TranslationStrings>().username;
 }
