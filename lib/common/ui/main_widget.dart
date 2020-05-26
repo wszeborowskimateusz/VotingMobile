@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/ui/common_layout.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
@@ -16,9 +17,12 @@ class MainWidget extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0).copyWith(top: 0.0),
         child: locator.get<UserRepository>().isLoggedIn
-            ? VotingsHistoryListWidget(
-                historyVotings: votingsRepository.getVotingsHistory(),
-                activeVoting: votingsRepository.activeVoting,
+            ? Consumer<ActiveVoting>(
+                builder: (context, activeVoting, child) =>
+                    VotingsHistoryListWidget(
+                  historyVotings: votingsRepository.getVotingsHistory(),
+                  activeVoting: activeVoting.activeVoting,
+                ),
               )
             : LoginPage(),
       ),

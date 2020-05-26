@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:votingmobile/common/locator/locator.dart';
+import 'package:provider/provider.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
@@ -15,13 +15,21 @@ class VoteButton extends StatelessWidget {
     return CommonGradientButton(
       title: translations.vote,
       onPressed: () {
+        final activeVoting =
+            Provider.of<ActiveVoting>(context, listen: false).activeVoting;
+        if (activeVoting == null) {
+          Scaffold.of(context).showSnackBar(SnackBar(
+            content: Text(translations.noActiveVotingDisclaimer),
+          ));
+          return;
+        }
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) =>
-                locator.get<VotingsRepository>().activeVoting.cardinality ==
-                        VotingCardinality.SINGLE_CHOICE
-                    ? VotePageSingleChoice()
-                    : VotePageMultipleChoices(),
+            builder: (context) {
+              return activeVoting.cardinality == VotingCardinality.SINGLE_CHOICE
+                  ? VotePageSingleChoice()
+                  : VotePageMultipleChoices();
+            },
           ),
         );
       },

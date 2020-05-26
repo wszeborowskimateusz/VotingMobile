@@ -1,17 +1,41 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/login/backend/user_repository.dart';
 import 'package:votingmobile/voting/models/vote_type.dart';
 import 'package:votingmobile/voting/models/voting.dart';
 import 'package:votingmobile/voting/models/voting_option.dart';
 import 'package:votingmobile/voting/models/voting_results.dart';
 
-class VotingsRepository {
+class ActiveVoting extends ChangeNotifier {
   Voting _activeVoting = _testActiveVoting;
+  Timer _activeActiveVotingTimer;
 
-  // Voting here should only be in a FINISHED status
-  List<Voting> getVotingsHistory() {
-    return _testVotings;
+  ActiveVoting() {
+    _startFetchingActiveVoting();
   }
 
   Voting get activeVoting => _activeVoting;
+
+  @override
+  void dispose() {
+    _activeActiveVotingTimer.cancel();
+    super.dispose();
+  }
+
+  void _startFetchingActiveVoting() {
+    _activeActiveVotingTimer = Timer.periodic(Duration(seconds: 30), (_) {
+      if (locator.get<UserRepository>().isLoggedIn) {
+        // TODO: Fetch it from the server
+        // TODO: Handle situation when user has already voted in a specific voting
+        if (_activeVoting != _testActiveVoting) {
+          _activeVoting = _testActiveVoting;
+          notifyListeners();
+        }
+      }
+    });
+  }
 
   // TODO: Vote object should probably be more complicated - id, options id
   Future<void> vote(List<VoteType> votes) async {
@@ -21,10 +45,14 @@ class VotingsRepository {
     // TODO: Send a real request
     await Future.delayed(Duration(seconds: 5));
     _activeVoting = null;
+    notifyListeners();
+  }
+}
 
-    Future.delayed(Duration(seconds: 10), () {
-      _activeVoting = _testActiveVoting;
-    });
+class VotingsRepository {
+  // Voting here should only be in a FINISHED status
+  List<Voting> getVotingsHistory() {
+    return _testVotings;
   }
 }
 

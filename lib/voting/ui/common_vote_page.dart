@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:votingmobile/common/locator/locator.dart';
+import 'package:provider/provider.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_route.dart';
 import 'package:votingmobile/localization/translations.dart';
@@ -17,15 +17,17 @@ class CommonVotePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CommonRoute(
-      withSmallerFontSize: true,
-      displayRightIcon: true,
-      alignTitleCenter: true,
-      title: locator.get<VotingsRepository>().activeVoting.name,
-      child: votingOptions,
-      bottomSection: CommonGradientButton(
-        title: Translations.of(context).vote,
-        onPressed: bottomButtonOnPressed,
+    return Consumer<ActiveVoting>(
+      builder: (context, activeVoting, child) => CommonRoute(
+        withSmallerFontSize: true,
+        displayRightIcon: true,
+        alignTitleCenter: true,
+        title: activeVoting.activeVoting?.name ?? "",
+        child: votingOptions,
+        bottomSection: CommonGradientButton(
+          title: Translations.of(context).vote,
+          onPressed: bottomButtonOnPressed,
+        ),
       ),
     );
   }

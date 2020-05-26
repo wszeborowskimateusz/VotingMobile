@@ -47,4 +47,6 @@ abstract class TranslationStrings {
   String get loginIncorrectUsernameOrPassword;
 
   String get logout;
+
+  String get noActiveVotingDisclaimer;
 }

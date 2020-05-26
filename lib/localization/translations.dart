@@ -91,4 +91,8 @@ class Translations implements TranslationStrings {
 
   @override
   String get logout => locator.get<TranslationStrings>().logout;
+
+  @override
+  String get noActiveVotingDisclaimer =>
+      locator.get<TranslationStrings>().noActiveVotingDisclaimer;
 }

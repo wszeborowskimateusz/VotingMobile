@@ -61,7 +61,11 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get username => "Nazwa użytkownika";
-  
+
   @override
   String get logout => "Wyloguj się";
+
+  @override
+  String get noActiveVotingDisclaimer =>
+      "Głosowanie, na które próbujesz zagłosować nie jest już aktywne";
 }

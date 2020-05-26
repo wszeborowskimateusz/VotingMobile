@@ -64,4 +64,8 @@ class TranslationStringsEn implements TranslationStrings {
 
   @override
   String get logout => "Logout";
+
+  @override
+  String get noActiveVotingDisclaimer =>
+      "The voting you are trying to vote for is no longer active";
 }

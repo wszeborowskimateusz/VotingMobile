@@ -5,7 +5,6 @@ import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
-import 'package:votingmobile/main.dart';
 
 class LoginPage extends StatefulWidget {
   @override

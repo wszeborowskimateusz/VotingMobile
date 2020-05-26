@@ -77,7 +77,6 @@ class _VotingNumericResults extends StatelessWidget {
         _buildResultInfo("assets/images/successful.svg", votingResults.inFavor),
         _buildResultInfo(
             "assets/images/unsuccessful.svg", votingResults.against),
-        // TODO: Replace it with question mark
         _buildResultInfo("assets/images/hold.svg", votingResults.hold),
       ],
     );
