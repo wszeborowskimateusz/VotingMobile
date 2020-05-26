@@ -17,10 +17,10 @@ class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 
-   static void setLocale(BuildContext context, Locale newLocale) {
+  static void setLocale(BuildContext context, Locale newLocale) {
     _HomePageState state =
-      context.findRootAncestorStateOfType<_HomePageState>();
-    
+        context.findRootAncestorStateOfType<_HomePageState>();
+
     state.setState(() {
       state.selectedLocale = newLocale;
     });
@@ -48,7 +48,9 @@ class _HomePageState extends State<HomePage> {
               displayColor: Colors.black,
             ),
       ),
-      home: Builder(builder: (context) => MainWidget()),
+      home: Builder(
+        builder: (context) => MainWidget(),
+      ),
       debugShowCheckedModeBanner: false,
     );
   }

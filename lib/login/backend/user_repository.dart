@@ -5,6 +5,7 @@ class UserRepository {
 
   // Returns if operation was successful or not
   Future<bool> login(String username, String password) async {
+    await Future.delayed(Duration(seconds: 5));
     if (username.isNotEmpty && password == "123") {
       _token = "secretToken";
       return true;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:votingmobile/common/ui/common_will_pop_scope.dart';
 import 'package:votingmobile/common/ui/settings/settings_page.dart';
 
 class CommonLayout extends StatelessWidget {
@@ -14,34 +15,36 @@ class CommonLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return CommonWillPopScope(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          leading: displayLeftIcon
+              ? IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () => Navigator.pop(context),
+                  color: Colors.black,
+                )
+              : null,
+          elevation: 0.0,
+          actions: <Widget>[
+            rightIcon ??
+                IconButton(
+                  icon: Icon(Icons.settings),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => SettingPage(),
+                      ),
+                    );
+                  },
+                  color: Color(0xff4169E1),
+                )
+          ],
+        ),
         backgroundColor: Colors.white,
-        leading: displayLeftIcon
-            ? IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context),
-                color: Colors.black,
-              )
-            : null,
-        elevation: 0.0,
-        actions: <Widget>[
-          rightIcon ??
-              IconButton(
-                icon: Icon(Icons.settings),
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => SettingPage(),
-                    ),
-                  );
-                },
-                color: Color(0xff4169E1),
-              )
-        ],
+        body: SafeArea(child: body),
       ),
-      backgroundColor: Colors.white,
-      body: SafeArea(child: body),
     );
   }
 }

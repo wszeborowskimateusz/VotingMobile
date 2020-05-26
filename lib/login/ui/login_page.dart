@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
+import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
 import 'package:votingmobile/main.dart';
@@ -75,21 +76,21 @@ class _LoginPageState extends State<LoginPage> {
     final String login = _loginController.text;
     final String password = _passwordController.text;
 
-    final bool isCredentialCorrect =
-        await _userRepository.login(login, password);
-    if (isCredentialCorrect) {
-      // TODO: Navigate to home screen
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HomePage(), settings: RouteSettings()),
-        (_) => false,
-      );
-    } else {
-      setState(() {
-        _isValidationCorrect = false;
-      });
-    }
+    applyBlockade<bool>(context, future: _userRepository.login(login, password),
+        onFutureResolved: (bool isCredentialCorrect) {
+      if (isCredentialCorrect) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage(), settings: RouteSettings()),
+          (_) => false,
+        );
+      } else {
+        setState(() {
+          _isValidationCorrect = false;
+        });
+      }
+    });
   }
 }
 
