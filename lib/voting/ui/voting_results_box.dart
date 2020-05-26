@@ -62,8 +62,6 @@ class VotingResultsBox extends StatelessWidget {
 }
 
 class _VotingNumericResults extends StatelessWidget {
-  static const Color _grey = Color(0xff555555);
-
   const _VotingNumericResults({
     @required this.votingResults,
   });

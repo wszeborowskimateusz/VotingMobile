@@ -5,7 +5,7 @@ import 'package:votingmobile/localization/translations.dart';
 void showConfirmPopup({
   @required BuildContext context,
   @required String title,
-  @required VoidCallback onConfirm,
+  @required Function(BuildContext) onConfirm,
 }) {
   final translations = Translations.of(context);
   showDialog(
@@ -20,7 +20,7 @@ void showConfirmPopup({
           ),
           FlatButton(
             child: Text(translations.voteAccept),
-            onPressed: onConfirm,
+            onPressed: () => onConfirm(context),
           ),
         ],
       );

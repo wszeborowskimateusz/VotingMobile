@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_popup.dart';
 import 'package:votingmobile/common/ui/dots_indicator.dart';
+import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/models/vote_type.dart';
@@ -18,6 +20,7 @@ class VotePageMultipleChoices extends StatefulWidget {
 }
 
 class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
+  final VotingsRepository votingsRepository = locator.get();
   final Voting activeVoting = locator.get<VotingsRepository>().activeVoting;
   List<VoteType> _selectedMultipleOptions;
   int _current = 0;
@@ -86,6 +89,14 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
         context: context,
         title: Translations.of(context)
             .multipleVoteInfo(_getVottedAmount, activeVoting.options.length),
-        onConfirm: () {});
+        onConfirm: (innerContext) {
+          // Remove the dialog
+          Navigator.pop(innerContext);
+          applyBlockade(context,
+              future: votingsRepository.vote(_selectedMultipleOptions),
+              onFutureResolved: (_) {
+            navigateToHomePage(context);
+          });
+        });
   }
 }

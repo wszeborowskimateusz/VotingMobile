@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
@@ -79,12 +80,7 @@ class _LoginPageState extends State<LoginPage> {
     applyBlockade<bool>(context, future: _userRepository.login(login, password),
         onFutureResolved: (bool isCredentialCorrect) {
       if (isCredentialCorrect) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-              builder: (context) => HomePage(), settings: RouteSettings()),
-          (_) => false,
-        );
+        navigateToHomePage(context);
       } else {
         setState(() {
           _isValidationCorrect = false;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/backend/locale_repository.dart';
 import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_route.dart';
 import 'package:votingmobile/common/ui/settings/rolling_switch.dart';
@@ -40,13 +41,7 @@ class _SettingPageState extends State<SettingPage> {
               title: translations.logout,
               onPressed: () {
                 userRepository.logout();
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => HomePage(),
-                      settings: RouteSettings()),
-                  (_) => false,
-                );
+                navigateToHomePage(context);
               },
             )
           : null,

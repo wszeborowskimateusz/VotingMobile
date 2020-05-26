@@ -25,7 +25,7 @@ void applyBlockade<T>(
 
   isBlockade = false;
   // Remove the blocker
-  Navigator.of(context).pop();
+  Navigator.of(context, rootNavigator: true).pop();
 
   onFutureResolved?.call(result);
 }

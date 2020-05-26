@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_popup.dart';
+import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/models/vote_type.dart';
@@ -14,9 +16,10 @@ class VotePageSingleChoice extends StatefulWidget {
 }
 
 class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
-  VoteType _selectedSingleOption;
-
+  final VotingsRepository votingsRepository = locator.get();
   final Voting activeVoting = locator.get<VotingsRepository>().activeVoting;
+
+  VoteType _selectedSingleOption;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +43,15 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
       context: context,
       title: translations.singleVoteInfo(
           translations.getTranslationForVoteType(_selectedSingleOption)),
-      onConfirm: () {},
+      onConfirm: (innerContext) {
+        // Remove the dialog
+        Navigator.pop(innerContext);
+        applyBlockade(context,
+            future: votingsRepository.vote([_selectedSingleOption]),
+            onFutureResolved: (_) {
+          navigateToHomePage(context);
+        });
+      },
     );
   }
 

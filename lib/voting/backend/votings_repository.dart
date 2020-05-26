@@ -1,3 +1,4 @@
+import 'package:votingmobile/voting/models/vote_type.dart';
 import 'package:votingmobile/voting/models/voting.dart';
 import 'package:votingmobile/voting/models/voting_option.dart';
 import 'package:votingmobile/voting/models/voting_results.dart';
@@ -12,12 +13,18 @@ class VotingsRepository {
 
   Voting get activeVoting => _activeVoting;
 
-  void vote() {
+  // TODO: Vote object should probably be more complicated - id, options id
+  Future<void> vote(List<VoteType> votes) async {
     // TODO: Think of a situation when we send a vote but the voting is already finished
     assert(
-        _activeVoting == null, "You can only vote when some voting is active");
+        _activeVoting != null, "You can only vote when some voting is active");
     // TODO: Send a real request
+    await Future.delayed(Duration(seconds: 5));
     _activeVoting = null;
+
+    Future.delayed(Duration(seconds: 10), () {
+      _activeVoting = _testActiveVoting;
+    });
   }
 }
 
@@ -201,14 +208,47 @@ final List<Voting> _testVotings = [
 ];
 
 final Voting _testActiveVoting = Voting(
-  id: 10,
-  name: "Czy zgadzasz się ze mną",
-  cardinality: VotingCardinality.SINGLE_CHOICE,
-  options: [],
+  id: 11,
+  name:
+      "Głosowanie ws. wyboru członków Komisji Prawno Rewizyjnej: kandydat(ka)",
+  cardinality: VotingCardinality.MULTIPLE_CHOICE,
+  options: [
+    VotingOption(id: 1, name: "Anna Winiarska"),
+    VotingOption(id: 2, name: "Marta Rutkowska"),
+    VotingOption(id: 3, name: "Bartosz Nurek"),
+    VotingOption(id: 4, name: "Dawid Krefta"),
+  ],
   majority: VotingMajority.ABSOLUTE,
   secrecy: false,
   status: VotingStatus.FINISHED,
   results: [
-    VotingResults(inFavor: 40, against: 35, hold: 2, wasSuccessful: true)
+    VotingResults(
+      inFavor: 40,
+      against: 35,
+      hold: 2,
+      wasSuccessful: false,
+      optionId: 1,
+    ),
+    VotingResults(
+      inFavor: 55,
+      against: 7,
+      hold: 3,
+      wasSuccessful: true,
+      optionId: 2,
+    ),
+    VotingResults(
+      inFavor: 10,
+      against: 41,
+      hold: 5,
+      wasSuccessful: false,
+      optionId: 3,
+    ),
+    VotingResults(
+      inFavor: 10,
+      against: 41,
+      hold: 5,
+      wasSuccessful: true,
+      optionId: 4,
+    ),
   ],
 );

@@ -17,7 +17,11 @@ class VoteButton extends StatelessWidget {
       onPressed: () {
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => locator.get<VotingsRepository>().activeVoting.cardinality == VotingCardinality.SINGLE_CHOICE ? VotePageSingleChoice() : VotePageMultipleChoices(),
+            builder: (context) =>
+                locator.get<VotingsRepository>().activeVoting.cardinality ==
+                        VotingCardinality.SINGLE_CHOICE
+                    ? VotePageSingleChoice()
+                    : VotePageMultipleChoices(),
           ),
         );
       },
