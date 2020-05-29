@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
@@ -28,10 +29,13 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final translations = Translations.of(context);
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: _isWidthThresholdExceeded(context)
+                ? CrossAxisAlignment.center
+                : CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
@@ -64,9 +68,13 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-        CommonGradientButton(
-          title: translations.login,
-          onPressed: () => _onLogin(context),
+        Container(
+          constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
+          alignment: Alignment.center,
+          child: CommonGradientButton(
+            title: translations.login,
+            onPressed: () => _onLogin(context),
+          ),
         )
       ],
     );
@@ -88,6 +96,9 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 }
+
+bool _isWidthThresholdExceeded(BuildContext context) =>
+    MediaQuery.of(context).size.width > Config.maxElementInAppWidth;
 
 class _InputForm extends StatefulWidget {
   final bool isValidationCorrect;
@@ -113,54 +124,62 @@ class __InputFormState extends State<_InputForm> {
   @override
   Widget build(BuildContext context) {
     final translations = Translations.of(context);
-    return Form(
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 8.0),
-            child: TextFormField(
+    return Container(
+      constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 100),
+      child: Form(
+        child: Column(
+          crossAxisAlignment: _isWidthThresholdExceeded(context)
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: 8.0),
+              child: TextFormField(
+                style: widget.isValidationCorrect
+                    ? null
+                    : TextStyle(color: Colors.red),
+                autocorrect: false,
+                autofocus: true,
+                controller: widget.loginController,
+                maxLines: 1,
+                decoration: InputDecoration(labelText: translations.username),
+                textInputAction: TextInputAction.next,
+                onChanged: (_) => widget.onInputChange(),
+                onFieldSubmitted: (_) {
+                  FocusScope.of(context).nextFocus();
+                },
+              ),
+            ),
+            TextFormField(
               style: widget.isValidationCorrect
                   ? null
                   : TextStyle(color: Colors.red),
               autocorrect: false,
-              autofocus: true,
-              controller: widget.loginController,
+              autofocus: false,
+              controller: widget.passwordController,
               maxLines: 1,
-              decoration: InputDecoration(labelText: translations.username),
-              textInputAction: TextInputAction.next,
+              obscureText: _isPasswordObscured,
+              onFieldSubmitted: (_) => widget.onSubmit(),
               onChanged: (_) => widget.onInputChange(),
-              onFieldSubmitted: (_) {
-                FocusScope.of(context).nextFocus();
-              },
-            ),
-          ),
-          TextFormField(
-            style: widget.isValidationCorrect
-                ? null
-                : TextStyle(color: Colors.red),
-            autocorrect: false,
-            autofocus: false,
-            controller: widget.passwordController,
-            maxLines: 1,
-            obscureText: _isPasswordObscured,
-            onFieldSubmitted: (_) => widget.onSubmit(),
-            onChanged: (_) => widget.onInputChange(),
-            decoration: InputDecoration(
-              labelText: translations.password,
-              suffix: IconButton(
-                icon: Icon(
-                  _isPasswordObscured ? Icons.visibility_off : Icons.visibility,
-                  color: Colors.black,
+              decoration: InputDecoration(
+                labelText: translations.password,
+                suffix: IconButton(
+                  icon: Icon(
+                    _isPasswordObscured
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordObscured = !_isPasswordObscured;
+                    });
+                  },
                 ),
-                onPressed: () {
-                  setState(() {
-                    _isPasswordObscured = !_isPasswordObscured;
-                  });
-                },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

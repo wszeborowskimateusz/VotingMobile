@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:math';
 
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:votingmobile/common/platform_svg/platform_svg.dart';
 
 /// Customable and attractive Switch button.
 /// Currently, you can't change the widget
@@ -167,18 +167,20 @@ class _RollingSwitchState extends State<RollingSwitch>
                       Center(
                         child: Opacity(
                           opacity: (1 - value).clamp(0.0, 1.0),
-                          child: SvgPicture.asset(
+                          child: PlatformSvg.asset(
                             widget.iconOffPath,
                             width: 35,
+                            height: 35,
                           ),
                         ),
                       ),
                       Center(
                         child: Opacity(
                           opacity: value.clamp(0.0, 1.0),
-                          child: SvgPicture.asset(
-                               widget.iconOnPath,
+                          child: PlatformSvg.asset(
+                            widget.iconOnPath,
                             width: 35,
+                            height: 35,
                           ),
                         ),
                       ),

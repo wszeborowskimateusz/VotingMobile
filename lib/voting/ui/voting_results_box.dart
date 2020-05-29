@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:votingmobile/common/config/config.dart';
+import 'package:votingmobile/common/platform_svg/platform_svg.dart';
 import 'package:votingmobile/voting/models/voting_results.dart';
 
 class VotingResultsBox extends StatelessWidget {
   static const double boxHeight = 150;
-  static const double _resultBadgeHeight = 80;
 
   final String votingName;
   final VotingResults votingResults;
@@ -19,6 +19,7 @@ class VotingResultsBox extends StatelessWidget {
     return Stack(
       children: <Widget>[
         Container(
+          constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
           margin: EdgeInsets.symmetric(horizontal: 20),
           height: boxHeight,
           decoration: BoxDecoration(
@@ -33,7 +34,7 @@ class VotingResultsBox extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0)
-                .copyWith(left: _resultBadgeHeight, right: 16.0),
+                .copyWith(left: _getBadgeHeight(context), right: 16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,6 +62,8 @@ class VotingResultsBox extends StatelessWidget {
   }
 }
 
+double _getBadgeHeight(context) => VotingResultsBox.boxHeight * 0.6;
+
 class _VotingNumericResults extends StatelessWidget {
   const _VotingNumericResults({
     @required this.votingResults,
@@ -86,7 +89,7 @@ class _VotingNumericResults extends StatelessWidget {
     return Row(children: <Widget>[
       Container(
           margin: EdgeInsets.only(right: 2.0, bottom: 4.0),
-          child: SvgPicture.asset(
+          child: PlatformSvg.asset(
             imagePath,
             height: 24,
           )),
@@ -104,15 +107,18 @@ class _ResultBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double badgeHeight = _getBadgeHeight(context);
     return Positioned(
       left: 0,
-      top: VotingResultsBox.boxHeight / 2 -
-          (VotingResultsBox._resultBadgeHeight / 2),
-      child: SvgPicture.asset(
+      top: VotingResultsBox.boxHeight / 2 - (badgeHeight / 2),
+      child: PlatformSvg.asset(
         votingResults.wasSuccessful
             ? "assets/images/successful.svg"
             : "assets/images/unsuccessful.svg",
-        height: VotingResultsBox._resultBadgeHeight,
+        height: badgeHeight,
+        width: badgeHeight,
+        // *
+        // MediaQuery.of(context).size.height,
       ),
     );
   }

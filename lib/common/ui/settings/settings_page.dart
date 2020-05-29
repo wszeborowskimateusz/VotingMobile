@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/backend/locale_repository.dart';
+import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
@@ -28,13 +29,16 @@ class _SettingPageState extends State<SettingPage> {
     final translations = Translations.of(context);
     return CommonRoute(
       title: translations.settings,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Divider(),
-          _buildLocaleSettings(context),
-          Divider(),
-        ],
+      child: Container(
+        constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            Divider(),
+            _buildLocaleSettings(context),
+            Divider(),
+          ],
+        ),
       ),
       bottomSection: userRepository.isLoggedIn
           ? CommonGradientButton(

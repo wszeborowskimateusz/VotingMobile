@@ -23,33 +23,39 @@ class VotingsHistoryListWidget extends StatelessWidget {
       );
     }
 
-    return Stack(children: [
-      if (historyVotings.isNotEmpty)
-        _VotingsHistory(historyVotings: historyVotings),
-      if (historyVotings.isEmpty)
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              child: Center(
-                child: Text(
-                  Translations.of(context).noVotingsHistory,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline4,
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        if (historyVotings.isNotEmpty)
+          _VotingsHistory(historyVotings: historyVotings),
+        if (historyVotings.isEmpty)
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                child: Center(
+                  child: Text(
+                    Translations.of(context).noVotingsHistory,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline4,
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      if (activeVoting != null)
-        Positioned(
-          bottom: 16,
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16.0),
-            child: VoteButton(),
+            ],
           ),
-        ),
-    ]);
+        if (activeVoting != null)
+          Positioned(
+            bottom: 0,
+            child: Container(
+              alignment: Alignment.center,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 16.0),
+                child: VoteButton(),
+              ),
+            ),
+          ),
+      ],
+    );
   }
 }
 
@@ -64,7 +70,7 @@ class _VotingsHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(bottom: 8.0, left: 16.0),
@@ -81,6 +87,7 @@ class _VotingsHistory extends StatelessWidget {
             itemBuilder: (context, index) {
               final Voting voting = historyVotings[index];
               return Container(
+                alignment: Alignment.center,
                 margin: const EdgeInsets.symmetric(vertical: 16.0).copyWith(
                     bottom: index == historyVotings.length - 1 ? 100 : 16),
                 child: voting.cardinality == VotingCardinality.MULTIPLE_CHOICE
