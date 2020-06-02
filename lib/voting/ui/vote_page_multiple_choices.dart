@@ -72,6 +72,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
                                 PageStorageKey(activeVoting.activeVoting.id),
                             enableInfiniteScroll: false,
                             enlargeCenterPage: false,
+                            viewportFraction: 1.0,
                             onPageChanged: (index, reason) {
                               setState(() {
                                 _current = index;
@@ -79,8 +80,10 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
                             }),
                       ),
                       DotsIndicator<VotingOption>(
-                          options: activeVoting.activeVoting.options,
-                          current: _current),
+                        options: activeVoting.activeVoting.options,
+                        current: _current,
+                        dotSize: 12.0,
+                      ),
                     ],
                   ),
                 ),

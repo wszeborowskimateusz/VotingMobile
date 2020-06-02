@@ -5,11 +5,13 @@ class DotsIndicator<T> extends StatefulWidget {
     Key key,
     @required this.options,
     @required int current,
+    this.dotSize = 8.0,
   })  : _current = current,
         super(key: key);
 
   final List<T> options;
   final int _current;
+  final double dotSize;
 
   @override
   _DotsIndicatorState<T> createState() => _DotsIndicatorState<T>();
@@ -25,8 +27,8 @@ class _DotsIndicatorState<T> extends State<DotsIndicator<T>>
       children: widget.options.map((option) {
         final int index = widget.options.indexOf(option);
         return Container(
-          width: 8.0,
-          height: 8.0,
+          width: widget.dotSize,
+          height: widget.dotSize,
           margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,

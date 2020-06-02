@@ -24,6 +24,7 @@ class CommonVotePage extends StatelessWidget {
         displayRightIcon: false,
         alignTitleCenter: true,
         title: activeVoting.activeVoting?.name ?? "",
+        removeContentHorizontalPadding: true,
         child: Container(
             constraints:
                 BoxConstraints(maxWidth: Config.maxElementInAppWidth),

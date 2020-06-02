@@ -8,6 +8,7 @@ class CommonRoute extends StatelessWidget {
   final bool displayRightIcon;
   final bool withSmallerFontSize;
   final bool alignTitleCenter;
+  final bool removeContentHorizontalPadding;
 
   const CommonRoute({
     @required this.title,
@@ -16,17 +17,19 @@ class CommonRoute extends StatelessWidget {
     this.displayRightIcon = false,
     this.withSmallerFontSize = false,
     this.alignTitleCenter = false,
+    this.removeContentHorizontalPadding = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final TextTheme theme = Theme.of(context).textTheme;
+    final EdgeInsets padding = const EdgeInsets.all(20.0).copyWith(top: 12);
     return CommonLayout(
       // null will get as a default - settings icon
       rightIcon: displayRightIcon ? null : Container(),
       body: _ExpandedWithScroll(
         topSection: Padding(
-          padding: const EdgeInsets.only(bottom: 16.0),
+          padding: padding,
           child: Text(
             title,
             style: (withSmallerFontSize ? theme.headline5 : theme.headline4)
@@ -34,8 +37,14 @@ class CommonRoute extends StatelessWidget {
             textAlign: alignTitleCenter ? TextAlign.center : TextAlign.left,
           ),
         ),
-        expandedSection: child,
-        bottomSection: bottomSection,
+        expandedSection: Padding(
+          padding: removeContentHorizontalPadding ? EdgeInsets.zero : padding,
+          child: child,
+        ),
+        bottomSection: Padding(
+          padding: padding,
+          child: bottomSection,
+        ),
       ),
     );
   }
@@ -58,23 +67,20 @@ class _ExpandedWithScroll extends StatelessWidget {
             constraints: BoxConstraints(
                 minHeight: constraint.maxHeight, minWidth: constraint.maxWidth),
             child: IntrinsicHeight(
-              child: Padding(
-                padding: const EdgeInsets.all(20.0).copyWith(top: 12),
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          if (topSection != null) topSection,
-                          if (expandedSection != null)
-                            Expanded(child: expandedSection),
-                        ],
-                      ),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        if (topSection != null) topSection,
+                        if (expandedSection != null)
+                          Expanded(child: expandedSection),
+                      ],
                     ),
-                    if (bottomSection != null) bottomSection,
-                  ],
-                ),
+                  ),
+                  if (bottomSection != null) bottomSection,
+                ],
               ),
             ),
           ),
