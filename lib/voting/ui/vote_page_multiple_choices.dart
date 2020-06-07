@@ -43,8 +43,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
           activeVoting.activeVoting == null
               ? Center(child: CircularProgressIndicator())
               : CommonVotePage(
-                  bottomButtonOnPressed:
-                      _getVottedAmount == 0 ? null : _onVoteButtonPressed,
+                  bottomButtonOnPressed: _onVoteButtonPressed,
                   votingOptions: Column(
                     children: <Widget>[
                       CarouselSlider.builder(

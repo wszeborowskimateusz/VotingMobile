@@ -36,10 +36,17 @@ class _CustomRadioGroupWidgetState<T> extends State<CustomRadioGroupWidget<T>> {
           widget.radioList[index],
           onTap: () {
             setState(() {
-              widget.radioList.forEach((element) => element.isSelected = false);
-              widget.radioList[index].isSelected = true;
-              _selectedValue = widget.radioList[index].value;
-              _publishSelection(_selectedValue);
+              if (widget.radioList[index].isSelected == true) {
+                widget.radioList[index].isSelected = false;
+                _selectedValue = null;
+                _publishSelection(_selectedValue);
+              } else {
+                widget.radioList
+                    .forEach((element) => element.isSelected = false);
+                widget.radioList[index].isSelected = true;
+                _selectedValue = widget.radioList[index].value;
+                _publishSelection(_selectedValue);
+              }
             });
           },
         );
