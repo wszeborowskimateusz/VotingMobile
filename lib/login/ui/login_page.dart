@@ -33,9 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       children: <Widget>[
         Expanded(
           child: Column(
-            crossAxisAlignment: _isWidthThresholdExceeded(context)
-                ? CrossAxisAlignment.center
-                : CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(bottom: 16.0),
@@ -59,12 +57,14 @@ class _LoginPageState extends State<LoginPage> {
                   _isValidationCorrect = true;
                 }),
                 onSubmit: () => _onLogin(context),
+                bottomSection: !_isValidationCorrect
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0, top: 16.0),
+                        child:
+                            Text(translations.loginIncorrectUsernameOrPassword),
+                      )
+                    : null,
               ),
-              if (!_isValidationCorrect)
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(translations.loginIncorrectUsernameOrPassword),
-                ),
             ],
           ),
         ),
@@ -80,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onLogin(BuildContext context) async {
+  void _onLogin(BuildContext context) {
     final String login = _loginController.text;
     final String password = _passwordController.text;
 
@@ -97,15 +97,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-bool _isWidthThresholdExceeded(BuildContext context) =>
-    MediaQuery.of(context).size.width > Config.maxElementInAppWidth;
-
 class _InputForm extends StatefulWidget {
   final bool isValidationCorrect;
   final VoidCallback onInputChange;
   final VoidCallback onSubmit;
   final TextEditingController loginController;
   final TextEditingController passwordController;
+  final Widget bottomSection;
 
   const _InputForm({
     @required this.isValidationCorrect,
@@ -113,6 +111,7 @@ class _InputForm extends StatefulWidget {
     @required this.onSubmit,
     @required this.loginController,
     @required this.passwordController,
+    this.bottomSection,
   });
   @override
   __InputFormState createState() => __InputFormState();
@@ -128,9 +127,7 @@ class __InputFormState extends State<_InputForm> {
       constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 100),
       child: Form(
         child: Column(
-          crossAxisAlignment: _isWidthThresholdExceeded(context)
-              ? CrossAxisAlignment.center
-              : CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
@@ -178,6 +175,7 @@ class __InputFormState extends State<_InputForm> {
                 ),
               ),
             ),
+            if (widget.bottomSection != null) widget.bottomSection,
           ],
         ),
       ),

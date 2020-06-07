@@ -51,6 +51,7 @@ class _HomePageState extends State<HomePage> {
       ],
       supportedLocales: supportedLocales,
       locale: selectedLocale,
+      // TODO: Change this name
       title: 'Flutter Demo',
       theme: ThemeData(
         textTheme: Theme.of(context).textTheme.apply(
