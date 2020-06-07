@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:votingmobile/common/ui/common_layout.dart';
 import 'package:votingmobile/localization/translations.dart';
+import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/models/voting.dart';
 import 'package:votingmobile/voting/ui/multiple_choice_voting_results_box.dart';
 import 'package:votingmobile/voting/ui/vote_button.dart';
@@ -7,54 +10,90 @@ import 'package:votingmobile/voting/ui/voting_results_box.dart';
 
 class VotingsHistoryListWidget extends StatelessWidget {
   final List<Voting> historyVotings;
-  final Voting activeVoting;
 
-  VotingsHistoryListWidget({@required this.historyVotings, this.activeVoting});
+  const VotingsHistoryListWidget({@required this.historyVotings});
 
   @override
   Widget build(BuildContext context) {
-    if (activeVoting == null && historyVotings.isEmpty) {
-      return Center(
-        child: Text(
-          Translations.of(context).noVotings,
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headline4,
-        ),
-      );
-    }
+    return Consumer<ActiveVoting>(
+      builder: (context, activeVotingModel, _) => _buildWidget(
+        context,
+        child: activeVotingModel.activeVoting == null && historyVotings.isEmpty
+            ? _NoActiveVotingNoVotingsHistory()
+            : historyVotings.isEmpty
+                ? _NoVotingsHistory()
+                : _VotingsHistory(historyVotings: historyVotings),
+      ),
+    );
+  }
 
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        if (historyVotings.isNotEmpty)
-          _VotingsHistory(historyVotings: historyVotings),
-        if (historyVotings.isEmpty)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              Expanded(
-                child: Center(
-                  child: Text(
-                    Translations.of(context).noVotingsHistory,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline4,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        if (activeVoting != null)
-          Positioned(
-            bottom: 0,
-            child: Container(
-              alignment: Alignment.center,
+  Widget _buildWidget(BuildContext context, {@required Widget child}) {
+    return CommonLayout(
+      body: Consumer<ActiveVoting>(
+        builder: (context, activeVotingModel, _) => Column(
+          children: [
+            _PageTitle(),
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 16.0),
-                child: VoteButton(),
+                padding: const EdgeInsets.all(16.0),
+                child: child,
               ),
             ),
+            if (activeVotingModel.activeVoting != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: VoteButton(),
+              ),
+          ],
+        ),
+      ),
+      displayLeftIcon: false,
+    );
+  }
+}
+
+class _NoActiveVotingNoVotingsHistory extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        Translations.of(context).noVotings,
+        textAlign: TextAlign.center,
+        style: Theme.of(context).textTheme.headline4,
+      ),
+    );
+  }
+}
+
+class _NoVotingsHistory extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        Expanded(
+          child: Center(
+            child: Text(
+              Translations.of(context).noVotingsHistory,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline4,
+            ),
           ),
+        ),
       ],
+    );
+  }
+}
+
+class _PageTitle extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      Translations.of(context).votingsHistory,
+      style: Theme.of(context)
+          .textTheme
+          .headline4
+          .copyWith(fontWeight: FontWeight.bold),
     );
   }
 }
@@ -69,39 +108,22 @@ class _VotingsHistory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8.0, left: 16.0),
-          child: Text(
-            Translations.of(context).votingsHistory,
-            style: Theme.of(context)
-                .textTheme
-                .headline4
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              final Voting voting = historyVotings[index];
-              return Container(
-                alignment: Alignment.center,
-                margin: const EdgeInsets.symmetric(vertical: 16.0).copyWith(
-                    bottom: index == historyVotings.length - 1 ? 100 : 16),
-                child: voting.cardinality == VotingCardinality.MULTIPLE_CHOICE
-                    ? MultipleChoiceVotingResultsBox(voting: voting)
-                    : VotingResultsBox(
-                        votingName: voting.name,
-                        votingResults: voting.results[0],
-                      ),
-              );
-            },
-            itemCount: historyVotings.length,
-          ),
-        ),
-      ],
+    return ListView.builder(
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        final Voting voting = historyVotings[index];
+        return Container(
+          alignment: Alignment.center,
+          margin: const EdgeInsets.symmetric(vertical: 16.0),
+          child: voting.cardinality == VotingCardinality.MULTIPLE_CHOICE
+              ? MultipleChoiceVotingResultsBox(voting: voting)
+              : VotingResultsBox(
+                  votingName: voting.name,
+                  votingResults: voting.results[0],
+                ),
+        );
+      },
+      itemCount: historyVotings.length,
     );
   }
 }

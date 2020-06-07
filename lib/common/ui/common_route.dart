@@ -6,6 +6,7 @@ class CommonRoute extends StatelessWidget {
   final Widget bottomSection;
   final String title;
   final bool displayRightIcon;
+    final bool displayLeftIcon;
   final bool withSmallerFontSize;
   final bool alignTitleCenter;
   final bool removeContentHorizontalPadding;
@@ -15,6 +16,7 @@ class CommonRoute extends StatelessWidget {
     this.bottomSection,
     @required this.child,
     this.displayRightIcon = false,
+    this.displayLeftIcon = true,
     this.withSmallerFontSize = false,
     this.alignTitleCenter = false,
     this.removeContentHorizontalPadding = false,
@@ -27,6 +29,7 @@ class CommonRoute extends StatelessWidget {
     return CommonLayout(
       // null will get as a default - settings icon
       rightIcon: displayRightIcon ? null : Container(),
+      displayLeftIcon: displayLeftIcon,
       body: _ExpandedWithScroll(
         topSection: Padding(
           padding: padding,

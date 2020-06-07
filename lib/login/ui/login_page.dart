@@ -3,6 +3,7 @@ import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
+import 'package:votingmobile/common/ui/common_layout.dart';
 import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
@@ -28,55 +29,62 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final translations = Translations.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: <Widget>[
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  translations.login,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline3
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
+    return CommonLayout(
+      displayLeftIcon: false,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                      translations.login,
+                      style: Theme.of(context)
+                          .textTheme
+                          .headline3
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Text(translations.loginDisclaimer),
+                  ),
+                  _InputForm(
+                    loginController: _loginController,
+                    passwordController: _passwordController,
+                    isValidationCorrect: _isValidationCorrect,
+                    onInputChange: () => setState(() {
+                      _isValidationCorrect = true;
+                    }),
+                    onSubmit: () => _onLogin(context),
+                    bottomSection: !_isValidationCorrect
+                        ? Padding(
+                            padding:
+                                const EdgeInsets.only(bottom: 8.0, top: 16.0),
+                            child: Text(
+                                translations.loginIncorrectUsernameOrPassword),
+                          )
+                        : null,
+                  ),
+                ],
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(translations.loginDisclaimer),
+            ),
+            Container(
+              constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
+              alignment: Alignment.center,
+              child: CommonGradientButton(
+                title: translations.login,
+                onPressed: () => _onLogin(context),
               ),
-              _InputForm(
-                loginController: _loginController,
-                passwordController: _passwordController,
-                isValidationCorrect: _isValidationCorrect,
-                onInputChange: () => setState(() {
-                  _isValidationCorrect = true;
-                }),
-                onSubmit: () => _onLogin(context),
-                bottomSection: !_isValidationCorrect
-                    ? Padding(
-                        padding: const EdgeInsets.only(bottom: 8.0, top: 16.0),
-                        child:
-                            Text(translations.loginIncorrectUsernameOrPassword),
-                      )
-                    : null,
-              ),
-            ],
-          ),
+            )
+          ],
         ),
-        Container(
-          constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
-          alignment: Alignment.center,
-          child: CommonGradientButton(
-            title: translations.login,
-            onPressed: () => _onLogin(context),
-          ),
-        )
-      ],
+      ),
     );
   }
 
