@@ -5,7 +5,6 @@ import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/models/voting.dart';
 import 'package:votingmobile/voting/ui/multiple_choice_voting_results_box.dart';
-import 'package:votingmobile/voting/ui/vote_button.dart';
 import 'package:votingmobile/voting/ui/voting_results_box.dart';
 
 class VotingsHistoryListWidget extends StatelessWidget {
@@ -29,21 +28,17 @@ class VotingsHistoryListWidget extends StatelessWidget {
 
   Widget _buildWidget(BuildContext context, {@required Widget child}) {
     return CommonLayout(
+      displayVoteSheet: true,
       body: Consumer<ActiveVoting>(
         builder: (context, activeVotingModel, _) => Column(
           children: [
             _PageTitle(),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0).copyWith(bottom: 60.0),
                 child: child,
               ),
             ),
-            if (activeVotingModel.activeVoting != null)
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: VoteButton(),
-              ),
           ],
         ),
       ),

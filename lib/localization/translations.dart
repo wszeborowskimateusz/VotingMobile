@@ -60,6 +60,9 @@ class Translations implements TranslationStrings {
   String get voteCancel => locator.get<TranslationStrings>().voteCancel;
 
   String getTranslationForVoteType(VoteType voteType) {
+    if(voteType == null) {
+      return emptyVote;
+    }
     switch (voteType) {
       case VoteType.FOR:
         return voteInFavor;
@@ -95,4 +98,17 @@ class Translations implements TranslationStrings {
   @override
   String get noActiveVotingDisclaimer =>
       locator.get<TranslationStrings>().noActiveVotingDisclaimer;
+
+  @override
+  String get goToVoting => locator.get<TranslationStrings>().goToVoting;
+
+  @override
+  String get activeVoting => locator.get<TranslationStrings>().activeVoting;
+
+  @override
+  String get emptyVote => locator.get<TranslationStrings>().emptyVote;
+
+  @override
+  String get noCurrentActiveVotingDisclaimer =>
+      locator.get<TranslationStrings>().noCurrentActiveVotingDisclaimer;
 }

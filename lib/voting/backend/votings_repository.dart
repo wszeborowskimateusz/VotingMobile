@@ -238,7 +238,7 @@ final List<Voting> _testVotings = [
 final Voting _testActiveVoting = Voting(
   id: 11,
   name:
-      "Głosowanie ws. wyboru członków Komisji Prawno Rewizyjnej: kandydat(ka)",
+      "Głosowanie ws. wyboru członków Komisji Prawno Rewizyjnej: kandydat(ka) I tyle",
   cardinality: VotingCardinality.MULTIPLE_CHOICE,
   options: [
     VotingOption(id: 1, name: "Anna Winiarska"),

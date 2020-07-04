@@ -27,11 +27,8 @@ class _CustomRadioGroupWidgetState<T> extends State<CustomRadioGroupWidget<T>> {
   }
 
   Widget _buildRoundRadioGroup() {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: widget.radioList.length,
-      itemBuilder: (BuildContext context, int index) {
+    return Column(
+      children: List.generate(widget.radioList.length, (index) {
         return RoundRadioItem<T>(
           widget.radioList[index],
           onTap: () {
@@ -50,7 +47,7 @@ class _CustomRadioGroupWidgetState<T> extends State<CustomRadioGroupWidget<T>> {
             });
           },
         );
-      },
+      }),
     );
   }
 
@@ -102,12 +99,9 @@ class RoundRadioItem<T> extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.grey,
-              blurRadius: 10.0, // has the effect of softening the shadow
-              spreadRadius: 3.0, // has the effect of extending the shadow
-              offset: Offset(
-                5.0, // horizontal, move right 10
-                5.0, // vertical, move down 10
-              ),
+              blurRadius: 10.0,
+              spreadRadius: 3.0,
+              offset: Offset(5.0, 5.0),
             )
           ],
           color: _item.isSelected ? _item.selectedColor : Colors.white,

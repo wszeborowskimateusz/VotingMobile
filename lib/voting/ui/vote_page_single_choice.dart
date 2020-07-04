@@ -30,9 +30,7 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
         holdTranslation: translations.voteHold,
         onValueChanged: _onVoteOptionChanged,
       ),
-      bottomButtonOnPressed: _selectedSingleOption == null
-          ? null
-          : () => _onVoteButtonPressed(context),
+      bottomButtonOnPressed: () => _onVoteButtonPressed(context),
     );
   }
 
@@ -40,8 +38,10 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
     final translations = Translations.of(context);
     showConfirmPopup(
       context: context,
-      title: translations.singleVoteInfo(
-          translations.getTranslationForVoteType(_selectedSingleOption)),
+      title: _selectedSingleOption == null
+          ? translations.emptyVote
+          : translations.singleVoteInfo(
+              translations.getTranslationForVoteType(_selectedSingleOption)),
       onConfirm: (innerContext) {
         final activeVoting = Provider.of<ActiveVoting>(context, listen: false);
 
@@ -56,11 +56,13 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
           return;
         }
 
-        applyBlockade(context,
-            future: activeVoting.vote([_selectedSingleOption]),
-            onFutureResolved: (_) {
-          navigateToHomePage(context);
-        });
+        applyBlockade(
+          context,
+          future: activeVoting.vote([_selectedSingleOption]),
+          onFutureResolved: (_) {
+            navigateToHomePage(context);
+          },
+        );
       },
     );
   }

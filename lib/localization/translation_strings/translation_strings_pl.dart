@@ -68,4 +68,17 @@ class TranslationStringsPl implements TranslationStrings {
   @override
   String get noActiveVotingDisclaimer =>
       "Głosowanie, na które próbujesz zagłosować nie jest już aktywne";
+
+  @override
+  String get goToVoting => "Przejdź go głosowania!";
+
+  @override
+  String get activeVoting => "Aktywne Głosowanie";
+
+  @override
+  String get emptyVote => "Czy na pewno chcesz oddać pusty głos ?";
+
+  @override
+  String get noCurrentActiveVotingDisclaimer =>
+      "Obecnie nie trwa żadne głosowanie lub już zagłosowałeś";
 }

@@ -68,4 +68,17 @@ class TranslationStringsEn implements TranslationStrings {
   @override
   String get noActiveVotingDisclaimer =>
       "The voting you are trying to vote for is no longer active";
+
+  @override
+  String get goToVoting => "Go to Voting!";
+
+  @override
+  String get activeVoting => "Active Voting";
+
+  @override
+  String get emptyVote => "Are you sure you want to give an empty vote ?";
+
+  @override
+  String get noCurrentActiveVotingDisclaimer =>
+      "Curently there is no active voting or you have already voted";
 }

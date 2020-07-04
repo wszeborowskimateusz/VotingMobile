@@ -49,4 +49,12 @@ abstract class TranslationStrings {
   String get logout;
 
   String get noActiveVotingDisclaimer;
+
+  String get goToVoting;
+
+  String get activeVoting;
+
+  String get emptyVote;
+
+  String get noCurrentActiveVotingDisclaimer;
 }

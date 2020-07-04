@@ -57,26 +57,23 @@ class _VotingOptionsState extends State<VotingOptions>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Container(
-      height: MediaQuery.of(context).size.height / 2,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          if (widget.optionName != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Text(
-                widget.optionName,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline5,
-              ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        if (widget.optionName != null)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Text(
+              widget.optionName,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.headline5,
             ),
-          CustomRadioGroupWidget<VoteType>(
-            onChanged: widget.onValueChanged,
-            radioList: incidentTypeList,
           ),
-        ],
-      ),
+        CustomRadioGroupWidget<VoteType>(
+          onChanged: widget.onValueChanged,
+          radioList: incidentTypeList,
+        ),
+      ],
     );
   }
 
