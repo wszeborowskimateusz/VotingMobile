@@ -6,6 +6,7 @@ import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_route.dart';
 import 'package:votingmobile/common/ui/settings/rolling_switch.dart';
+import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
@@ -44,8 +45,10 @@ class _SettingPageState extends State<SettingPage> {
           ? CommonGradientButton(
               title: translations.logout,
               onPressed: () {
-                userRepository.logout();
-                navigateToHomePage(context);
+                applyBlockade(context, future: userRepository.logout(),
+                    onFutureResolved: (_) {
+                  navigateToHomePage(context);
+                });
               },
             )
           : null,
