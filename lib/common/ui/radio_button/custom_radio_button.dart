@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:votingmobile/common/platform_svg/platform_svg.dart';
 import 'package:votingmobile/common/ui/radio_button/radio_model.dart';
 
 class CustomRadioGroupWidget<T> extends StatefulWidget {
@@ -78,7 +77,7 @@ class RoundRadioItem<T> extends StatelessWidget {
               _item.assetPath != null
                   ? Padding(
                       padding: const EdgeInsets.only(right: 8.0),
-                      child: PlatformSvg.asset(
+                      child: Image.asset(
                         _item.assetPath,
                         height: 24,
                         width: 24,

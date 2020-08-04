@@ -71,8 +71,8 @@ class _SettingPageState extends State<SettingPage> {
           textOff: 'Polski',
           colorOn: Colors.blueAccent[700],
           colorOff: Colors.redAccent[700],
-          iconOnPath: "assets/images/gb.svg",
-          iconOffPath: "assets/images/pl.svg",
+          iconOnPath: "assets/images/gb.png",
+          iconOffPath: "assets/images/pl.png",
           textSize: 16.0,
           onChanged: (bool state) {
             if (!initialized) {

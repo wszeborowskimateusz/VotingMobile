@@ -32,21 +32,21 @@ class _VotingOptionsState extends State<VotingOptions>
     incidentTypeList = [
       RadioModel<VoteType>(
         false,
-        "assets/images/successful.svg",
+        "assets/images/successful.png",
         widget.inFavorTranslation,
         Color(0xff00B000),
         VoteType.FOR,
       ),
       RadioModel<VoteType>(
         false,
-        "assets/images/unsuccessful.svg",
+        "assets/images/unsuccessful.png",
         widget.againstTranslation,
         Color(0xffC00000),
         VoteType.AGAINST,
       ),
       RadioModel<VoteType>(
         false,
-        "assets/images/hold.svg",
+        "assets/images/hold.png",
         widget.holdTranslation,
         Colors.blueAccent,
         VoteType.HOLD,
