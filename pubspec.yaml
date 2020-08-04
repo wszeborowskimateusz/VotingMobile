@@ -14,7 +14,7 @@ description: Mobile version of voting app
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -26,11 +26,9 @@ dependencies:
   provider: ^4.1.2
   lite_rolling_switch: ^0.1.1
   shared_preferences: ^0.5.7+2
-  flutter_svg: ^0.17.4
   carousel_slider: ^2.1.0
   flutter_sequence_animation: ^3.0.1
   sliding_sheet: ^0.3.5
-  flutter_secure_storage: ^3.3.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,13 +38,11 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -54,14 +50,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-   - assets/images/
-
+    - assets/images/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

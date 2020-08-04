@@ -1,19 +1,20 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
   static const String _tokenStorageKey = "api_token";
-  final storage = FlutterSecureStorage();
 
   Future<void> init() async {
     await _getTokenFromStorage();
   }
 
   Future<void> _getTokenFromStorage() async {
-    _token = await storage.read(key: _tokenStorageKey);
+    final storage = await SharedPreferences.getInstance();
+    _token = storage.getString(_tokenStorageKey);
   }
 
   Future<void> _saveTokenToStorage(String token) async {
-    await storage.write(key: _tokenStorageKey, value: token);
+    final storage = await SharedPreferences.getInstance();
+    await storage.setString(_tokenStorageKey, token);
   }
 
   String _token;
@@ -31,7 +32,8 @@ class UserRepository {
   }
 
   Future<void> logout() async {
+    final storage = await SharedPreferences.getInstance();
     _token = null;
-    await storage.delete(key: _tokenStorageKey);
+    await storage.remove(_tokenStorageKey);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/config/config.dart';
-import 'package:votingmobile/common/platform_svg/platform_svg.dart';
 import 'package:votingmobile/voting/models/voting_results.dart';
 
 class VotingResultsBox extends StatelessWidget {
@@ -77,10 +76,10 @@ class _VotingNumericResults extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        _buildResultInfo("assets/images/successful.svg", votingResults.inFavor),
+        _buildResultInfo("assets/images/successful.png", votingResults.inFavor),
         _buildResultInfo(
-            "assets/images/unsuccessful.svg", votingResults.against),
-        _buildResultInfo("assets/images/hold.svg", votingResults.hold),
+            "assets/images/unsuccessful.png", votingResults.against),
+        _buildResultInfo("assets/images/hold.png", votingResults.hold),
       ],
     );
   }
@@ -89,7 +88,7 @@ class _VotingNumericResults extends StatelessWidget {
     return Row(children: <Widget>[
       Container(
           margin: EdgeInsets.only(right: 2.0, bottom: 4.0),
-          child: PlatformSvg.asset(
+          child: Image.asset(
             imagePath,
             height: 24,
           )),
@@ -111,14 +110,12 @@ class _ResultBadge extends StatelessWidget {
     return Positioned(
       left: 0,
       top: VotingResultsBox.boxHeight / 2 - (badgeHeight / 2),
-      child: PlatformSvg.asset(
+      child: Image.asset(
         votingResults.wasSuccessful
-            ? "assets/images/successful.svg"
-            : "assets/images/unsuccessful.svg",
+            ? "assets/images/successful.png"
+            : "assets/images/unsuccessful.png",
         height: badgeHeight,
         width: badgeHeight,
-        // *
-        // MediaQuery.of(context).size.height,
       ),
     );
   }
