@@ -8,6 +8,8 @@ import 'package:votingmobile/common/ui/dots_indicator.dart';
 import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
+import 'package:votingmobile/voting/models/user_vote.dart';
+import 'package:votingmobile/voting/models/user_votes.dart';
 import 'package:votingmobile/voting/models/vote_type.dart';
 import 'package:votingmobile/voting/models/voting_option.dart';
 import 'package:votingmobile/voting/ui/common_vote_page.dart';
@@ -21,19 +23,19 @@ class VotePageMultipleChoices extends StatefulWidget {
 
 class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
   final VotingsRepository votingsRepository = locator.get();
-  List<VoteType> _selectedMultipleOptions;
+  List<UserVote> _selectedMultipleOptions;
   int _current = 0;
 
   @override
   void initState() {
     super.initState();
-    _selectedMultipleOptions = List<VoteType>(
-      Provider.of<ActiveVoting>(context, listen: false)
-              .activeVoting
-              ?.options
-              ?.length ??
-          0,
-    );
+    _selectedMultipleOptions = Provider.of<ActiveVoting>(context, listen: false)
+            .activeVoting
+            ?.options
+            ?.map((VotingOption option) =>
+                UserVote(optionId: option.id, vote: VoteType.NO_VOTE))
+            ?.toList() ??
+        [];
   }
 
   @override
@@ -78,7 +80,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
             againstTranslation: translations.voteAgainst,
             holdTranslation: translations.voteHold,
             onValueChanged: (value) =>
-                getValueForMultipleSelection(index, value),
+                getValueForMultipleSelection(index, value, option.id),
             optionName: option.name,
           ),
         );
@@ -100,9 +102,10 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
     );
   }
 
-  void getValueForMultipleSelection(int index, VoteType value) {
+  void getValueForMultipleSelection(int index, VoteType value, int optionId) {
     setState(() {
-      _selectedMultipleOptions[index] = value;
+      _selectedMultipleOptions[index] =
+          UserVote(optionId: optionId, vote: value);
     });
   }
 
@@ -119,7 +122,8 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
         // Remove the dialog
         Navigator.pop(innerContext);
         applyBlockade(context,
-            future: activeVoting.vote(_selectedMultipleOptions),
+            future:
+                activeVoting.vote(UserVotes(votes: _selectedMultipleOptions)),
             onFutureResolved: (_) {
           navigateToHomePage(context);
         });

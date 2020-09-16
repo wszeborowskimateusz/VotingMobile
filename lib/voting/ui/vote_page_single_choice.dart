@@ -6,6 +6,8 @@ import 'package:votingmobile/common/ui/common_popup.dart';
 import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
+import 'package:votingmobile/voting/models/user_vote.dart';
+import 'package:votingmobile/voting/models/user_votes.dart';
 import 'package:votingmobile/voting/models/vote_type.dart';
 import 'package:votingmobile/voting/ui/common_vote_page.dart';
 import 'package:votingmobile/voting/ui/voting_options.dart';
@@ -58,7 +60,8 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
 
         applyBlockade(
           context,
-          future: activeVoting.vote([_selectedSingleOption]),
+          future: activeVoting
+              .vote(UserVotes(votes: [UserVote(vote: _selectedSingleOption)])),
           onFutureResolved: (_) {
             navigateToHomePage(context);
           },

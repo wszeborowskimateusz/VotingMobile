@@ -1,6 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'voting_results.g.dart';
+
+@JsonSerializable(createToJson: false)
 class VotingResults extends Equatable {
   final int inFavor;
   final int against;
@@ -15,6 +19,8 @@ class VotingResults extends Equatable {
     @required this.wasSuccessful,
     this.optionId,
   });
+
+  factory VotingResults.fromJson(dynamic json) => _$VotingResultsFromJson(json);
 
   @override
   List<Object> get props => [inFavor, against, hold, wasSuccessful, optionId];

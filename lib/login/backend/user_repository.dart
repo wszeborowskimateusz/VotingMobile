@@ -1,39 +1,26 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:votingmobile/common/http/http_client.dart';
+import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/login/backend/user_authentication_api.dart';
+import 'package:votingmobile/login/dto/user_credentials.dart';
 
 class UserRepository {
-  static const String _tokenStorageKey = "api_token";
+  final UserAuthenticationApi _userAuthenticationApi = locator.get();
+  final CommonHttpClient _httpClient = locator.get();
 
-  Future<void> init() async {
-    await _getTokenFromStorage();
-  }
-
-  Future<void> _getTokenFromStorage() async {
-    final storage = await SharedPreferences.getInstance();
-    _token = storage.getString(_tokenStorageKey);
-  }
-
-  Future<void> _saveTokenToStorage(String token) async {
-    final storage = await SharedPreferences.getInstance();
-    await storage.setString(_tokenStorageKey, token);
-  }
-
-  String _token;
-
-  bool get isLoggedIn => _token != null;
+  bool get isLoggedIn => _httpClient.token != null;
 
   // Returns if operation was successful or not
   Future<bool> login(String username, String password) async {
-    if (username.isNotEmpty && password == "123") {
-      _token = "secretToken";
-      await _saveTokenToStorage(_token);
+    return _userAuthenticationApi
+        .login(UserCredentials(login: username, password: password))
+        .then((token) {
+      _httpClient.updateToken(token);
       return true;
-    }
-    return false;
+    }).catchError((_) => false);
   }
 
   Future<void> logout() async {
-    final storage = await SharedPreferences.getInstance();
-    _token = null;
-    await storage.remove(_tokenStorageKey);
+    await _userAuthenticationApi.logout();
+    await _httpClient.updateToken(null);
   }
 }

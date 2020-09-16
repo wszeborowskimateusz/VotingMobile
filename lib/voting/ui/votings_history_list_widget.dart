@@ -4,6 +4,7 @@ import 'package:votingmobile/common/ui/common_layout.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/models/voting.dart';
+import 'package:votingmobile/voting/models/voting_cardinality.dart';
 import 'package:votingmobile/voting/ui/multiple_choice_voting_results_box.dart';
 import 'package:votingmobile/voting/ui/voting_results_box.dart';
 

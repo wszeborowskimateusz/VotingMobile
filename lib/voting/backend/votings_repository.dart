@@ -3,13 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
-import 'package:votingmobile/voting/models/vote_type.dart';
+import 'package:votingmobile/voting/backend/votings_api.dart';
+import 'package:votingmobile/voting/models/user_votes.dart';
 import 'package:votingmobile/voting/models/voting.dart';
+import 'package:votingmobile/voting/models/voting_cardinality.dart';
+import 'package:votingmobile/voting/models/voting_majority.dart';
 import 'package:votingmobile/voting/models/voting_option.dart';
 import 'package:votingmobile/voting/models/voting_results.dart';
+import 'package:votingmobile/voting/models/voting_status.dart';
 
 class ActiveVoting extends ChangeNotifier {
-  Voting _activeVoting = _testActiveVoting;
+  final VotingsApi _votingsApi = locator.get();
+
+  Voting _activeVoting;
   Timer _activeActiveVotingTimer;
 
   ActiveVoting() {
@@ -24,26 +30,24 @@ class ActiveVoting extends ChangeNotifier {
     super.dispose();
   }
 
-  void _startFetchingActiveVoting() {
-    _activeActiveVotingTimer = Timer.periodic(Duration(seconds: 30), (_) {
+  void _startFetchingActiveVoting() async {
+    _activeVoting = await _votingsApi.getActiveVoting();
+    _activeActiveVotingTimer = Timer.periodic(Duration(seconds: 30), (_) async {
       if (locator.get<UserRepository>().isLoggedIn) {
-        // TODO: Fetch it from the server
-        // TODO: Handle situation when user has already voted in a specific voting
-        if (_activeVoting != _testActiveVoting) {
-          _activeVoting = _testActiveVoting;
+        final Voting newActiveVoting = await _votingsApi.getActiveVoting();
+        if (_activeVoting != newActiveVoting) {
+          _activeVoting = newActiveVoting;
           notifyListeners();
         }
       }
     });
   }
 
-  // TODO: Vote object should probably be more complicated - id, options id
-  Future<void> vote(List<VoteType> votes) async {
+  Future<void> vote(UserVotes votes) async {
     // TODO: Think of a situation when we send a vote but the voting is already finished
     assert(
         _activeVoting != null, "You can only vote when some voting is active");
-    // TODO: Send a real request
-    await Future.delayed(Duration(seconds: 5));
+    await _votingsApi.vote(_activeVoting.id, votes);
     _activeVoting = null;
     notifyListeners();
   }
@@ -234,49 +238,3 @@ final List<Voting> _testVotings = [
     ],
   ),
 ];
-
-final Voting _testActiveVoting = Voting(
-  id: 11,
-  name:
-      "Głosowanie ws. wyboru członków Komisji Prawno Rewizyjnej: kandydat(ka) I tyle",
-  cardinality: VotingCardinality.MULTIPLE_CHOICE,
-  options: [
-    VotingOption(id: 1, name: "Anna Winiarska"),
-    VotingOption(id: 2, name: "Marta Rutkowska"),
-    VotingOption(id: 3, name: "Bartosz Nurek"),
-    VotingOption(id: 4, name: "Dawid Krefta"),
-  ],
-  majority: VotingMajority.ABSOLUTE,
-  secrecy: false,
-  status: VotingStatus.FINISHED,
-  results: [
-    VotingResults(
-      inFavor: 40,
-      against: 35,
-      hold: 2,
-      wasSuccessful: false,
-      optionId: 1,
-    ),
-    VotingResults(
-      inFavor: 55,
-      against: 7,
-      hold: 3,
-      wasSuccessful: true,
-      optionId: 2,
-    ),
-    VotingResults(
-      inFavor: 10,
-      against: 41,
-      hold: 5,
-      wasSuccessful: false,
-      optionId: 3,
-    ),
-    VotingResults(
-      inFavor: 10,
-      against: 41,
-      hold: 5,
-      wasSuccessful: true,
-      optionId: 4,
-    ),
-  ],
-);
