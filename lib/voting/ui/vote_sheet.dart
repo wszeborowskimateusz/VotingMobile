@@ -72,36 +72,44 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final translations = Translations.of(context);
-    return GestureDetector(
-      onTap: () => customTitle != null ? null : _onTap(context),
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xff4169E1), Color(0xff20b2aa)],
+    return Wrap(children: [
+      Container(
+        alignment: Alignment.bottomCenter,
+        child: GestureDetector(
+          onTap: () => customTitle != null ? null : _onTap(context),
+          child: Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xff4169E1), Color(0xff20b2aa)],
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                )),
+            constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
+            height: 56,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Text(
+              customTitle ??
+                  (isExpanded
+                      ? translations.activeVoting
+                      : translations.goToVoting),
+              textAlign: TextAlign.center,
+              style: customTitle != null
+                  ? Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(color: Colors.white)
+                  : Theme.of(context).textTheme.headline5.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+            ),
           ),
         ),
-        constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
-        height: 56,
-        width: double.infinity,
-        alignment: Alignment.center,
-        child: Text(
-          customTitle ??
-              (isExpanded
-                  ? translations.activeVoting
-                  : translations.goToVoting),
-          textAlign: TextAlign.center,
-          style: customTitle != null
-              ? Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(color: Colors.white)
-              : Theme.of(context).textTheme.headline5.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-        ),
       ),
-    );
+    ]);
   }
 
   void _onTap(BuildContext context) {

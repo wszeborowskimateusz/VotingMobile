@@ -31,7 +31,9 @@ class ActiveVoting extends ChangeNotifier {
   }
 
   void _startFetchingActiveVoting() async {
-    _activeVoting = await _votingsApi.getActiveVoting();
+    if (locator.get<UserRepository>().isLoggedIn) {
+      _activeVoting = await _votingsApi.getActiveVoting();
+    }
     _activeActiveVotingTimer = Timer.periodic(Duration(seconds: 30), (_) async {
       if (locator.get<UserRepository>().isLoggedIn) {
         final Voting newActiveVoting = await _votingsApi.getActiveVoting();
