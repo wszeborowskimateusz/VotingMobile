@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 part '_http_client_token_manager.dart';
 
-typedef ResponseParser<T> = T Function(Map<String, dynamic> json);
+typedef ResponseParser<T> = T Function(dynamic json);
 
 class CommonHttpClient {
   final HttpClientTokenManager _tokenManager = HttpClientTokenManager();
@@ -92,7 +92,7 @@ class CommonHttpClient {
       return null;
     }
 
-    final Map<String, dynamic> jsonResponse = json.decode(data);
+    final jsonResponse = json.decode(data);
 
     return parser(jsonResponse);
   }
@@ -100,6 +100,7 @@ class CommonHttpClient {
   void _handleError(error) {
     print(error);
 
-    return error;
+    // TODO: Do something with the error ?
+    throw error;
   }
 }

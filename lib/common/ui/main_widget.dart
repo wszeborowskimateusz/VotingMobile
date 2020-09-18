@@ -6,14 +6,10 @@ import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/ui/votings_history_list_widget.dart';
 
 class MainWidget extends StatelessWidget {
-  final VotingsRepository votingsRepository = locator.get<VotingsRepository>();
-
   @override
   Widget build(BuildContext context) {
     return locator.get<UserRepository>().isLoggedIn
-        ? VotingsHistoryListWidget(
-            historyVotings: votingsRepository.getVotingsHistory(),
-          )
+        ?  VotingsHistoryListWidget()
         : LoginPage();
   }
 }

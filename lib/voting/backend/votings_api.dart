@@ -19,4 +19,15 @@ class VotingsApi {
       body: votes.toJson(),
     );
   }
+
+  Future<List<Voting>> getFinishedVotings() async {
+    return _httpClient.get(
+      url: '/votings?includeResults=true',
+      responseParser: ((dynamic json) {
+        return (json as List)
+            ?.map((dynamic jsonVoting) => Voting.fromJson(jsonVoting))
+            ?.toList();
+      }),
+    );
+  }
 }
