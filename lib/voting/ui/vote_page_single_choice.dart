@@ -20,7 +20,7 @@ class VotePageSingleChoice extends StatefulWidget {
 class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
   final VotingsRepository votingsRepository = locator.get();
 
-  VoteType _selectedSingleOption;
+  VoteType _selectedSingleOption = VoteType.NO_VOTE;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
     final translations = Translations.of(context);
     showConfirmPopup(
       context: context,
-      title: _selectedSingleOption == null
+      title: _selectedSingleOption == VoteType.NO_VOTE
           ? translations.emptyVote
           : translations.singleVoteInfo(
               translations.getTranslationForVoteType(_selectedSingleOption)),
@@ -72,7 +72,7 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
 
   void _onVoteOptionChanged(VoteType value) {
     setState(() {
-      _selectedSingleOption = value;
+      _selectedSingleOption = value ?? VoteType.NO_VOTE;
     });
   }
 }

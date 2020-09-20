@@ -105,12 +105,12 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
   void getValueForMultipleSelection(int index, VoteType value, int optionId) {
     setState(() {
       _selectedMultipleOptions[index] =
-          UserVote(optionId: optionId, vote: value);
+          UserVote(optionId: optionId, vote: value ?? VoteType.NO_VOTE);
     });
   }
 
   int get _getVottedAmount =>
-      _selectedMultipleOptions.where((x) => x != null).length;
+      _selectedMultipleOptions.where((x) => x.vote != VoteType.NO_VOTE).length;
 
   void _onVoteButtonPressed() {
     final activeVoting = Provider.of<ActiveVoting>(context, listen: false);
