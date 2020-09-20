@@ -14,7 +14,7 @@ class VotingsApi {
   }
 
   Future<void> vote(int votingId, UserVotes votes) async {
-    return _httpClient.get(
+    return _httpClient.post(
       url: '/votes/vote/$votingId',
       body: votes.toJson(),
     );
