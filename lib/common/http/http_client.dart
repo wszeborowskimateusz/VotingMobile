@@ -25,7 +25,7 @@ class CommonHttpClient {
 
   String get token => _tokenManager.token;
 
-  Future<T> get<T>({String url, ResponseParser responseParser}) async {
+  Future<T> get<T>({String url, ResponseParser<T> responseParser}) async {
     final response = await http
         .get(_prepareApiUrl(url), headers: _commonHeaders())
         .catchError(_handleError);
@@ -36,7 +36,7 @@ class CommonHttpClient {
   Future<T> post<T>({
     @required String url,
     Map<String, dynamic> body,
-    ResponseParser responseParser,
+    ResponseParser<T> responseParser,
   }) async {
     final response = await (http
         .post(_prepareApiUrl(url),
@@ -44,9 +44,7 @@ class CommonHttpClient {
             body: json.encode(body))
         .catchError(_handleError));
 
-    return _parseResponse(response, parser: responseParser).catchError((Object error) {
-      _handleError(error);
-    });
+    return _parseResponse(response, parser: responseParser).catchError(_handleError);
   }
 
   Uri _prepareApiUrl(String url) {
@@ -68,7 +66,7 @@ class CommonHttpClient {
 
   Future<T> _parseResponse<T>(
     http.Response response, {
-    ResponseParser parser,
+    ResponseParser<T> parser,
   }) async {
     final String refreshedToken = response.headers["Refreshed-Jwt-Token"];
     if (refreshedToken != null) {

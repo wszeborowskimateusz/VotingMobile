@@ -20,7 +20,8 @@ class UserRepository {
   }
 
   Future<void> logout() async {
-    await _userAuthenticationApi.logout();
+    // TODO: Uncoment once logout endpoint is ready
+    // await _userAuthenticationApi.logout();
     await _httpClient.updateToken(null);
   }
 }
