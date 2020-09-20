@@ -6,11 +6,6 @@ import 'package:votingmobile/login/backend/user_repository.dart';
 import 'package:votingmobile/voting/backend/votings_api.dart';
 import 'package:votingmobile/voting/models/user_votes.dart';
 import 'package:votingmobile/voting/models/voting.dart';
-import 'package:votingmobile/voting/models/voting_cardinality.dart';
-import 'package:votingmobile/voting/models/voting_majority.dart';
-import 'package:votingmobile/voting/models/voting_option.dart';
-import 'package:votingmobile/voting/models/voting_results.dart';
-import 'package:votingmobile/voting/models/voting_status.dart';
 
 class ActiveVoting extends ChangeNotifier {
   final VotingsApi _votingsApi = locator.get();
