@@ -42,13 +42,17 @@ class CommonHttpClient {
         .post(_prepareApiUrl(url),
             headers: _commonHeaders(withContentType: body != null),
             body: json.encode(body))
-        .catchError(_handleError));
+        .catchError((error) {
+          _handleError(error);
+        }));
 
-    return _parseResponse(response, parser: responseParser).catchError(_handleError);
+    return _parseResponse(response, parser: responseParser).catchError((error) {
+      _handleError(error);
+    });
   }
 
-  Uri _prepareApiUrl(String url) {
-    return Uri.parse('${Config.apiUrl}$url');
+  String _prepareApiUrl(String url) {
+    return '${Config.apiUrl}$url';
   }
 
   Map<String, String> _commonHeaders({bool withContentType = false}) {
@@ -86,7 +90,7 @@ class CommonHttpClient {
 
     final String data = response.body;
 
-    if (data == null || parser == null) {
+    if (data == null || data.isEmpty || parser == null) {
       return null;
     }
 

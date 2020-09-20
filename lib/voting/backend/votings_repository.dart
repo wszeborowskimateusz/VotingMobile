@@ -6,6 +6,7 @@ import 'package:votingmobile/login/backend/user_repository.dart';
 import 'package:votingmobile/voting/backend/votings_api.dart';
 import 'package:votingmobile/voting/models/user_votes.dart';
 import 'package:votingmobile/voting/models/voting.dart';
+import 'package:votingmobile/voting/models/voting_status.dart';
 
 class ActiveVoting extends ChangeNotifier {
   final VotingsApi _votingsApi = locator.get();
@@ -31,6 +32,7 @@ class ActiveVoting extends ChangeNotifier {
     }
     _activeActiveVotingTimer = Timer.periodic(Duration(seconds: 30), (_) async {
       if (locator.get<UserRepository>().isLoggedIn) {
+        var x = _activeVoting;
         final Voting newActiveVoting = await _votingsApi.getActiveVoting();
         if (_activeVoting != newActiveVoting) {
           _activeVoting = newActiveVoting;
@@ -53,7 +55,8 @@ class ActiveVoting extends ChangeNotifier {
 class VotingsRepository {
   final VotingsApi _votingsApi = locator.get();
 
-  Future<List<Voting>> getVotingsHistory() {
-    return _votingsApi.getFinishedVotings();
+  Future<List<Voting>> getVotingsHistory() async {
+    final votings = await _votingsApi.getVotings();
+    return votings.where((v) => v.status == VotingStatus.FINISHED).toList();
   }
 }

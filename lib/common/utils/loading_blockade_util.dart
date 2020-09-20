@@ -21,11 +21,19 @@ void applyBlockade<T>(
     transitionDuration: const Duration(milliseconds: 500),
   );
 
-  final T result = await future;
+  final T result = await future.then((T result) {
+    _removeBlockade(context);
+    return result;
+  }).catchError((error) {
+    _removeBlockade(context);
+    throw error;
+  });
 
+  onFutureResolved?.call(result);
+}
+
+void _removeBlockade(BuildContext context) {
   isBlockade = false;
   // Remove the blocker
   Navigator.of(context, rootNavigator: true).pop();
-
-  onFutureResolved?.call(result);
 }
