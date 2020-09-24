@@ -9,7 +9,7 @@ import 'package:votingmobile/voting/models/voting_status.dart';
 
 part 'voting.g.dart';
 
-@JsonSerializable(createToJson: false)
+// @JsonSerializable(createToJson: false)
 @VotingMajorityConverter()
 @VotingCardinalityConverter()
 @VotingStatusConverter()
@@ -21,7 +21,8 @@ class Voting extends Equatable {
   final bool secrecy;
   final VotingStatus status;
   final List<VotingOption> options;
-  final List<VotingResults> results;
+  @JsonKey(fromJson: _votingResultsFromJson)
+  final dynamic results;
 
   const Voting({
     @required this.id,
@@ -32,7 +33,10 @@ class Voting extends Equatable {
     @required this.status,
     @required this.options,
     this.results,
-  }) : assert(status != VotingStatus.FINISHED || (status == VotingStatus.FINISHED && results != null && results.length != 0), "When voting is finished it should have result");
+  }) : assert(
+            status != VotingStatus.FINISHED ||
+                (status == VotingStatus.FINISHED && results != null),
+            "When voting is finished it should have result");
 
   factory Voting.fromJson(dynamic json) => _$VotingFromJson(json);
 
@@ -47,4 +51,17 @@ class Voting extends Equatable {
         options,
         results,
       ];
+
+  static _votingResultsFromJson(dynamic json, String cardinalityJson) {
+    final cardinality = VotingCardinality.fromJson(cardinalityJson);
+
+    assert(VotingCardinality.values.contains(cardinality));
+
+    if (cardinality == VotingCardinality.SINGLE_CHOICE) {
+      return VotingResults.fromJson(json);
+    }
+
+    final jsonWithResults = {'results': json};
+    return VotingResultsForMultipleChoice.fromJson(jsonWithResults).results;
+  }
 }

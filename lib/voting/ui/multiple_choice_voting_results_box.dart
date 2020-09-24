@@ -33,7 +33,8 @@ class _MultipleChoiceVotingResultsBoxState
           ),
         ),
         Container(
-          constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
+          constraints:
+              BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
           child: CarouselSlider.builder(
             itemCount: widget.voting.options.length,
             itemBuilder: (context, index) {
@@ -42,8 +43,7 @@ class _MultipleChoiceVotingResultsBoxState
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: VotingResultsBox(
                   votingName: option.name,
-                  votingResults: widget.voting.results
-                      .firstWhere((element) => element.optionId == option.id),
+                  votingResults: widget.voting.results[option.id],
                 ),
               );
             },

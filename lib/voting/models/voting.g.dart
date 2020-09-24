@@ -1,10 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'voting.dart';
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 Voting _$VotingFromJson(Map<String, dynamic> json) {
   return Voting(
@@ -19,8 +13,7 @@ Voting _$VotingFromJson(Map<String, dynamic> json) {
     options: (json['options'] as List)
         ?.map((e) => e == null ? null : VotingOption.fromJson(e))
         ?.toList(),
-    results: (json['results'] as List)
-        ?.map((e) => e == null ? null : VotingResults.fromJson(e))
-        ?.toList(),
+    results:
+        Voting._votingResultsFromJson(json['results'], json['cardinality']),
   );
 }

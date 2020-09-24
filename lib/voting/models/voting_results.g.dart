@@ -15,3 +15,13 @@ VotingResults _$VotingResultsFromJson(Map<String, dynamic> json) {
     optionId: json['optionId'] as int,
   );
 }
+
+VotingResultsForMultipleChoice _$VotingResultsForMultipleChoiceFromJson(
+    Map<String, dynamic> json) {
+  return VotingResultsForMultipleChoice(
+    results: (json['results'] as Map<String, dynamic>)?.map(
+      (k, e) =>
+          MapEntry(int.parse(k), e == null ? null : VotingResults.fromJson(e)),
+    ),
+  );
+}

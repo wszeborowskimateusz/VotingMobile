@@ -127,7 +127,7 @@ class _VotingsHistory extends StatelessWidget {
               ? MultipleChoiceVotingResultsBox(voting: voting)
               : VotingResultsBox(
                   votingName: voting.name,
-                  votingResults: voting.results[0],
+                  votingResults: voting.results,
                 ),
         );
       },

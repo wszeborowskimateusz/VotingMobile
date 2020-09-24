@@ -25,3 +25,18 @@ class VotingResults extends Equatable {
   @override
   List<Object> get props => [inFavor, against, hold, wasSuccessful, optionId];
 }
+
+@JsonSerializable(createToJson: false)
+class VotingResultsForMultipleChoice extends Equatable {
+  final Map<int, VotingResults> results;
+
+  const VotingResultsForMultipleChoice({
+    @required this.results,
+  });
+
+  factory VotingResultsForMultipleChoice.fromJson(dynamic json) =>
+      _$VotingResultsForMultipleChoiceFromJson(json);
+
+  @override
+  List<Object> get props => [results];
+}
