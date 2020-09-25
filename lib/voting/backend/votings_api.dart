@@ -10,7 +10,8 @@ class VotingsApi {
     return _httpClient
         .get(
           url: '/votes/active',
-          responseParser: (dynamic json) => json == null ? null : Voting.fromJson(json),
+          responseParser: (dynamic json) =>
+              json == null ? null : Voting.fromJson(json),
         )
         .catchError((_) => null);
   }

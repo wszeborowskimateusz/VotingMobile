@@ -81,7 +81,6 @@ class __AnimatedDotState extends State<_AnimatedDot>
 
   @override
   void dispose() {
-    _controller.stop();
     _controller.dispose();
     super.dispose();
   }

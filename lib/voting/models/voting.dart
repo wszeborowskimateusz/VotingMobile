@@ -53,6 +53,8 @@ class Voting extends Equatable {
       ];
 
   static _votingResultsFromJson(dynamic json, String cardinalityJson) {
+    if (json == null) return null;
+
     final cardinality = VotingCardinality.fromJson(cardinalityJson);
 
     assert(VotingCardinality.values.contains(cardinality));
