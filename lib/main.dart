@@ -9,6 +9,8 @@ import 'package:votingmobile/common/ui/main_widget.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 
+import 'nav_key.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await registerDependencies();
@@ -43,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

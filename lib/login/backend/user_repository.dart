@@ -20,7 +20,9 @@ class UserRepository {
   }
 
   Future<void> logout() async {
-    await _userAuthenticationApi.logout();
-    await _httpClient.updateToken(null);
+    if (isLoggedIn) {
+      await _userAuthenticationApi.logout();
+      await _httpClient.updateToken(null);
+    }
   }
 }

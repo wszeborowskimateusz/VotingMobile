@@ -1,12 +1,16 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
 import 'package:http/http.dart' as http;
+import 'package:votingmobile/main.dart';
+import 'package:votingmobile/nav_key.dart';
 
 part '_http_client_token_manager.dart';
 
@@ -30,7 +34,8 @@ class CommonHttpClient {
         .get(_prepareApiUrl(url), headers: _commonHeaders())
         .catchError(_handleError);
 
-    return _parseResponse(response, parser: responseParser).catchError(_handleError);
+    return _parseResponse(response, parser: responseParser)
+        .catchError(_handleError);
   }
 
   Future<T> post<T>({
@@ -43,8 +48,8 @@ class CommonHttpClient {
             headers: _commonHeaders(withContentType: body != null),
             body: json.encode(body))
         .catchError((error) {
-          _handleError(error);
-        }));
+      _handleError(error);
+    }));
 
     return _parseResponse(response, parser: responseParser).catchError((error) {
       _handleError(error);
@@ -78,8 +83,8 @@ class CommonHttpClient {
     }
 
     if (response.statusCode == 401) {
-      //TODO: Navigate to starting page
       await locator.get<UserRepository>().logout();
+      navigateToHomePage(navigatorKey.currentContext);
     }
 
     if (response.statusCode ~/ 200 != 1) {
