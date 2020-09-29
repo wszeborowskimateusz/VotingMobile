@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/loader/screen_loader.dart';
 import 'package:votingmobile/common/locator/locator.dart';
@@ -7,6 +8,7 @@ import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_layout.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
+import 'package:votingmobile/voting/backend/votings_repository.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -97,6 +99,8 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
         await performFuture(() => _userRepository.login(login, password));
     if (isCredentialCorrect) {
       navigateToHomePage(context);
+      await Provider.of<ActiveVoting>(context, listen: false)
+          .updateActiveVoting();
     } else {
       setState(() {
         _isValidationCorrect = false;
