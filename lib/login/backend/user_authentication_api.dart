@@ -9,6 +9,7 @@ class UserAuthenticationApi {
     return _httpClient.post(
       url: '/authentication/login',
       body: userCredentials.toJson(),
+      handle401: false,
       responseParser: (dynamic json) => json['token'] as String,
     );
   }

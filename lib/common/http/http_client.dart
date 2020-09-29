@@ -9,7 +9,6 @@ import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
 import 'package:http/http.dart' as http;
-import 'package:votingmobile/main.dart';
 import 'package:votingmobile/nav_key.dart';
 
 part '_http_client_token_manager.dart';
@@ -42,16 +41,19 @@ class CommonHttpClient {
     @required String url,
     Map<String, dynamic> body,
     ResponseParser<T> responseParser,
+    bool handle401 = true,
   }) async {
     final response = await (http
         .post(_prepareApiUrl(url),
             headers: _commonHeaders(withContentType: body != null),
-            body: json.encode(body))
+            body: body == null ? null : json.encode(body))
         .catchError((error) {
       _handleError(error);
     }));
 
-    return _parseResponse(response, parser: responseParser).catchError((error) {
+    return _parseResponse(response,
+            parser: responseParser, handle401: handle401)
+        .catchError((error) {
       _handleError(error);
     });
   }
@@ -76,15 +78,17 @@ class CommonHttpClient {
   Future<T> _parseResponse<T>(
     http.Response response, {
     ResponseParser<T> parser,
+    bool handle401 = true,
   }) async {
     final String refreshedToken = response.headers["Refreshed-Jwt-Token"];
     if (refreshedToken != null) {
       await updateToken(refreshedToken);
     }
 
-    if (response.statusCode == 401) {
+    if (response.statusCode == 401 && handle401) {
       await locator.get<UserRepository>().logout();
       navigateToHomePage(navigatorKey.currentContext);
+      return null;
     }
 
     if (response.statusCode ~/ 200 != 1) {

@@ -61,9 +61,7 @@ class _HomePageState extends State<HomePage> {
               displayColor: Colors.black,
             ),
       ),
-      home: Builder(
-        builder: (context) => MainWidget(),
-      ),
+      home: MainWidget(),
       debugShowCheckedModeBanner: false,
     );
   }

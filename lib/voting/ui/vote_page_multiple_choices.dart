@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:votingmobile/common/loader/screen_loader.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_popup.dart';
 import 'package:votingmobile/common/ui/dots_indicator.dart';
-import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/models/user_vote.dart';
@@ -21,7 +21,8 @@ class VotePageMultipleChoices extends StatefulWidget {
       _VotePageMultipleChoicesState();
 }
 
-class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
+class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
+    with ScreenLoader {
   final VotingsRepository votingsRepository = locator.get();
   List<UserVote> _selectedMultipleOptions;
   int _current = 0;
@@ -39,7 +40,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Consumer<ActiveVoting>(
       builder: (context, activeVoting, child) =>
           activeVoting.activeVoting == null
@@ -118,15 +119,12 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
       context: context,
       title: Translations.of(context).multipleVoteInfo(
           _getVottedAmount, activeVoting.activeVoting.options.length),
-      onConfirm: (innerContext) {
+      onConfirm: (innerContext) async {
         // Remove the dialog
         Navigator.pop(innerContext);
-        applyBlockade(context,
-            future:
-                activeVoting.vote(UserVotes(votes: _selectedMultipleOptions)),
-            onFutureResolved: (_) {
-          navigateToHomePage(context);
-        });
+        await performFuture(() =>
+            activeVoting.vote(UserVotes(votes: _selectedMultipleOptions)));
+        navigateToHomePage(context);
       },
     );
   }
