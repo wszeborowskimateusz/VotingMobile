@@ -1,9 +1,18 @@
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-
+import 'package:json_annotation/json_annotation.dart';
+import 'package:votingmobile/voting/models/voting_cardinality.dart';
+import 'package:votingmobile/voting/models/voting_majority.dart';
 import 'package:votingmobile/voting/models/voting_option.dart';
 import 'package:votingmobile/voting/models/voting_results.dart';
+import 'package:votingmobile/voting/models/voting_status.dart';
 
+part 'voting.g.dart';
+
+// @JsonSerializable(createToJson: false)
+@VotingMajorityConverter()
+@VotingCardinalityConverter()
+@VotingStatusConverter()
 class Voting extends Equatable {
   final int id;
   final String name;
@@ -12,9 +21,10 @@ class Voting extends Equatable {
   final bool secrecy;
   final VotingStatus status;
   final List<VotingOption> options;
-  final List<VotingResults> results;
+  @JsonKey(fromJson: _votingResultsFromJson)
+  final dynamic results;
 
-  Voting({
+  const Voting({
     @required this.id,
     @required this.name,
     @required this.majority,
@@ -23,12 +33,12 @@ class Voting extends Equatable {
     @required this.status,
     @required this.options,
     this.results,
-  }) {
-    if (status == VotingStatus.FINISHED) {
-      assert(results != null && results.isNotEmpty,
-          "When voting is finished it should have result");
-    }
-  }
+  }) : assert(
+            status != VotingStatus.FINISHED ||
+                (status == VotingStatus.FINISHED && results != null),
+            "When voting is finished it should have result");
+
+  factory Voting.fromJson(dynamic json) => _$VotingFromJson(json);
 
   @override
   List<Object> get props => [
@@ -41,15 +51,19 @@ class Voting extends Equatable {
         options,
         results,
       ];
-}
 
-enum VotingMajority { RELATIVE, ABSOLUTE, TWO_THIRDS }
+  static _votingResultsFromJson(dynamic json, String cardinalityJson) {
+    if (json == null) return null;
 
-enum VotingCardinality { SINGLE_CHOICE, MULTIPLE_CHOICE }
+    final cardinality = VotingCardinality.fromJson(cardinalityJson);
 
-enum VotingStatus {
-  FINISHED,
-  // This one will probably be never send to mobile app
-  NOT_STARTED,
-  DURING_VOTING
+    assert(VotingCardinality.values.contains(cardinality));
+
+    if (cardinality == VotingCardinality.SINGLE_CHOICE) {
+      return VotingResults.fromJson(json);
+    }
+
+    final jsonWithResults = {'results': json};
+    return VotingResultsForMultipleChoice.fromJson(jsonWithResults).results;
+  }
 }

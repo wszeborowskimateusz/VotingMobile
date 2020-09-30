@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:votingmobile/common/config/config.dart';
+import 'package:votingmobile/common/loader/screen_loader.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_layout.dart';
-import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
+import 'package:votingmobile/voting/backend/votings_repository.dart';
 
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with ScreenLoader {
   final UserRepository _userRepository = locator.get();
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -27,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     final translations = Translations.of(context);
     return CommonLayout(
       displayLeftIcon: false,
@@ -75,7 +77,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             Container(
-              constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
+              constraints:
+                  BoxConstraints(maxWidth: Config.maxElementInAppWidth),
               alignment: Alignment.center,
               child: CommonGradientButton(
                 title: translations.login,
@@ -88,20 +91,21 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _onLogin(BuildContext context) {
+  void _onLogin(BuildContext context) async {
     final String login = _loginController.text;
     final String password = _passwordController.text;
 
-    applyBlockade<bool>(context, future: _userRepository.login(login, password),
-        onFutureResolved: (bool isCredentialCorrect) {
-      if (isCredentialCorrect) {
-        navigateToHomePage(context);
-      } else {
-        setState(() {
-          _isValidationCorrect = false;
-        });
-      }
-    });
+    final isCredentialCorrect =
+        await performFuture(() => _userRepository.login(login, password));
+    if (isCredentialCorrect) {
+      navigateToHomePage(context);
+      await Provider.of<ActiveVoting>(context, listen: false)
+          .updateActiveVoting();
+    } else {
+      setState(() {
+        _isValidationCorrect = false;
+      });
+    }
   }
 }
 

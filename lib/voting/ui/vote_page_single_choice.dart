@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:votingmobile/common/loader/screen_loader.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_popup.dart';
-import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
+import 'package:votingmobile/voting/models/user_vote.dart';
+import 'package:votingmobile/voting/models/user_votes.dart';
 import 'package:votingmobile/voting/models/vote_type.dart';
 import 'package:votingmobile/voting/ui/common_vote_page.dart';
 import 'package:votingmobile/voting/ui/voting_options.dart';
@@ -15,13 +17,14 @@ class VotePageSingleChoice extends StatefulWidget {
   _VotePageSingleChoiceState createState() => _VotePageSingleChoiceState();
 }
 
-class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
+class _VotePageSingleChoiceState extends State<VotePageSingleChoice>
+    with ScreenLoader {
   final VotingsRepository votingsRepository = locator.get();
 
-  VoteType _selectedSingleOption;
+  VoteType _selectedSingleOption = VoteType.NO_VOTE;
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     final translations = Translations.of(context);
     return CommonVotePage(
       votingOptions: VotingOptions(
@@ -38,11 +41,11 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
     final translations = Translations.of(context);
     showConfirmPopup(
       context: context,
-      title: _selectedSingleOption == null
+      title: _selectedSingleOption == VoteType.NO_VOTE
           ? translations.emptyVote
           : translations.singleVoteInfo(
               translations.getTranslationForVoteType(_selectedSingleOption)),
-      onConfirm: (innerContext) {
+      onConfirm: (innerContext) async {
         final activeVoting = Provider.of<ActiveVoting>(context, listen: false);
 
         // Remove the dialog
@@ -56,20 +59,16 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice> {
           return;
         }
 
-        applyBlockade(
-          context,
-          future: activeVoting.vote([_selectedSingleOption]),
-          onFutureResolved: (_) {
-            navigateToHomePage(context);
-          },
-        );
+        await performFuture(() => activeVoting
+            .vote(UserVotes(votes: [UserVote(vote: _selectedSingleOption)])));
+        navigateToHomePage(context);
       },
     );
   }
 
   void _onVoteOptionChanged(VoteType value) {
     setState(() {
-      _selectedSingleOption = value;
+      _selectedSingleOption = value ?? VoteType.NO_VOTE;
     });
   }
 }

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:votingmobile/main.dart';
+import 'package:votingmobile/common/ui/main_widget.dart';
 
-void navigateToHomePage(BuildContext context, {bool clearHistory = true}) {
+void navigateToHomePage(BuildContext context) {
   Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(
-        builder: (context) => HomePage(), settings: RouteSettings()),
-    (_) => !clearHistory,
+        builder: (context) => MainWidget(), settings: RouteSettings()),
+    (_) => false,
   );
 }

@@ -4,7 +4,7 @@ import 'package:sliding_sheet/sliding_sheet.dart';
 import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
-import 'package:votingmobile/voting/models/voting.dart';
+import 'package:votingmobile/voting/models/voting_cardinality.dart';
 import 'package:votingmobile/voting/ui/vote_page_multiple_choices.dart';
 import 'package:votingmobile/voting/ui/vote_page_single_choice.dart';
 
@@ -23,7 +23,6 @@ class _VoteSheetState extends State<VoteSheet> {
   @override
   Widget build(BuildContext context) {
     final translations = Translations.of(context);
-    //TODO: Handle situation when we have active voting and user has alreade voted in it
 
     return SlidingSheet(
       elevation: 8,
@@ -73,36 +72,44 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final translations = Translations.of(context);
-    return GestureDetector(
-      onTap: () => customTitle != null ? null : _onTap(context),
-      child: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xff4169E1), Color(0xff20b2aa)],
+    return Wrap(children: [
+      Container(
+        alignment: Alignment.bottomCenter,
+        child: GestureDetector(
+          onTap: () => customTitle != null ? null : _onTap(context),
+          child: Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [Color(0xff4169E1), Color(0xff20b2aa)],
+                ),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                )),
+            constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
+            height: 56,
+            width: double.infinity,
+            alignment: Alignment.center,
+            child: Text(
+              customTitle ??
+                  (isExpanded
+                      ? translations.activeVoting
+                      : translations.goToVoting),
+              textAlign: TextAlign.center,
+              style: customTitle != null
+                  ? Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(color: Colors.white)
+                  : Theme.of(context).textTheme.headline5.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+            ),
           ),
         ),
-        constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
-        height: 56,
-        width: double.infinity,
-        alignment: Alignment.center,
-        child: Text(
-          customTitle ??
-              (isExpanded
-                  ? translations.activeVoting
-                  : translations.goToVoting),
-          textAlign: TextAlign.center,
-          style: customTitle != null
-              ? Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(color: Colors.white)
-              : Theme.of(context).textTheme.headline5.copyWith(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-        ),
       ),
-    );
+    ]);
   }
 
   void _onTap(BuildContext context) {

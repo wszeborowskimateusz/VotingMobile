@@ -1,13 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:votingmobile/common/loader/screen_loader.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_popup.dart';
 import 'package:votingmobile/common/ui/dots_indicator.dart';
-import 'package:votingmobile/common/utils/loading_blockade_util.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
+import 'package:votingmobile/voting/models/user_vote.dart';
+import 'package:votingmobile/voting/models/user_votes.dart';
 import 'package:votingmobile/voting/models/vote_type.dart';
 import 'package:votingmobile/voting/models/voting_option.dart';
 import 'package:votingmobile/voting/ui/common_vote_page.dart';
@@ -19,25 +21,26 @@ class VotePageMultipleChoices extends StatefulWidget {
       _VotePageMultipleChoicesState();
 }
 
-class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
+class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
+    with ScreenLoader {
   final VotingsRepository votingsRepository = locator.get();
-  List<VoteType> _selectedMultipleOptions;
+  List<UserVote> _selectedMultipleOptions;
   int _current = 0;
 
   @override
   void initState() {
     super.initState();
-    _selectedMultipleOptions = List<VoteType>(
-      Provider.of<ActiveVoting>(context, listen: false)
-              .activeVoting
-              ?.options
-              ?.length ??
-          0,
-    );
+    _selectedMultipleOptions = Provider.of<ActiveVoting>(context, listen: false)
+            .activeVoting
+            ?.options
+            ?.map((VotingOption option) =>
+                UserVote(optionId: option.id, vote: VoteType.NO_VOTE))
+            ?.toList() ??
+        [];
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Consumer<ActiveVoting>(
       builder: (context, activeVoting, child) =>
           activeVoting.activeVoting == null
@@ -78,7 +81,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
             againstTranslation: translations.voteAgainst,
             holdTranslation: translations.voteHold,
             onValueChanged: (value) =>
-                getValueForMultipleSelection(index, value),
+                getValueForMultipleSelection(index, value, option.id),
             optionName: option.name,
           ),
         );
@@ -100,14 +103,15 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
     );
   }
 
-  void getValueForMultipleSelection(int index, VoteType value) {
+  void getValueForMultipleSelection(int index, VoteType value, int optionId) {
     setState(() {
-      _selectedMultipleOptions[index] = value;
+      _selectedMultipleOptions[index] =
+          UserVote(optionId: optionId, vote: value ?? VoteType.NO_VOTE);
     });
   }
 
   int get _getVottedAmount =>
-      _selectedMultipleOptions.where((x) => x != null).length;
+      _selectedMultipleOptions.where((x) => x.vote != VoteType.NO_VOTE).length;
 
   void _onVoteButtonPressed() {
     final activeVoting = Provider.of<ActiveVoting>(context, listen: false);
@@ -115,14 +119,12 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> {
       context: context,
       title: Translations.of(context).multipleVoteInfo(
           _getVottedAmount, activeVoting.activeVoting.options.length),
-      onConfirm: (innerContext) {
+      onConfirm: (innerContext) async {
         // Remove the dialog
         Navigator.pop(innerContext);
-        applyBlockade(context,
-            future: activeVoting.vote(_selectedMultipleOptions),
-            onFutureResolved: (_) {
-          navigateToHomePage(context);
-        });
+        await performFuture(() =>
+            activeVoting.vote(UserVotes(votes: _selectedMultipleOptions)));
+        navigateToHomePage(context);
       },
     );
   }

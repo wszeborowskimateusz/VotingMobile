@@ -1,27 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/ui/common_layout.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 import 'package:votingmobile/voting/models/voting.dart';
+import 'package:votingmobile/voting/models/voting_cardinality.dart';
 import 'package:votingmobile/voting/ui/multiple_choice_voting_results_box.dart';
 import 'package:votingmobile/voting/ui/voting_results_box.dart';
 
 class VotingsHistoryListWidget extends StatelessWidget {
-  final List<Voting> historyVotings;
+  final VotingsRepository votingsRepository = locator.get<VotingsRepository>();
 
-  const VotingsHistoryListWidget({@required this.historyVotings});
+  VotingsHistoryListWidget();
 
   @override
   Widget build(BuildContext context) {
     return Consumer<ActiveVoting>(
       builder: (context, activeVotingModel, _) => _buildWidget(
         context,
-        child: activeVotingModel.activeVoting == null && historyVotings.isEmpty
-            ? _NoActiveVotingNoVotingsHistory()
-            : historyVotings.isEmpty
-                ? _NoVotingsHistory()
-                : _VotingsHistory(historyVotings: historyVotings),
+        child: FutureBuilder(
+          future: votingsRepository.getVotingsHistory(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData && !snapshot.hasError)
+              return Center(child: CircularProgressIndicator());
+              
+            if(snapshot.hasError) print(snapshot.error);
+            final historyVotings = snapshot.hasError ? [] : snapshot.data;
+            return activeVotingModel.activeVoting == null &&
+                    historyVotings.isEmpty
+                ? _NoActiveVotingNoVotingsHistory()
+                : historyVotings.isEmpty
+                    ? _NoVotingsHistory()
+                    : _VotingsHistory(historyVotings: historyVotings);
+          },
+        ),
       ),
     );
   }
@@ -114,7 +127,7 @@ class _VotingsHistory extends StatelessWidget {
               ? MultipleChoiceVotingResultsBox(voting: voting)
               : VotingResultsBox(
                   votingName: voting.name,
-                  votingResults: voting.results[0],
+                  votingResults: voting.results,
                 ),
         );
       },

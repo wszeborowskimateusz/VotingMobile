@@ -72,8 +72,12 @@ class __AnimatedDotState extends State<_AnimatedDot>
 
   Future<Null> _playAnimation() async {
     try {
-      await _controller.forward(from: widget.startingPhase);
-      await _controller.repeat(reverse: true);
+      if (mounted) {
+        await _controller.forward(from: widget.startingPhase);
+        if (mounted) {
+          await _controller.repeat(reverse: true);
+        }
+      }
     } on TickerCanceled {
       // disposed
     }
@@ -81,7 +85,6 @@ class __AnimatedDotState extends State<_AnimatedDot>
 
   @override
   void dispose() {
-    _controller.stop();
     _controller.dispose();
     super.dispose();
   }
