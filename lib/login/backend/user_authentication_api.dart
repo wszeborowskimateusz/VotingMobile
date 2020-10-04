@@ -7,7 +7,7 @@ class UserAuthenticationApi {
 
   Future<String> login(UserCredentials userCredentials) async {
     return _httpClient.post(
-      url: '/authentication/login',
+      url: '/authentication/login/voter',
       body: userCredentials.toJson(),
       handle401: false,
       responseParser: (dynamic json) => json['token'] as String,
