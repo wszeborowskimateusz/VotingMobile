@@ -6,11 +6,11 @@ import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_route.dart';
+import 'package:votingmobile/common/ui/home_page.dart';
 import 'package:votingmobile/common/ui/settings/rolling_switch.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
-import 'package:votingmobile/main.dart';
 
 class SettingPage extends StatefulWidget {
   @override

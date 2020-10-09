@@ -16,6 +16,7 @@ part '_http_client_token_manager.dart';
 typedef ResponseParser<T> = T Function(dynamic json);
 
 class CommonHttpClient {
+  final Config _config = locator.get();
   final HttpClientTokenManager _tokenManager = HttpClientTokenManager();
 
   Future<void> init() async {
@@ -59,7 +60,7 @@ class CommonHttpClient {
   }
 
   String _prepareApiUrl(String url) {
-    return '${Config.apiUrl}$url';
+    return '${_config.apiUrl}$url';
   }
 
   Map<String, String> _commonHeaders({bool withContentType = false}) {
