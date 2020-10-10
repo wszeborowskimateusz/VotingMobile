@@ -53,8 +53,8 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 8.0),
-                    child: Text(translations.loginDisclaimer),
+                    padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                    child: Text(translations.loginDisclaimer, textAlign: TextAlign.center),
                   ),
                   _InputForm(
                     loginController: _loginController,
