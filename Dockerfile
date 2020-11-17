@@ -27,5 +27,7 @@ RUN /usr/local/flutter/bin/flutter build web
 # # Stage 2 - Create the run-time image
 FROM nginx:stable-alpine as production-stage
 COPY --from=build-stage /usr/local/VotingMobile/build/web /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
+EXPOSE 443
 CMD ["nginx", "-g", "daemon off;"]
