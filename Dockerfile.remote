@@ -22,7 +22,7 @@ RUN flutter config --enable-web
 RUN mkdir /usr/local/VotingMobile
 COPY . /usr/local/VotingMobile
 WORKDIR /usr/local/VotingMobile
-RUN /usr/local/flutter/bin/flutter build web
+RUN /usr/local/flutter/bin/flutter build web -t lib/main.remote.dart
 
 # # Stage 2 - Create the run-time image
 FROM nginx:stable-alpine as production-stage
