@@ -16,7 +16,7 @@ jobs:
     - name: Build and push Docker images
       uses: docker/build-push-action@v1
       with:
-        dockerfile: Dockerfile  
+        dockerfile: Dockerfile.remote 
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         repository: 25kiop2020/mops-mobile
