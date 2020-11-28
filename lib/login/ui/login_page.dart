@@ -39,41 +39,48 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 16.0),
-                    child: Text(
-                      translations.login,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3
-                          .copyWith(fontWeight: FontWeight.bold),
-                    ),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 16.0),
+                        child: Text(
+                          translations.login,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3
+                              .copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
+                        child: Text(translations.loginDisclaimer,
+                            textAlign: TextAlign.center),
+                      ),
+                      _InputForm(
+                        loginController: _loginController,
+                        passwordController: _passwordController,
+                        isValidationCorrect: _isValidationCorrect,
+                        onInputChange: () => setState(() {
+                          _isValidationCorrect = true;
+                        }),
+                        onSubmit: () => _onLogin(context),
+                        bottomSection: !_isValidationCorrect
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.only(bottom: 8.0, top: 16.0),
+                                child: Text(translations
+                                    .loginIncorrectUsernameOrPassword),
+                              )
+                            : null,
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                    child: Text(translations.loginDisclaimer, textAlign: TextAlign.center),
-                  ),
-                  _InputForm(
-                    loginController: _loginController,
-                    passwordController: _passwordController,
-                    isValidationCorrect: _isValidationCorrect,
-                    onInputChange: () => setState(() {
-                      _isValidationCorrect = true;
-                    }),
-                    onSubmit: () => _onLogin(context),
-                    bottomSection: !_isValidationCorrect
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.only(bottom: 8.0, top: 16.0),
-                            child: Text(
-                                translations.loginIncorrectUsernameOrPassword),
-                          )
-                        : null,
-                  ),
-                ],
+                ),
               ),
             ),
             Container(
