@@ -22,6 +22,10 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> with ScreenLoader {
+  static const String _pug = "assets/images/pug.png";
+  static const String _easterEgg = "assets/images/easter_egg.jpg";
+  static const Duration _fadeDuration = Duration(milliseconds: 500);
+
   static const Map<bool, Locale> _valueToLocaleMap = {
     true: englishLocale,
     false: polishLocale
@@ -30,6 +34,7 @@ class _SettingPageState extends State<SettingPage> with ScreenLoader {
   bool initialized = false;
   ShakeDetector _shakeDetector;
   bool _displayEasterEgg = false;
+  String _easterEggImage = _pug;
 
   @override
   void initState() {
@@ -50,6 +55,13 @@ class _SettingPageState extends State<SettingPage> with ScreenLoader {
           if (mounted) {
             setState(() {
               _displayEasterEgg = false;
+            });
+            Future.delayed(_fadeDuration, () {
+              if (mounted) {
+                setState(() {
+                  _easterEggImage = _pug;
+                });
+              }
             });
           }
         });
@@ -100,14 +112,24 @@ class _SettingPageState extends State<SettingPage> with ScreenLoader {
   }
 
   Widget _buildEasterEgg() {
-    return Padding(
+    return Padding( 
       padding: const EdgeInsets.only(bottom: 16.0),
-      child: AnimatedOpacity(
-        opacity: _displayEasterEgg ? 1.0 : 0.0,
-        duration: Duration(milliseconds: 500),
-        child: CircleAvatar(
-          radius: 50,
-          backgroundImage: AssetImage("assets/images/easter_egg.jpg"),
+      child: GestureDetector(
+        onDoubleTap: () {
+          if (_displayEasterEgg) {
+            setState(() {
+              _easterEggImage = _easterEgg;
+            });
+          }
+        },
+        child: AnimatedOpacity(
+          opacity: _displayEasterEgg ? 1.0 : 0.0,
+          duration: _fadeDuration,
+          child: CircleAvatar(
+            radius: 50,
+            backgroundImage: AssetImage(_easterEggImage),
+            backgroundColor: Colors.transparent,
+          ),
         ),
       ),
     );
