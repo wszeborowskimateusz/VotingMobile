@@ -52,7 +52,7 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice>
         Navigator.pop(innerContext);
 
         if (activeVoting.activeVoting == null) {
-          Scaffold.of(context).showSnackBar(SnackBar(
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(translations.noActiveVotingDisclaimer),
           ));
           navigateToHomePage(context);

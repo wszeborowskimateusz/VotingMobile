@@ -32,7 +32,7 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
   Widget screen(BuildContext context) {
     final translations = Translations.of(context);
     return CommonLayout(
-      displayLeftIcon: false,
+      displayLeftBackIcon: false,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

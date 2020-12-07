@@ -9,10 +9,18 @@ import 'package:votingmobile/voting/models/voting_cardinality.dart';
 import 'package:votingmobile/voting/ui/multiple_choice_voting_results_box.dart';
 import 'package:votingmobile/voting/ui/voting_results_box.dart';
 
-class VotingsHistoryListWidget extends StatelessWidget {
-  final VotingsRepository votingsRepository = locator.get<VotingsRepository>();
-
+class VotingsHistoryListWidget extends StatefulWidget {
   VotingsHistoryListWidget();
+
+  @override
+  _VotingsHistoryListWidgetState createState() =>
+      _VotingsHistoryListWidgetState();
+}
+
+class _VotingsHistoryListWidgetState extends State<VotingsHistoryListWidget> {
+  final VotingsRepository _votingsRepository = locator.get<VotingsRepository>();
+
+  bool _isRefreshing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +28,12 @@ class VotingsHistoryListWidget extends StatelessWidget {
       builder: (context, activeVotingModel, _) => _buildWidget(
         context,
         child: FutureBuilder(
-          future: votingsRepository.getVotingsHistory(),
+          future: _votingsRepository.getVotingsHistory(),
           builder: (context, snapshot) {
             if (!snapshot.hasData && !snapshot.hasError)
               return Center(child: CircularProgressIndicator());
-              
-            if(snapshot.hasError) print(snapshot.error);
+
+            if (snapshot.hasError) print(snapshot.error);
             final historyVotings = snapshot.hasError ? [] : snapshot.data;
             return activeVotingModel.activeVoting == null &&
                     historyVotings.isEmpty
@@ -41,6 +49,21 @@ class VotingsHistoryListWidget extends StatelessWidget {
 
   Widget _buildWidget(BuildContext context, {@required Widget child}) {
     return CommonLayout(
+      leftIcon: _isRefreshing
+          ? Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: CircularProgressIndicator(
+                strokeWidth: 3.0,
+                valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4169E1)),
+              ),
+          )
+          : IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                _refreshState(context);
+              },
+              color: Color(0xff4169E1),
+            ),
       displayVoteSheet: true,
       body: Consumer<ActiveVoting>(
         builder: (context, activeVotingModel, _) => Column(
@@ -55,8 +78,19 @@ class VotingsHistoryListWidget extends StatelessWidget {
           ],
         ),
       ),
-      displayLeftIcon: false,
+      displayLeftBackIcon: false,
     );
+  }
+
+  void _refreshState(BuildContext context) async {
+    setState(() {
+      _isRefreshing = true;
+    });
+    await Provider.of<ActiveVoting>(context, listen: false)
+        .updateActiveVoting();
+    setState(() {
+      _isRefreshing = false;
+    });
   }
 }
 

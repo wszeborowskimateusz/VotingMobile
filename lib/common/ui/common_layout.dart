@@ -7,13 +7,15 @@ import 'package:votingmobile/voting/ui/vote_sheet.dart';
 class CommonLayout extends StatelessWidget {
   final Widget body;
   final Widget rightIcon;
-  final bool displayLeftIcon;
+  final Widget leftIcon;
+  final bool displayLeftBackIcon;
   final bool displayVoteSheet;
 
   const CommonLayout({
     @required this.body,
     this.rightIcon,
-    this.displayLeftIcon = true,
+    this.leftIcon,
+    this.displayLeftBackIcon = true,
     this.displayVoteSheet = false,
   });
 
@@ -23,13 +25,14 @@ class CommonLayout extends StatelessWidget {
       builder: (context, activeVotingModel, _) => Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
-          leading: displayLeftIcon
-              ? IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () => Navigator.pop(context),
-                  color: Colors.black,
-                )
-              : null,
+          leading: leftIcon ??
+              (displayLeftBackIcon
+                  ? IconButton(
+                      icon: Icon(Icons.arrow_back),
+                      onPressed: () => Navigator.pop(context),
+                      color: Colors.black,
+                    )
+                  : null),
           elevation: 0.0,
           actions: <Widget>[
             rightIcon ??
