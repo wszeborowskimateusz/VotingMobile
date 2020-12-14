@@ -12,6 +12,9 @@ class TranslationStringsPl implements TranslationStrings {
 
   @override
   String get vote => "Zagłosuj";
+  
+  @override
+  String get next => "Następny";
 
   @override
   String get votingsHistory => "Historia Głosowań";

@@ -7,11 +7,13 @@ import 'package:votingmobile/voting/backend/votings_repository.dart';
 class CommonVotePage extends StatelessWidget {
   final Widget votingOptions;
   final VoidCallback bottomButtonOnPressed;
+  final String customVoteButton;
 
   const CommonVotePage({
     Key key,
     @required this.votingOptions,
     @required this.bottomButtonOnPressed,
+    this.customVoteButton,
   }) : super(key: key);
 
   @override
@@ -34,7 +36,7 @@ class CommonVotePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0).copyWith(bottom: 16.0),
             child: CommonGradientButton(
-              title: Translations.of(context).vote,
+              title: customVoteButton ?? Translations.of(context).vote,
               onPressed: bottomButtonOnPressed,
             ),
           ),
