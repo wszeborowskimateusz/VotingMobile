@@ -1,6 +1,6 @@
 class HttpStatusException {
   final int statusCode;
-  final String reasonPhrase;
+  final String body;
 
-  const HttpStatusException(this.statusCode, this.reasonPhrase);
+  const HttpStatusException(this.statusCode, this.body);
 }

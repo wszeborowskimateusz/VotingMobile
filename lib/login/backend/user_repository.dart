@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:votingmobile/common/http/http_client.dart';
 import 'package:votingmobile/common/http/http_status_exception.dart';
 import 'package:votingmobile/common/locator/locator.dart';
@@ -22,14 +20,13 @@ class UserRepository {
       _httpClient.updateToken(token);
       return LoginStatus.successful;
     }).catchError((error) {
-      // TODO: Check where the message is
       if (error is HttpStatusException) {
         if (error.statusCode == 404 &&
-            error.reasonPhrase == 'IN_PROGRESS/SUSPENDED') {
+            error.body == 'IN_PROGRESS/SUSPENDED') {
           return LoginStatus.noSession;
         }
 
-        if (error.statusCode == 401 && error.reasonPhrase == 'BLOCKED') {
+        if (error.statusCode == 401 && error.body == 'BLOCKED') {
           return LoginStatus.userBlocked;
         }
       }

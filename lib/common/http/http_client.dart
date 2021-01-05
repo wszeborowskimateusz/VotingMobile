@@ -94,7 +94,7 @@ class CommonHttpClient {
     }
 
     if (response.statusCode ~/ 200 != 1) {
-      throw HttpStatusException(response.statusCode, response.reasonPhrase);
+      throw HttpStatusException(response.statusCode, response.body);
     }
 
     final String data = response.body;
