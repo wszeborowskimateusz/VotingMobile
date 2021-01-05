@@ -63,7 +63,7 @@ class Translations implements TranslationStrings {
   String get voteCancel => locator.get<TranslationStrings>().voteCancel;
 
   String getTranslationForVoteType(VoteType voteType) {
-    if(voteType == null) {
+    if (voteType == null) {
       return emptyVote;
     }
     switch (voteType) {
@@ -88,6 +88,14 @@ class Translations implements TranslationStrings {
   @override
   String get loginIncorrectUsernameOrPassword =>
       locator.get<TranslationStrings>().loginIncorrectUsernameOrPassword;
+
+  @override
+  String get loginIncorrectUserBlocked =>
+      locator.get<TranslationStrings>().loginIncorrectUserBlocked;
+
+  @override
+  String get loginIncorrectNoSession =>
+      locator.get<TranslationStrings>().loginIncorrectNoSession;
 
   @override
   String get password => locator.get<TranslationStrings>().password;

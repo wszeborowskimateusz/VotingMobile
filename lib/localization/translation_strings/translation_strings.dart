@@ -15,7 +15,7 @@ abstract class TranslationStrings {
   String get language;
 
   String get vote;
-  
+
   String get next;
 
   String get votingsHistory;
@@ -43,10 +43,14 @@ abstract class TranslationStrings {
   String get password;
 
   String get login;
-  
+
   String get loginDisclaimer;
-  
+
   String get loginIncorrectUsernameOrPassword;
+
+  String get loginIncorrectUserBlocked;
+  
+  String get loginIncorrectNoSession;
 
   String get logout;
 

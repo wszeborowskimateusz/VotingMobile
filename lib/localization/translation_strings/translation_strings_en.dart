@@ -16,7 +16,6 @@ class TranslationStringsEn implements TranslationStrings {
   @override
   String get next => "Next";
 
-
   @override
   String get votingsHistory => "Votings History";
 
@@ -59,6 +58,13 @@ class TranslationStringsEn implements TranslationStrings {
   @override
   String get loginIncorrectUsernameOrPassword =>
       "Incorrect username or password";
+
+  @override
+  String get loginIncorrectNoSession =>
+      "There is no session in progress. Wait for the lead to start a session.";
+
+  @override
+  String get loginIncorrectUserBlocked => "Your account is blocked";
 
   @override
   String get password => "Password";

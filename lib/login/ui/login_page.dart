@@ -19,7 +19,7 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
   final UserRepository _userRepository = locator.get();
   final TextEditingController _loginController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  bool _isValidationCorrect = true;
+  LoginStatus _loginStatus = LoginStatus.successful;
 
   @override
   void dispose() {
@@ -64,17 +64,24 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
                       _InputForm(
                         loginController: _loginController,
                         passwordController: _passwordController,
-                        isValidationCorrect: _isValidationCorrect,
+                        loginStatus: _loginStatus,
                         onInputChange: () => setState(() {
-                          _isValidationCorrect = true;
+                          _loginStatus = LoginStatus.successful;
                         }),
                         onSubmit: () => _onLogin(context),
-                        bottomSection: !_isValidationCorrect
+                        bottomSection: _loginStatus != LoginStatus.successful
                             ? Padding(
-                                padding:
-                                    const EdgeInsets.only(bottom: 8.0, top: 16.0),
-                                child: Text(translations
-                                    .loginIncorrectUsernameOrPassword),
+                                padding: const EdgeInsets.only(
+                                    bottom: 8.0, top: 16.0),
+                                child: Text(
+                                  _getLoginErrorInfo(translations),
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .subtitle2
+                                      .copyWith(
+                                        color: Colors.red,
+                                      ),
+                                ),
                               )
                             : null,
                       ),
@@ -98,26 +105,39 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
     );
   }
 
+  String _getLoginErrorInfo(Translations translations) {
+    switch (_loginStatus) {
+      case LoginStatus.wrongUsernameOrPassword:
+        return translations.loginIncorrectUsernameOrPassword;
+      case LoginStatus.noSession:
+        return translations.loginIncorrectNoSession;
+      case LoginStatus.userBlocked:
+        return translations.loginIncorrectUserBlocked;
+      default:
+        return "";
+    }
+  }
+
   void _onLogin(BuildContext context) async {
     final String login = _loginController.text;
     final String password = _passwordController.text;
 
-    final isCredentialCorrect =
+    final loginStatus =
         await performFuture(() => _userRepository.login(login, password));
-    if (isCredentialCorrect) {
+    if (loginStatus == LoginStatus.successful) {
       navigateToHomePage(context);
       await Provider.of<ActiveVoting>(context, listen: false)
           .updateActiveVoting();
     } else {
       setState(() {
-        _isValidationCorrect = false;
+        _loginStatus = loginStatus;
       });
     }
   }
 }
 
 class _InputForm extends StatefulWidget {
-  final bool isValidationCorrect;
+  final LoginStatus loginStatus;
   final VoidCallback onInputChange;
   final VoidCallback onSubmit;
   final TextEditingController loginController;
@@ -125,7 +145,7 @@ class _InputForm extends StatefulWidget {
   final Widget bottomSection;
 
   const _InputForm({
-    @required this.isValidationCorrect,
+    @required this.loginStatus,
     @required this.onInputChange,
     @required this.onSubmit,
     @required this.loginController,
@@ -151,7 +171,7 @@ class __InputFormState extends State<_InputForm> {
             Padding(
               padding: EdgeInsets.only(bottom: 8.0),
               child: TextFormField(
-                style: widget.isValidationCorrect
+                style: widget.loginStatus == LoginStatus.successful
                     ? null
                     : TextStyle(color: Colors.red),
                 autocorrect: false,
@@ -167,7 +187,7 @@ class __InputFormState extends State<_InputForm> {
               ),
             ),
             TextFormField(
-              style: widget.isValidationCorrect
+              style: widget.loginStatus == LoginStatus.successful
                   ? null
                   : TextStyle(color: Colors.red),
               autocorrect: false,

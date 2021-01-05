@@ -59,6 +59,14 @@ class TranslationStringsPl implements TranslationStrings {
   String get loginIncorrectUsernameOrPassword =>
       "Nieprawidłowa nazwa użytkownika lub hasło";
 
+      
+  @override
+  String get loginIncorrectNoSession =>
+      "Nie trwa obecnie żadne posiedzenie. Zaczekaj aż przewodniczący rozpocznie posiedzenie.";
+
+  @override
+  String get loginIncorrectUserBlocked => "Twoje konto jest zablokowane";
+
   @override
   String get password => "Hasło";
 

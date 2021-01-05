@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:votingmobile/common/config/config.dart';
+import 'package:votingmobile/common/http/http_status_exception.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
@@ -93,9 +94,7 @@ class CommonHttpClient {
     }
 
     if (response.statusCode ~/ 200 != 1) {
-      print(response.statusCode);
-      print(response.reasonPhrase);
-      throw HttpException(response.reasonPhrase);
+      throw HttpStatusException(response.statusCode, response.reasonPhrase);
     }
 
     final String data = response.body;
