@@ -19,7 +19,7 @@ class VotingResultsBox extends StatelessWidget {
       children: <Widget>[
         Container(
           constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
-          margin: EdgeInsets.symmetric(horizontal: 20),
+          margin: EdgeInsets.symmetric(horizontal: 12),
           height: boxHeight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
