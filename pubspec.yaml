@@ -31,6 +31,7 @@ dependencies:
   flutter_sequence_animation: ^3.0.1
   sliding_sheet: ^0.3.5
   shake: ^0.1.0
+  universal_html: ^2.0.8
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -40,10 +41,10 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^1.10.0
-  json_serializable: ^3.2.5
-  built_value_generator: ^7.1.0
-  flutter_launcher_icons: "^0.8.0"
+  build_runner: ^1.12.2
+  json_serializable: ^4.1.0
+  built_value_generator: ^8.0.4
+  flutter_launcher_icons: ^0.9.0
 
 flutter_icons:
   android: true

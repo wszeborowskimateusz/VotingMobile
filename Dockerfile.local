@@ -7,14 +7,14 @@ RUN apt-get install -y curl git wget zip unzip libgconf-2-4 gdb libstdc++6 libgl
 RUN apt-get clean
 
 # Clone the flutter repo
-RUN git clone --branch 1.24.0-10.2.pre https://github.com/flutter/flutter.git /usr/local/flutter
+RUN git clone --branch 2.0.5 https://github.com/flutter/flutter.git /usr/local/flutter
 
 # Run flutter doctor and set path
 RUN /usr/local/flutter/bin/flutter doctor -v
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
 # Enable flutter web
-RUN flutter config --enable-web
+RUN flutter pub get
 
 # # Copy files to container and build
 RUN mkdir /usr/local/VotingMobile
