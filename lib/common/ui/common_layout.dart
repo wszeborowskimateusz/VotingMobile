@@ -41,7 +41,7 @@ class CommonLayout extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => SettingPage(),
+                        builder: (context) => SettingsPage(),
                       ),
                     );
                   },

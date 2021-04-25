@@ -1,30 +1,12 @@
-library lite_rolling_switch;
-
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'dart:math';
 
-/// Customable and attractive Switch button.
-/// Currently, you can't change the widget
-/// width and height properties.
-///
-/// As well as the classical Switch Widget
-/// from flutter material, the following
-/// arguments are required:
-///
-/// * [value] determines whether this switch is on or off.
-/// * [onChanged] is called when the user toggles the switch on or off.
-///
-/// If you don't set these arguments you would
-/// experiment errors related to animationController
-/// states or any other undesirable behavior, please
-/// don't forget to set them.
-///
 class RollingSwitch extends StatefulWidget {
   @required
   final bool value;
   @required
-  final Function(bool) onChanged;
+  final ValueChanged<bool> onChanged;
   final String textOff;
   final String textOn;
   final Color colorOn;
@@ -33,24 +15,20 @@ class RollingSwitch extends StatefulWidget {
   final Duration animationDuration;
   final String iconOnPath;
   final String iconOffPath;
-  final Function onTap;
-  final Function onDoubleTap;
-  final Function onSwipe;
 
-  RollingSwitch(
-      {this.value = false,
-      this.textOff = "Off",
-      this.textOn = "On",
-      this.textSize = 14.0,
-      this.colorOn = Colors.green,
-      this.colorOff = Colors.red,
-      @required this.iconOffPath,
-      @required this.iconOnPath,
-      this.animationDuration = const Duration(milliseconds: 600),
-      this.onTap,
-      this.onDoubleTap,
-      this.onSwipe,
-      this.onChanged});
+  RollingSwitch({
+    this.value = false,
+    this.textOff = "Off",
+    this.textOn = "On",
+    this.textSize = 14.0,
+    this.colorOn = Colors.green,
+    this.colorOff = Colors.red,
+    @required this.iconOffPath,
+    @required this.iconOnPath,
+    this.animationDuration = const Duration(milliseconds: 600),
+    this.onChanged,
+    Key key,
+  }) : super(key: key);
 
   @override
   _RollingSwitchState createState() => _RollingSwitchState();
@@ -94,18 +72,9 @@ class _RollingSwitchState extends State<RollingSwitch>
     Color transitionColor = Color.lerp(widget.colorOff, widget.colorOn, value);
 
     return GestureDetector(
-      onDoubleTap: () {
-        _action();
-        if (widget.onDoubleTap != null) widget.onDoubleTap();
-      },
-      onTap: () {
-        _action();
-        if (widget.onTap != null) widget.onTap();
-      },
-      onPanEnd: (details) {
-        _action();
-        if (widget.onSwipe != null) widget.onSwipe();
-      },
+      onDoubleTap: () => _determine(changeState: true),
+      onTap: () => _determine(changeState: true),
+      onPanEnd: (details) => _determine(changeState: true),
       child: Container(
         padding: EdgeInsets.all(5),
         width: 130,
@@ -114,7 +83,7 @@ class _RollingSwitchState extends State<RollingSwitch>
         child: Stack(
           children: <Widget>[
             Transform.translate(
-              offset: Offset(10 * value, 0), //original
+              offset: Offset(10 * value, 0),
               child: Opacity(
                 opacity: (1 - value).clamp(0.0, 1.0),
                 child: Container(
@@ -132,11 +101,11 @@ class _RollingSwitchState extends State<RollingSwitch>
               ),
             ),
             Transform.translate(
-              offset: Offset(10 * (1 - value), 0), //original
+              offset: Offset(10 * (1 - value), 0),
               child: Opacity(
                 opacity: value.clamp(0.0, 1.0),
                 child: Container(
-                  padding: EdgeInsets.only(/*top: 10,*/ left: 5),
+                  padding: EdgeInsets.only(left: 5),
                   alignment: Alignment.centerLeft,
                   height: 40,
                   child: Text(
@@ -190,10 +159,6 @@ class _RollingSwitchState extends State<RollingSwitch>
         ),
       ),
     );
-  }
-
-  _action() {
-    _determine(changeState: true);
   }
 
   _determine({bool changeState = false}) {

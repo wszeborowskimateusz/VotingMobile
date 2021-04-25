@@ -15,11 +15,14 @@ class _LoadingBlockerState extends State<LoadingBlocker> {
 
   @override
   Widget build(BuildContext context) {
-    final listOfDots = List<Widget>(_numberOfDots);
-    for (int i = 0; i < _numberOfDots; i++) {
-      listOfDots[i] = _AnimatedDot(
-          startingPhase: i / _numberOfDots, color: _color, dotSize: _dotSize);
-    }
+    final listOfDots = List.generate(
+      _numberOfDots,
+      (i) => AnimatedDot(
+        startingPhase: i / _numberOfDots,
+        color: _color,
+        dotSize: _dotSize,
+      ),
+    );
 
     return Container(
       width: _numberOfDots * _dotSize + (_numberOfDots - 1) * _spaceBetweenDots,
@@ -33,19 +36,20 @@ class _LoadingBlockerState extends State<LoadingBlocker> {
   }
 }
 
-class _AnimatedDot extends StatefulWidget {
+@visibleForTesting
+class AnimatedDot extends StatefulWidget {
   final double startingPhase;
   final double dotSize;
   final Color color;
 
-  const _AnimatedDot({Key key, this.startingPhase, this.dotSize, this.color})
+  const AnimatedDot({Key key, this.startingPhase, this.dotSize, this.color})
       : super(key: key);
 
   @override
-  __AnimatedDotState createState() => __AnimatedDotState();
+  _AnimatedDotState createState() => _AnimatedDotState();
 }
 
-class __AnimatedDotState extends State<_AnimatedDot>
+class _AnimatedDotState extends State<AnimatedDot>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   SequenceAnimation _sequenceAnimation;

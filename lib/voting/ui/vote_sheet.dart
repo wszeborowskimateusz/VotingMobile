@@ -48,9 +48,12 @@ class _VoteSheetState extends State<VoteSheet> {
         final activeVoting =
             Provider.of<ActiveVoting>(context, listen: false).activeVoting;
         if (activeVoting == null) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text(translations.noActiveVotingDisclaimer),
-          ));
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(translations.noActiveVotingDisclaimer),
+            ));
+          });
+
           return Container();
         }
 

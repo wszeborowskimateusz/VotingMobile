@@ -8,9 +8,7 @@ class LocaleRepository {
 
   Locale _selectedLocale;
 
-  Locale get selectedLocale {
-    return _selectedLocale;
-  }
+  Locale get selectedLocale => _selectedLocale;
 
   Future<void> init() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

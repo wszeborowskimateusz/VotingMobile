@@ -55,6 +55,7 @@ class _CustomRadioGroupWidgetState<T> extends State<CustomRadioGroupWidget<T>> {
   }
 }
 
+@visibleForTesting
 class RoundRadioItem<T> extends StatelessWidget {
   final RadioModel<T> _item;
   final VoidCallback onTap;

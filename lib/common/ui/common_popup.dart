@@ -14,11 +14,11 @@ void showConfirmPopup({
       return AlertDialog(
         content: Text(title),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text(translations.voteCancel),
             onPressed: () => Navigator.pop(context),
           ),
-          FlatButton(
+          TextButton(
             child: Text(translations.voteAccept),
             onPressed: () => onConfirm(context),
           ),

@@ -8,21 +8,26 @@ class CommonGradientButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String title;
 
-  const CommonGradientButton({@required this.title, @required this.onPressed});
+  const CommonGradientButton(
+      {@required this.title, @required this.onPressed, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 50,
       child: Container(
-        constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 100),
-        child: RaisedButton(
-          padding: EdgeInsets.all(0.0),
-          onPressed: onPressed,
-          elevation: 15.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: _borderRadius,
+        constraints:
+            BoxConstraints(maxWidth: Config.maxElementInAppWidth - 100),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.all(0.0),
+            elevation: 15.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: _borderRadius,
+            ),
           ),
+          onPressed: onPressed,
           child: Ink(
             decoration: const BoxDecoration(
               gradient: LinearGradient(

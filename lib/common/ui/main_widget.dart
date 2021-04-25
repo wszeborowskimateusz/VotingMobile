@@ -8,7 +8,7 @@ class MainWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return locator.get<UserRepository>().isLoggedIn
-        ?  VotingsHistoryListWidget()
+        ? VotingsHistoryListWidget()
         : LoginPage();
   }
 }

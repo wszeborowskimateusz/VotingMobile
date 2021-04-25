@@ -10,7 +10,6 @@ import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
 import 'package:http/http.dart' as http;
-import 'package:votingmobile/nav_key.dart';
 
 part '_http_client_token_manager.dart';
 
@@ -111,7 +110,6 @@ class CommonHttpClient {
   void _handleError(error) {
     print(error);
 
-    // TODO: Do something with the error ?
     throw error;
   }
 }

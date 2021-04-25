@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
-import 'package:votingmobile/localization/translation_strings/translation_strings.dart';
+import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/localization/translation_strings/translation_strings_pl.dart';
 import 'package:votingmobile/localization/translation_strings/translation_strings_en.dart';
-import 'package:votingmobile/localization/translations.dart';
 
 const Locale englishLocale = Locale('en');
 const Locale polishLocale = Locale('pl');
@@ -16,7 +15,7 @@ const List<Locale> supportedLocales = [
 
 final Locale defaultLocale = Locale('en');
 
-TranslationStrings getTranslationsForLocale(Locale locale) {
+Translations getTranslationsForLocale(Locale locale) {
   switch (locale.languageCode) {
     case "pl":
       return TranslationStringsPl();
@@ -38,10 +37,10 @@ class TranslationsDelegate extends LocalizationsDelegate<Translations> {
   Future<Translations> load(Locale locale) {
     if (locale != null) {
       locator.allowReassignment = true;
-      locator.registerLazySingleton<TranslationStrings>(
-          () => getTranslationsForLocale(locale));
+      final Translations translationsString = getTranslationsForLocale(locale);
+      locator.registerLazySingleton<Translations>(() => translationsString);
       locator.allowReassignment = false;
-      return SynchronousFuture<Translations>(Translations(locale));
+      return SynchronousFuture<Translations>(translationsString);
     }
     return null;
   }

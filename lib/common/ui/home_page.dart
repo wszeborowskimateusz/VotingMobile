@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:votingmobile/common/backend/locale_repository.dart';
 import 'package:votingmobile/common/locator/locator.dart';
+import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/main_widget.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
-import 'package:votingmobile/nav_key.dart';
 
 class HomePage extends StatefulWidget {
   @override

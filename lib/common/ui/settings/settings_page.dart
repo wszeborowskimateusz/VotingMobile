@@ -16,12 +16,12 @@ import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
 import 'package:votingmobile/login/backend/user_repository.dart';
 
-class SettingPage extends StatefulWidget {
+class SettingsPage extends StatefulWidget {
   @override
-  _SettingPageState createState() => _SettingPageState();
+  _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _SettingPageState extends State<SettingPage> with ScreenLoader {
+class _SettingsPageState extends State<SettingsPage> with ScreenLoader {
   static const String _pug = "assets/images/pug.png";
   static const String _easterEgg = "assets/images/easter_egg.jpg";
   static const Duration _fadeDuration = Duration(milliseconds: 500);
