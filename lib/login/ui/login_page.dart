@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
                         child: Text(translations.loginDisclaimer,
                             textAlign: TextAlign.center),
                       ),
-                      _InputForm(
+                      InputForm(
                         loginController: _loginController,
                         passwordController: _passwordController,
                         loginStatus: _loginStatus,
@@ -136,7 +136,8 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
   }
 }
 
-class _InputForm extends StatefulWidget {
+@visibleForTesting
+class InputForm extends StatefulWidget {
   final LoginStatus loginStatus;
   final VoidCallback onInputChange;
   final VoidCallback onSubmit;
@@ -144,7 +145,7 @@ class _InputForm extends StatefulWidget {
   final TextEditingController passwordController;
   final Widget bottomSection;
 
-  const _InputForm({
+  const InputForm({
     @required this.loginStatus,
     @required this.onInputChange,
     @required this.onSubmit,
@@ -153,10 +154,10 @@ class _InputForm extends StatefulWidget {
     this.bottomSection,
   });
   @override
-  __InputFormState createState() => __InputFormState();
+  _InputFormState createState() => _InputFormState();
 }
 
-class __InputFormState extends State<_InputForm> {
+class _InputFormState extends State<InputForm> {
   bool _isPasswordObscured = true;
 
   @override
