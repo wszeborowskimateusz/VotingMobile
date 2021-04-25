@@ -1,6 +1,6 @@
-import 'package:votingmobile/localization/translation_strings/translation_strings.dart';
+import 'package:votingmobile/localization/translations.dart';
 
-class TranslationStringsPl implements TranslationStrings {
+class TranslationStringsPl extends Translations {
   @override
   String get appTitle => "Głosowanie";
 

@@ -1,66 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/locator/locator.dart';
-import 'package:votingmobile/localization/translation_strings/translation_strings.dart';
 import 'package:votingmobile/voting/models/vote_type.dart';
 
-class Translations implements TranslationStrings {
-  final Locale locale;
+typedef StringGetter = String Function(BuildContext);
 
-  const Translations(this.locale);
-
+abstract class Translations {
   static Translations of(BuildContext context) {
-    return Localizations.of<Translations>(context, Translations);
+    return locator.get<Translations>();
   }
-
-  @override
-  String get appTitle => locator.get<TranslationStrings>().appTitle;
-
-  @override
-  String get settings => locator.get<TranslationStrings>().settings;
-
-  @override
-  String get language => locator.get<TranslationStrings>().language;
-
-  @override
-  String get vote => locator.get<TranslationStrings>().vote;
-
-  @override
-  String get next => locator.get<TranslationStrings>().next;
-
-  @override
-  String get votingsHistory => locator.get<TranslationStrings>().votingsHistory;
-
-  @override
-  String get noVotings => locator.get<TranslationStrings>().noVotings;
-
-  @override
-  String get noVotingsHistory =>
-      locator.get<TranslationStrings>().noVotingsHistory;
-
-  @override
-  String get voteAgainst => locator.get<TranslationStrings>().voteAgainst;
-
-  @override
-  String get voteHold => locator.get<TranslationStrings>().voteHold;
-
-  @override
-  String get voteInFavor => locator.get<TranslationStrings>().voteInFavor;
-
-  @override
-  String multipleVoteInfo(int votedAnswersAmount, int allQuestionsAmount) =>
-      locator
-          .get<TranslationStrings>()
-          .multipleVoteInfo(votedAnswersAmount, allQuestionsAmount);
-
-  @override
-  String singleVoteInfo(String voteType) =>
-      locator.get<TranslationStrings>().singleVoteInfo(voteType);
-
-  @override
-  String get voteAccept => locator.get<TranslationStrings>().voteAccept;
-
-  @override
-  String get voteCancel => locator.get<TranslationStrings>().voteCancel;
 
   String getTranslationForVoteType(VoteType voteType) {
     if (voteType == null) {
@@ -78,48 +25,59 @@ class Translations implements TranslationStrings {
     throw ArgumentError("Given type $voteType is not supported");
   }
 
-  @override
-  String get login => locator.get<TranslationStrings>().login;
+  String get appTitle;
 
-  @override
-  String get loginDisclaimer =>
-      locator.get<TranslationStrings>().loginDisclaimer;
+  String get settings;
 
-  @override
-  String get loginIncorrectUsernameOrPassword =>
-      locator.get<TranslationStrings>().loginIncorrectUsernameOrPassword;
+  String get language;
 
-  @override
-  String get loginIncorrectUserBlocked =>
-      locator.get<TranslationStrings>().loginIncorrectUserBlocked;
+  String get vote;
 
-  @override
-  String get loginIncorrectNoSession =>
-      locator.get<TranslationStrings>().loginIncorrectNoSession;
+  String get next;
 
-  @override
-  String get password => locator.get<TranslationStrings>().password;
+  String get votingsHistory;
 
-  @override
-  String get username => locator.get<TranslationStrings>().username;
+  String get noVotings;
 
-  @override
-  String get logout => locator.get<TranslationStrings>().logout;
+  String get noVotingsHistory;
 
-  @override
-  String get noActiveVotingDisclaimer =>
-      locator.get<TranslationStrings>().noActiveVotingDisclaimer;
+  String get voteInFavor;
 
-  @override
-  String get goToVoting => locator.get<TranslationStrings>().goToVoting;
+  String get voteAgainst;
 
-  @override
-  String get activeVoting => locator.get<TranslationStrings>().activeVoting;
+  String get voteHold;
 
-  @override
-  String get emptyVote => locator.get<TranslationStrings>().emptyVote;
+  String get voteCancel;
 
-  @override
-  String get noCurrentActiveVotingDisclaimer =>
-      locator.get<TranslationStrings>().noCurrentActiveVotingDisclaimer;
+  String get voteAccept;
+
+  String singleVoteInfo(String voteType);
+
+  String multipleVoteInfo(int votedAnswersAmount, int allQuestionsAmount);
+
+  String get username;
+
+  String get password;
+
+  String get login;
+
+  String get loginDisclaimer;
+
+  String get loginIncorrectUsernameOrPassword;
+
+  String get loginIncorrectUserBlocked;
+  
+  String get loginIncorrectNoSession;
+
+  String get logout;
+
+  String get noActiveVotingDisclaimer;
+
+  String get goToVoting;
+
+  String get activeVoting;
+
+  String get emptyVote;
+
+  String get noCurrentActiveVotingDisclaimer;
 }

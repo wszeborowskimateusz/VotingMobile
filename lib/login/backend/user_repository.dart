@@ -12,7 +12,6 @@ class UserRepository {
 
   bool get isLoggedIn => _httpClient.token != null;
 
-  // Returns if operation was successful or not
   Future<LoginStatus> login(String username, String password) async {
     return _userAuthenticationApi
         .login(UserCredentials(login: username, password: password))

@@ -15,11 +15,14 @@ class _LoadingBlockerState extends State<LoadingBlocker> {
 
   @override
   Widget build(BuildContext context) {
-    final listOfDots = List<Widget>(_numberOfDots);
-    for (int i = 0; i < _numberOfDots; i++) {
-      listOfDots[i] = _AnimatedDot(
-          startingPhase: i / _numberOfDots, color: _color, dotSize: _dotSize);
-    }
+    final listOfDots = List.generate(
+      _numberOfDots,
+      (i) => _AnimatedDot(
+        startingPhase: i / _numberOfDots,
+        color: _color,
+        dotSize: _dotSize,
+      ),
+    );
 
     return Container(
       width: _numberOfDots * _dotSize + (_numberOfDots - 1) * _spaceBetweenDots,
