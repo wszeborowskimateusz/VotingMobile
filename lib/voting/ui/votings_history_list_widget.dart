@@ -30,14 +30,18 @@ class _VotingsHistoryListWidgetState extends State<VotingsHistoryListWidget> {
         child: FutureBuilder(
           future: _votingsRepository.getVotingsHistory(),
           builder: (context, snapshot) {
-            if (!snapshot.hasData && !snapshot.hasError)
+            if (!snapshot.hasData && !snapshot.hasError) {
               return Center(child: CircularProgressIndicator());
+            }
 
-            if (snapshot.hasError) print(snapshot.error);
+            if (snapshot.hasError) {
+              print(snapshot.error);
+            }
+
             final historyVotings = snapshot.hasError ? [] : snapshot.data;
             return activeVotingModel.activeVoting == null &&
                     historyVotings.isEmpty
-                ? _NoActiveVotingNoVotingsHistory()
+                ? NoActiveVotingNoVotingsHistory()
                 : historyVotings.isEmpty
                     ? _NoVotingsHistory()
                     : _VotingsHistory(historyVotings: historyVotings);
@@ -51,12 +55,12 @@ class _VotingsHistoryListWidgetState extends State<VotingsHistoryListWidget> {
     return CommonLayout(
       leftIcon: _isRefreshing
           ? Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: CircularProgressIndicator(
+              padding: const EdgeInsets.all(16.0),
+              child: CircularProgressIndicator(
                 strokeWidth: 3.0,
                 valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4169E1)),
               ),
-          )
+            )
           : IconButton(
               icon: Icon(Icons.refresh),
               onPressed: () {
@@ -94,7 +98,8 @@ class _VotingsHistoryListWidgetState extends State<VotingsHistoryListWidget> {
   }
 }
 
-class _NoActiveVotingNoVotingsHistory extends StatelessWidget {
+@visibleForTesting
+class NoActiveVotingNoVotingsHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(

@@ -27,8 +27,6 @@ void main() {
   });
 }
 
-Type typeOf<T>() => T;
-
 class _TestRadioValue {
   final int id;
 

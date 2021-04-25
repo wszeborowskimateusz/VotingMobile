@@ -39,3 +39,5 @@ Widget makeTestableWidget(Widget widget) {
     locale: defaultLocale,
   );
 }
+
+Type typeOf<T>() => T;
