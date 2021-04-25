@@ -17,7 +17,7 @@ class _LoadingBlockerState extends State<LoadingBlocker> {
   Widget build(BuildContext context) {
     final listOfDots = List.generate(
       _numberOfDots,
-      (i) => _AnimatedDot(
+      (i) => AnimatedDot(
         startingPhase: i / _numberOfDots,
         color: _color,
         dotSize: _dotSize,
@@ -36,19 +36,20 @@ class _LoadingBlockerState extends State<LoadingBlocker> {
   }
 }
 
-class _AnimatedDot extends StatefulWidget {
+@visibleForTesting
+class AnimatedDot extends StatefulWidget {
   final double startingPhase;
   final double dotSize;
   final Color color;
 
-  const _AnimatedDot({Key key, this.startingPhase, this.dotSize, this.color})
+  const AnimatedDot({Key key, this.startingPhase, this.dotSize, this.color})
       : super(key: key);
 
   @override
-  __AnimatedDotState createState() => __AnimatedDotState();
+  _AnimatedDotState createState() => _AnimatedDotState();
 }
 
-class __AnimatedDotState extends State<_AnimatedDot>
+class _AnimatedDotState extends State<AnimatedDot>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
   SequenceAnimation _sequenceAnimation;

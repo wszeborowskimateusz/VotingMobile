@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:votingmobile/common/loader/screen_loader.dart';
-import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/ui/common_popup.dart';
 import 'package:votingmobile/localization/translations.dart';
@@ -19,8 +18,6 @@ class VotePageSingleChoice extends StatefulWidget {
 
 class _VotePageSingleChoiceState extends State<VotePageSingleChoice>
     with ScreenLoader {
-  final VotingsRepository votingsRepository = locator.get();
-
   VoteType _selectedSingleOption = VoteType.NO_VOTE;
 
   @override

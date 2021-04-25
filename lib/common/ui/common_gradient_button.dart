@@ -8,7 +8,9 @@ class CommonGradientButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String title;
 
-  const CommonGradientButton({@required this.title, @required this.onPressed});
+  const CommonGradientButton(
+      {@required this.title, @required this.onPressed, Key key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

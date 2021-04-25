@@ -27,7 +27,8 @@ class RollingSwitch extends StatefulWidget {
     @required this.iconOnPath,
     this.animationDuration = const Duration(milliseconds: 600),
     this.onChanged,
-  });
+    Key key,
+  }) : super(key: key);
 
   @override
   _RollingSwitchState createState() => _RollingSwitchState();
@@ -70,87 +71,92 @@ class _RollingSwitchState extends State<RollingSwitch>
   Widget build(BuildContext context) {
     Color transitionColor = Color.lerp(widget.colorOff, widget.colorOn, value);
 
-    return Container(
-      padding: EdgeInsets.all(5),
-      width: 130,
-      decoration: BoxDecoration(
-          color: transitionColor, borderRadius: BorderRadius.circular(50)),
-      child: Stack(
-        children: <Widget>[
-          Transform.translate(
-            offset: Offset(10 * value, 0), //original
-            child: Opacity(
-              opacity: (1 - value).clamp(0.0, 1.0),
-              child: Container(
-                padding: EdgeInsets.only(right: 10),
-                alignment: Alignment.centerRight,
-                height: 40,
-                child: Text(
-                  widget.textOff,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: widget.textSize),
+    return GestureDetector(
+      onDoubleTap: () => _determine(changeState: true),
+      onTap: () => _determine(changeState: true),
+      onPanEnd: (details) => _determine(changeState: true),
+      child: Container(
+        padding: EdgeInsets.all(5),
+        width: 130,
+        decoration: BoxDecoration(
+            color: transitionColor, borderRadius: BorderRadius.circular(50)),
+        child: Stack(
+          children: <Widget>[
+            Transform.translate(
+              offset: Offset(10 * value, 0),
+              child: Opacity(
+                opacity: (1 - value).clamp(0.0, 1.0),
+                child: Container(
+                  padding: EdgeInsets.only(right: 10),
+                  alignment: Alignment.centerRight,
+                  height: 40,
+                  child: Text(
+                    widget.textOff,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.textSize),
+                  ),
                 ),
               ),
             ),
-          ),
-          Transform.translate(
-            offset: Offset(10 * (1 - value), 0),
-            child: Opacity(
-              opacity: value.clamp(0.0, 1.0),
-              child: Container(
-                padding: EdgeInsets.only(left: 5),
-                alignment: Alignment.centerLeft,
-                height: 40,
-                child: Text(
-                  widget.textOn,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: widget.textSize),
+            Transform.translate(
+              offset: Offset(10 * (1 - value), 0),
+              child: Opacity(
+                opacity: value.clamp(0.0, 1.0),
+                child: Container(
+                  padding: EdgeInsets.only(left: 5),
+                  alignment: Alignment.centerLeft,
+                  height: 40,
+                  child: Text(
+                    widget.textOn,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: widget.textSize),
+                  ),
                 ),
               ),
             ),
-          ),
-          Transform.translate(
-            offset: Offset(80 * value, 0),
-            child: Transform.rotate(
-              angle: lerpDouble(0, 2 * pi, value),
-              child: Container(
-                height: 40,
-                width: 40,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: Colors.white),
-                child: Stack(
-                  children: <Widget>[
-                    Center(
-                      child: Opacity(
-                        opacity: (1 - value).clamp(0.0, 1.0),
-                        child: Image.asset(
-                          widget.iconOffPath,
-                          width: 35,
-                          height: 35,
+            Transform.translate(
+              offset: Offset(80 * value, 0),
+              child: Transform.rotate(
+                angle: lerpDouble(0, 2 * pi, value),
+                child: Container(
+                  height: 40,
+                  width: 40,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.white),
+                  child: Stack(
+                    children: <Widget>[
+                      Center(
+                        child: Opacity(
+                          opacity: (1 - value).clamp(0.0, 1.0),
+                          child: Image.asset(
+                            widget.iconOffPath,
+                            width: 35,
+                            height: 35,
+                          ),
                         ),
                       ),
-                    ),
-                    Center(
-                      child: Opacity(
-                        opacity: value.clamp(0.0, 1.0),
-                        child: Image.asset(
-                          widget.iconOnPath,
-                          width: 35,
-                          height: 35,
+                      Center(
+                        child: Opacity(
+                          opacity: value.clamp(0.0, 1.0),
+                          child: Image.asset(
+                            widget.iconOnPath,
+                            width: 35,
+                            height: 35,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }
