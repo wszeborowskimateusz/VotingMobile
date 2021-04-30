@@ -15,7 +15,7 @@ void main() {
     await tester.pumpWidget(testableWidget);
     await tester.pump();
 
-    expect(find.byType(WillPopScope), findsOneWidget);
+    expect(find.byType(WillPopScope), findsNothing);
     expect(find.byKey(_key), findsOneWidget);
 
     final testButton = find.byType(TextButton);
@@ -26,6 +26,7 @@ void main() {
     await tester.pump();
 
     expect(find.byType(LoadingBlocker), findsOneWidget);
+    expect(find.byType(WillPopScope), findsOneWidget);
 
     await tester.pumpAndSettle();
   });
