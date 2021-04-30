@@ -49,7 +49,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
   }
 
   @override
-  Widget screen(BuildContext context) {
+  Widget build(BuildContext context) {
     return Consumer<ActiveVoting>(
       builder: (context, activeVoting, child) =>
           activeVoting.activeVoting == null
@@ -85,7 +85,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
     return CarouselSlider.builder(
       itemCount: activeVoting.activeVoting.options.length,
       carouselController: _carouselController,
-      itemBuilder: (context, index) {
+      itemBuilder: (context, index, _) {
         final VotingOption option = activeVoting.activeVoting.options[index];
         return Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),

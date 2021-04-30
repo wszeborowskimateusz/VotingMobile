@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
   }
 
   @override
-  Widget screen(BuildContext context) {
+  Widget build(BuildContext context) {
     final translations = Translations.of(context);
     return CommonLayout(
       displayLeftBackIcon: false,

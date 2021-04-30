@@ -76,7 +76,7 @@ class _SettingsPageState extends State<SettingsPage> with ScreenLoader {
   }
 
   @override
-  Widget screen(BuildContext context) {
+  Widget build(BuildContext context) {
     final translations = Translations.of(context);
     return CommonRoute(
       title: translations.settings,

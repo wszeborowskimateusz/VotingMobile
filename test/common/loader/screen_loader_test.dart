@@ -38,7 +38,7 @@ class _TestWidget extends StatefulWidget {
 
 class _TestWidgetState extends State<_TestWidget> with ScreenLoader {
   @override
-  Widget screen(BuildContext context) {
+  Widget build(BuildContext context) {
     return TextButton(
       key: _key,
       child: Container(),
