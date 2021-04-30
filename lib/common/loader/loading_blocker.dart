@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_sequence_animation/flutter_sequence_animation.dart';
 
 class LoadingBlocker extends StatefulWidget {
   @override
@@ -52,8 +51,7 @@ class AnimatedDot extends StatefulWidget {
 class _AnimatedDotState extends State<AnimatedDot>
     with SingleTickerProviderStateMixin {
   AnimationController _controller;
-  SequenceAnimation _sequenceAnimation;
-  final String _colorTag = "Color";
+  Animation<Color> _animation;
 
   @override
   void initState() {
@@ -63,15 +61,10 @@ class _AnimatedDotState extends State<AnimatedDot>
 
     _playAnimation();
 
-    _sequenceAnimation = SequenceAnimationBuilder()
-        .addAnimatable(
-            animatable: ColorTween(
-                begin: widget.color.withOpacity(0.3),
-                end: widget.color.withOpacity(1)),
-            from: const Duration(seconds: 0),
-            to: const Duration(seconds: 1),
-            tag: _colorTag)
-        .animate(_controller);
+    _animation = ColorTween(
+      begin: widget.color.withOpacity(0.3),
+      end: widget.color.withOpacity(1),
+    ).animate(_controller);
   }
 
   Future<Null> _playAnimation() async {
@@ -101,8 +94,9 @@ class _AnimatedDotState extends State<AnimatedDot>
           width: widget.dotSize,
           height: widget.dotSize,
           decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: _sequenceAnimation[_colorTag].value),
+            shape: BoxShape.circle,
+            color: _animation.value,
+          ),
         ),
       ),
       animation: _controller,

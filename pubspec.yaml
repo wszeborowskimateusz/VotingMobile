@@ -21,31 +21,29 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  http: ^0.12.2
-  get_it: ^4.0.2
-  equatable: ^1.1.1
-  provider: ^4.1.2
-  lite_rolling_switch: ^0.1.1
-  shared_preferences: ^0.5.7+2
-  carousel_slider: ^2.3.1
-  flutter_sequence_animation: ^3.0.1
-  sliding_sheet: ^0.3.5
-  shake: ^0.1.0
+  http: ^0.13.2
+  get_it: ^6.1.1
+  equatable: ^2.0.0
+  provider: ^5.0.0
+  shared_preferences: ^2.0.5
+  carousel_slider: ^4.0.0-nullsafety.0
+  sliding_sheet: ^0.5.0
+  shake: ^1.0.0
   universal_html: ^2.0.8
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
   mockito: ^5.0.5
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  build_runner: ^1.12.2
+  build_runner: ^2.0.1
   json_serializable: ^4.1.0
   built_value_generator: ^8.0.4
   flutter_launcher_icons: ^0.9.0
+
+  
+dependency_overrides:
+  build_config: 1.0.0
 
 flutter_icons:
   android: true

@@ -37,7 +37,7 @@ class _MultipleChoiceVotingResultsBoxState
               BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
           child: CarouselSlider.builder(
             itemCount: widget.voting.options.length,
-            itemBuilder: (context, index) {
+            itemBuilder: (context, index, _) {
               final VotingOption option = widget.voting.options[index];
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),

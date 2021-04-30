@@ -59,8 +59,8 @@ class CommonHttpClient {
     });
   }
 
-  String _prepareApiUrl(String url) {
-    return '${_config.apiUrl}$url';
+  Uri _prepareApiUrl(String url) {
+    return Uri.parse('${_config.apiUrl}$url');
   }
 
   Map<String, String> _commonHeaders({bool withContentType = false}) {

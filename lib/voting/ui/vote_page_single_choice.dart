@@ -21,7 +21,7 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice>
   VoteType _selectedSingleOption = VoteType.NO_VOTE;
 
   @override
-  Widget screen(BuildContext context) {
+  Widget build(BuildContext context) {
     final translations = Translations.of(context);
     return CommonVotePage(
       votingOptions: VotingOptions(
