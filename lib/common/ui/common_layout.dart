@@ -24,17 +24,17 @@ class CommonLayout extends StatelessWidget {
     return Consumer<ActiveVoting>(
       builder: (context, activeVotingModel, _) => Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           leading: leftIcon ??
               (displayLeftBackIcon
                   ? IconButton(
                       icon: Icon(Icons.arrow_back),
                       onPressed: () => Navigator.pop(context),
-                      color: Colors.black,
+                      color: Color(0xff4169E1)
                     )
                   : null),
           elevation: 0.0,
-          actions: <Widget>[
+          actions: [
             rightIcon ??
                 IconButton(
                   icon: Icon(Icons.settings),
@@ -49,7 +49,6 @@ class CommonLayout extends StatelessWidget {
                 )
           ],
         ),
-        backgroundColor: Colors.white,
         body: SafeArea(child: body),
         bottomSheet: !displayVoteSheet
             ? null

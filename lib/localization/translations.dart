@@ -80,4 +80,10 @@ abstract class Translations {
   String get emptyVote;
 
   String get noCurrentActiveVotingDisclaimer;
+
+  String get theme;
+
+  String get lightTheme;
+
+  String get darkTheme;
 }

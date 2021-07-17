@@ -195,7 +195,6 @@ class _InputFormState extends State<InputForm> {
                 suffix: IconButton(
                   icon: Icon(
                     _isPasswordObscured ? Icons.visibility_off : Icons.visibility,
-                    color: Colors.black,
                   ),
                   onPressed: () {
                     setState(() {

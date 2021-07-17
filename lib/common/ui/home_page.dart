@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
 import 'package:votingmobile/common/settings/language_change_notifier.dart';
+import 'package:votingmobile/common/settings/theme_change_notifier.dart';
 import 'package:votingmobile/common/ui/main_widget.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
 
@@ -11,25 +12,24 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageChangeNotifier>(
-      builder: (_, model, __) => MaterialApp(
-        navigatorKey: navigatorKey,
-        localizationsDelegates: [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-          locator.get<TranslationsDelegate>(),
-        ],
-        supportedLocales: supportedLocales,
-        locale: model.selectedLocale,
-        title: 'MoPS',
-        theme: ThemeData(
-          textTheme: Theme.of(context).textTheme.apply(
-                bodyColor: Colors.black,
-                displayColor: Colors.black,
-              ),
+      builder: (_, languageNotifier, __) => Consumer<ThemeChangeNotifier>(
+        builder: (___, themeNotifier, ____) => MaterialApp(
+          navigatorKey: navigatorKey,
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            locator.get<TranslationsDelegate>(),
+          ],
+          supportedLocales: supportedLocales,
+          locale: languageNotifier.selectedLocale,
+          title: 'MoPS',
+          darkTheme: ThemeData.dark(),
+          theme: ThemeData.light(),
+          themeMode: themeNotifier.selectedTheme,
+          home: MainWidget(),
+          debugShowCheckedModeBanner: false,
         ),
-        home: MainWidget(),
-        debugShowCheckedModeBanner: false,
       ),
     );
   }

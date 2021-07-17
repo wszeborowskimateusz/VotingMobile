@@ -61,6 +61,7 @@ class RoundRadioItem<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -84,9 +85,9 @@ class RoundRadioItem<T> extends StatelessWidget {
               Text(
                 _item.displayText,
                 style: TextStyle(
-                    color: _item.isSelected ? Colors.white : Colors.black,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold),
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -100,9 +101,11 @@ class RoundRadioItem<T> extends StatelessWidget {
               offset: Offset(5.0, 5.0),
             )
           ],
-          color: _item.isSelected ? _item.selectedColor : Colors.white,
-          border:
-              Border.all(width: 1.0, color: _item.isSelected ? _item.selectedColor : Colors.white),
+          color: _item.isSelected ? _item.selectedColor : backgroundColor,
+          border: Border.all(
+            width: 1.0,
+            color: _item.isSelected ? _item.selectedColor : backgroundColor,
+          ),
           borderRadius: const BorderRadius.all(const Radius.elliptical(100.0, 100.0)),
         ),
       ),

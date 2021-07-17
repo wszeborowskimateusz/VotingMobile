@@ -16,14 +16,14 @@ class VotingResultsBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: <Widget>[
+      children: [
         Container(
           constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
           margin: EdgeInsets.symmetric(horizontal: 12),
           height: boxHeight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10.0),
-            color: Colors.white,
+            color: Theme.of(context).scaffoldBackgroundColor,
             boxShadow: [
               BoxShadow(
                 color: Colors.grey,
@@ -37,7 +37,7 @@ class VotingResultsBox extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
+              children: [
                 Text(
                   votingName,
                   style: Theme.of(context).textTheme.bodyText1,

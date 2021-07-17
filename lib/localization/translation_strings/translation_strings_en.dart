@@ -89,4 +89,13 @@ class TranslationStringsEn extends Translations {
   @override
   String get noCurrentActiveVotingDisclaimer =>
       "Curently there is no active voting or you have already voted";
+
+  @override
+  String get darkTheme => "Dark";
+
+  @override
+  String get lightTheme => "Light";
+
+  @override
+  String get theme => "Theme";
 }

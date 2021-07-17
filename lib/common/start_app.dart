@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/settings/language_change_notifier.dart';
+import 'package:votingmobile/common/settings/theme_change_notifier.dart';
 import 'package:votingmobile/common/ui/home_page.dart';
 import 'package:votingmobile/voting/backend/votings_repository.dart';
 
@@ -18,12 +19,13 @@ void startApp(Config config) async {
   }
   HttpOverrides.global = new _IgnoreBadCertificate();
   runApp(
-    ChangeNotifierProvider<LanguageChangeNotifier>(
-      create: (_) => LanguageChangeNotifier(),
-      child: ChangeNotifierProvider<ActiveVoting>(
-        create: (_) => ActiveVoting(),
-        child: HomePage(),
-      ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<LanguageChangeNotifier>(create: (_) => LanguageChangeNotifier()),
+        ChangeNotifierProvider<ThemeChangeNotifier>(create: (_) => ThemeChangeNotifier()),
+        ChangeNotifierProvider<ActiveVoting>(create: (_) => ActiveVoting()),
+      ],
+      child: HomePage(),
     ),
   );
 }

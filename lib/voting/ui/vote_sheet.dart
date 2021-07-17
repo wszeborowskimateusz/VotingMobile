@@ -43,7 +43,7 @@ class _VoteSheetState extends State<VoteSheet> {
         snappings: [56, double.infinity],
         positioning: SnapPositioning.pixelOffset,
       ),
-      body: Container(color: Colors.white, child: widget.body),
+      body: widget.body,
       builder: (context, state) {
         final activeVoting = Provider.of<ActiveVoting>(context, listen: false).activeVoting;
         if (activeVoting == null) {

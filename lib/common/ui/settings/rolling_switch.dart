@@ -59,7 +59,7 @@ class _RollingSwitchState extends State<RollingSwitch> with SingleTickerProvider
       });
     });
     turnState = widget.value;
-    _determine();
+    _animate(changeState: false);
   }
 
   @override
@@ -67,9 +67,9 @@ class _RollingSwitchState extends State<RollingSwitch> with SingleTickerProvider
     Color transitionColor = Color.lerp(widget.colorOff, widget.colorOn, value);
 
     return GestureDetector(
-      onDoubleTap: () => _determine(changeState: true),
-      onTap: () => _determine(changeState: true),
-      onPanEnd: (details) => _determine(changeState: true),
+      onDoubleTap: () => _animate(),
+      onTap: () => _animate(),
+      onPanEnd: (_) => _animate(),
       child: Container(
         padding: EdgeInsets.all(5),
         width: 130,
@@ -154,12 +154,14 @@ class _RollingSwitchState extends State<RollingSwitch> with SingleTickerProvider
     );
   }
 
-  _determine({bool changeState = false}) {
+  void _animate({bool changeState = true}) {
     setState(() {
       if (changeState) turnState = !turnState;
       (turnState) ? animationController.forward() : animationController.reverse();
 
-      widget.onChanged(turnState);
+      if (changeState) {
+        widget.onChanged(turnState);
+      }
     });
   }
 }

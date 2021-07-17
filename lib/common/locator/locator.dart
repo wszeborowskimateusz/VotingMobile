@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:votingmobile/common/backend/locale_repository.dart';
+import 'package:votingmobile/common/backend/theme_repository.dart';
 import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/http/http_client.dart';
 import 'package:votingmobile/login/backend/user_authentication_api.dart';
@@ -22,5 +23,6 @@ Future<void> registerDependencies(Config config) async {
   locator.registerLazySingleton<UserRepository>(() => UserRepository());
   locator.registerLazySingleton<VotingsRepository>(() => VotingsRepository());
   locator.registerLazySingleton<LocaleRepository>(() => LocaleRepository());
+  locator.registerLazySingleton<ThemeRepository>(() => ThemeRepository());
   locator.registerLazySingleton<TranslationsDelegate>(() => TranslationsDelegate());
 }
