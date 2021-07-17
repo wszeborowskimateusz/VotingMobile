@@ -32,7 +32,8 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(CommonRoute), findsOneWidget);
-    expect(find.byType(RollingSwitch), findsOneWidget);
+    /// Locale and theme
+    expect(find.byType(RollingSwitch), findsNWidgets(2));
   });
 
   testWidgets("Settings should display logout button when user is logged in",

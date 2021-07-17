@@ -2,12 +2,12 @@ import 'package:flutter/widgets.dart';
 import 'package:votingmobile/common/backend/locale_repository.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 
-class LanguageChangeNotifier extends ChangeNotifier {
+class LocaleChangeNotifier extends ChangeNotifier {
   final LocaleRepository _localeRepository = locator.get();
 
   Locale _selectedLocale;
 
-  LanguageChangeNotifier() {
+  LocaleChangeNotifier() {
     _localeRepository.getLocaleFromStorage().then((value) {
       _selectedLocale = value;
     });

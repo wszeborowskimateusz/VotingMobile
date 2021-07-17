@@ -8,7 +8,7 @@ import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/loader/screen_loader.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
-import 'package:votingmobile/common/settings/language_change_notifier.dart';
+import 'package:votingmobile/common/settings/locale_change_notifier.dart';
 import 'package:votingmobile/common/settings/theme_change_notifier.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_route.dart';
@@ -135,7 +135,7 @@ class _SettingsPageState extends State<SettingsPage> with ScreenLoader {
   }
 
   Widget _buildLocaleSettings() {
-    return Consumer<LanguageChangeNotifier>(
+    return Consumer<LocaleChangeNotifier>(
       builder: (_, model, __) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
