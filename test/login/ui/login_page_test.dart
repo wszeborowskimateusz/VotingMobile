@@ -14,9 +14,7 @@ void main() {
     locator.registerLazySingleton<UserRepository>(() => UserRepositoryMock());
   });
 
-  testWidgets("Login page should be displayed",
-      (WidgetTester tester) async {
-
+  testWidgets("Login page should be displayed", (WidgetTester tester) async {
     final Widget testableWidget = makeTestableWidgetWithActiveVoting(LoginPage());
 
     await tester.pumpWidget(testableWidget);

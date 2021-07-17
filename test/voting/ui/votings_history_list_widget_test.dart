@@ -24,11 +24,9 @@ void main() {
     locator.registerLazySingleton<VotingsRepository>(() => votingsRepository);
   });
 
-  testWidgets("VotingsHistoryListWidget should be displayed",
-      (WidgetTester tester) async {
+  testWidgets("VotingsHistoryListWidget should be displayed", (WidgetTester tester) async {
     final votingsHistory = _getVotingsHistory();
-    when(votingsRepository.getVotingsHistory())
-        .thenAnswer((_) async => votingsHistory);
+    when(votingsRepository.getVotingsHistory()).thenAnswer((_) async => votingsHistory);
     final Widget testableWidget = makeTestableWidgetWithActiveVoting(
       VotingsHistoryListWidget(),
     );
@@ -41,8 +39,7 @@ void main() {
     expect(find.text(testStrings.votingsHistory), findsOneWidget);
   });
 
-  testWidgets(
-      "VotingsHistoryListWidget should be displayed when there are no votings in history",
+  testWidgets("VotingsHistoryListWidget should be displayed when there are no votings in history",
       (WidgetTester tester) async {
     when(votingsRepository.getVotingsHistory()).thenAnswer((_) async => []);
     final Widget testableWidget = makeTestableWidgetWithActiveVoting(

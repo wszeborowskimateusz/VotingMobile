@@ -6,8 +6,7 @@ part of 'user_credentials.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Map<String, dynamic> _$UserCredentialsToJson(UserCredentials instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$UserCredentialsToJson(UserCredentials instance) => <String, dynamic>{
       'login': instance.login,
       'password': instance.password,
     };

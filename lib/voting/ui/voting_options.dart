@@ -22,8 +22,7 @@ class VotingOptions extends StatefulWidget {
   _VotingOptionsState createState() => _VotingOptionsState();
 }
 
-class _VotingOptionsState extends State<VotingOptions>
-    with AutomaticKeepAliveClientMixin {
+class _VotingOptionsState extends State<VotingOptions> with AutomaticKeepAliveClientMixin {
   List<RadioModel<VoteType>> incidentTypeList;
 
   @override

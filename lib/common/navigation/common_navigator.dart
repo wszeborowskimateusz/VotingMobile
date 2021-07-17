@@ -6,8 +6,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void navigateToHomePage(BuildContext context) {
   Navigator.pushAndRemoveUntil(
     context,
-    MaterialPageRoute(
-        builder: (context) => MainWidget(), settings: RouteSettings()),
+    MaterialPageRoute(builder: (context) => MainWidget(), settings: RouteSettings()),
     (_) => false,
   );
 }

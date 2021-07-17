@@ -30,12 +30,10 @@ class CommonHttpClient {
   String get token => _tokenManager.token;
 
   Future<T> get<T>({String url, ResponseParser<T> responseParser}) async {
-    final response = await http
-        .get(_prepareApiUrl(url), headers: _commonHeaders())
-        .catchError(_handleError);
+    final response =
+        await http.get(_prepareApiUrl(url), headers: _commonHeaders()).catchError(_handleError);
 
-    return _parseResponse(response, parser: responseParser)
-        .catchError(_handleError);
+    return _parseResponse(response, parser: responseParser).catchError(_handleError);
   }
 
   Future<T> post<T>({
@@ -52,8 +50,7 @@ class CommonHttpClient {
       _handleError(error);
     }));
 
-    return _parseResponse(response,
-            parser: responseParser, handle401: handle401)
+    return _parseResponse(response, parser: responseParser, handle401: handle401)
         .catchError((error) {
       _handleError(error);
     });
@@ -65,12 +62,10 @@ class CommonHttpClient {
 
   Map<String, String> _commonHeaders({bool withContentType = false}) {
     Map<String, String> headers = {
-      if (withContentType)
-        HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
+      if (withContentType) HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
     };
     if (_tokenManager.token != null) {
-      headers[HttpHeaders.authorizationHeader] =
-          'Bearer ${_tokenManager.token}';
+      headers[HttpHeaders.authorizationHeader] = 'Bearer ${_tokenManager.token}';
     }
 
     return headers;

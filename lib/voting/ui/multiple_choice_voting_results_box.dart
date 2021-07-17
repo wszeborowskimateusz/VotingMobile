@@ -12,12 +12,10 @@ class MultipleChoiceVotingResultsBox extends StatefulWidget {
   const MultipleChoiceVotingResultsBox({@required this.voting});
 
   @override
-  _MultipleChoiceVotingResultsBoxState createState() =>
-      _MultipleChoiceVotingResultsBoxState();
+  _MultipleChoiceVotingResultsBoxState createState() => _MultipleChoiceVotingResultsBoxState();
 }
 
-class _MultipleChoiceVotingResultsBoxState
-    extends State<MultipleChoiceVotingResultsBox> {
+class _MultipleChoiceVotingResultsBoxState extends State<MultipleChoiceVotingResultsBox> {
   int _current = 0;
 
   @override
@@ -33,8 +31,7 @@ class _MultipleChoiceVotingResultsBoxState
           ),
         ),
         Container(
-          constraints:
-              BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
+          constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
           child: CarouselSlider.builder(
             itemCount: widget.voting.options.length,
             itemBuilder: (context, index, _) {
@@ -61,8 +58,7 @@ class _MultipleChoiceVotingResultsBoxState
                 }),
           ),
         ),
-        DotsIndicator<VotingOption>(
-            options: widget.voting.options, current: _current),
+        DotsIndicator<VotingOption>(options: widget.voting.options, current: _current),
       ],
     );
   }

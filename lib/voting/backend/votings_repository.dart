@@ -44,8 +44,7 @@ class ActiveVoting extends ChangeNotifier {
   }
 
   Future<void> vote(UserVotes votes) async {
-    assert(
-        _activeVoting != null, "You can only vote when some voting is active");
+    assert(_activeVoting != null, "You can only vote when some voting is active");
     await _votingsApi.vote(_activeVoting.id, votes);
     _activeVoting = null;
     notifyListeners();

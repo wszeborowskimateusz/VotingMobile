@@ -34,8 +34,7 @@ class Voting extends Equatable {
     @required this.options,
     this.results,
   }) : assert(
-            status != VotingStatus.FINISHED ||
-                (status == VotingStatus.FINISHED && results != null),
+            status != VotingStatus.FINISHED || (status == VotingStatus.FINISHED && results != null),
             "When voting is finished it should have result");
 
   factory Voting.fromJson(dynamic json) => _$VotingFromJson(json);

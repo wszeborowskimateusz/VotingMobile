@@ -26,22 +26,21 @@ void main() {
   testWidgets("Settings page should be displayed", (WidgetTester tester) async {
     when(userRepository.isLoggedIn).thenReturn(false);
 
-    final Widget testableWidget =
-        makeTestableWidgetWithActiveVoting(SettingsPage());
+    final Widget testableWidget = makeTestableWidgetWithActiveVoting(SettingsPage());
 
     await tester.pumpWidget(testableWidget);
     await tester.pumpAndSettle();
 
     expect(find.byType(CommonRoute), findsOneWidget);
-    expect(find.byType(RollingSwitch), findsOneWidget);
+    /// Locale and theme
+    expect(find.byType(RollingSwitch), findsNWidgets(2));
   });
 
   testWidgets("Settings should display logout button when user is logged in",
       (WidgetTester tester) async {
     when(userRepository.isLoggedIn).thenReturn(true);
 
-    final Widget testableWidget =
-        makeTestableWidgetWithActiveVoting(SettingsPage());
+    final Widget testableWidget = makeTestableWidgetWithActiveVoting(SettingsPage());
 
     await tester.pumpWidget(testableWidget);
     await tester.pumpAndSettle(Duration(seconds: 3));

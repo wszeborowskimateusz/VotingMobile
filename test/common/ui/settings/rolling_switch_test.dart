@@ -28,13 +28,10 @@ void main() {
     await tester.pumpWidget(testableWidget);
     await tester.pumpAndSettle();
 
-    final opacity1 =
-        find.byWidgetPredicate((w) => w is Opacity && w.opacity == 1.0);
+    final opacity1 = find.byWidgetPredicate((w) => w is Opacity && w.opacity == 1.0);
 
-    final yesValueFInder =
-        find.descendant(of: opacity1, matching: find.text(_yesValue));
-    final noValueFInder =
-        find.descendant(of: opacity1, matching: find.text(_noValue));
+    final yesValueFInder = find.descendant(of: opacity1, matching: find.text(_yesValue));
+    final noValueFInder = find.descendant(of: opacity1, matching: find.text(_noValue));
 
     expect(yesValueFInder, findsOneWidget);
     expect(noValueFInder, findsNothing);

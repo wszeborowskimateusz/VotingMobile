@@ -14,8 +14,7 @@ const Key _key = Key("some key");
 
 void main() {
   setUpAll(() {
-    locator.registerLazySingleton<VotingsRepository>(
-        () => VotingsRepositoryMock());
+    locator.registerLazySingleton<VotingsRepository>(() => VotingsRepositoryMock());
   });
 
   testWidgets("VoteSheet should be displayed", (WidgetTester tester) async {

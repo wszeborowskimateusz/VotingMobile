@@ -56,8 +56,7 @@ class _ExpandedWithScroll extends StatelessWidget {
   final Widget expandedSection;
   final Widget bottomSection;
 
-  const _ExpandedWithScroll(
-      {this.topSection, this.expandedSection, this.bottomSection});
+  const _ExpandedWithScroll({this.topSection, this.expandedSection, this.bottomSection});
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +64,8 @@ class _ExpandedWithScroll extends StatelessWidget {
       builder: (context, constraint) {
         return SingleChildScrollView(
           child: ConstrainedBox(
-            constraints: BoxConstraints(
-                minHeight: constraint.maxHeight, minWidth: constraint.maxWidth),
+            constraints:
+                BoxConstraints(minHeight: constraint.maxHeight, minWidth: constraint.maxWidth),
             child: IntrinsicHeight(
               child: Column(
                 children: <Widget>[
@@ -75,8 +74,7 @@ class _ExpandedWithScroll extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         if (topSection != null) topSection,
-                        if (expandedSection != null)
-                          Expanded(child: expandedSection),
+                        if (expandedSection != null) Expanded(child: expandedSection),
                       ],
                     ),
                   ),

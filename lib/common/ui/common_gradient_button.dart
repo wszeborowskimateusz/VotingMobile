@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:votingmobile/common/config/config.dart';
 
 class CommonGradientButton extends StatelessWidget {
-  static const BorderRadius _borderRadius =
-      BorderRadius.all(Radius.circular(8.0));
+  static const BorderRadius _borderRadius = BorderRadius.all(Radius.circular(8.0));
 
   final VoidCallback onPressed;
   final String title;
 
-  const CommonGradientButton(
-      {@required this.title, @required this.onPressed, Key key})
+  const CommonGradientButton({@required this.title, @required this.onPressed, Key key})
       : super(key: key);
 
   @override
@@ -17,8 +15,7 @@ class CommonGradientButton extends StatelessWidget {
     return SizedBox(
       height: 50,
       child: Container(
-        constraints:
-            BoxConstraints(maxWidth: Config.maxElementInAppWidth - 100),
+        constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 100),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(0.0),
@@ -30,8 +27,7 @@ class CommonGradientButton extends StatelessWidget {
           onPressed: onPressed,
           child: Ink(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Color(0xff4169E1), Color(0xff20b2aa)]),
+              gradient: LinearGradient(colors: [Color(0xff4169E1), Color(0xff20b2aa)]),
               borderRadius: _borderRadius,
             ),
             child: Container(

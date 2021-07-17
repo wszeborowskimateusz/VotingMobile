@@ -8,8 +8,7 @@ import '../../make_testable_widget.dart';
 const Key _key = Key("some widget key");
 
 void main() {
-  testWidgets("Screen loader should be displayed properly",
-      (WidgetTester tester) async {
+  testWidgets("Screen loader should be displayed properly", (WidgetTester tester) async {
     final Widget testableWidget = makeTestableWidget(_TestWidget());
 
     await tester.pumpWidget(testableWidget);

@@ -66,7 +66,7 @@ abstract class Translations {
   String get loginIncorrectUsernameOrPassword;
 
   String get loginIncorrectUserBlocked;
-  
+
   String get loginIncorrectNoSession;
 
   String get logout;
@@ -80,4 +80,10 @@ abstract class Translations {
   String get emptyVote;
 
   String get noCurrentActiveVotingDisclaimer;
+
+  String get theme;
+
+  String get lightTheme;
+
+  String get darkTheme;
 }

@@ -8,8 +8,7 @@ const String _buttonText = "some text";
 const Key _key = Key("gradient button");
 
 void main() {
-  testWidgets("Common gradient button should be displayed",
-      (WidgetTester tester) async {
+  testWidgets("Common gradient button should be displayed", (WidgetTester tester) async {
     bool wasButtonPressed = false;
     final Widget testableWidget = makeTestableWidget(CommonGradientButton(
       key: _key,

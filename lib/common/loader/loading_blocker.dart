@@ -41,23 +41,20 @@ class AnimatedDot extends StatefulWidget {
   final double dotSize;
   final Color color;
 
-  const AnimatedDot({Key key, this.startingPhase, this.dotSize, this.color})
-      : super(key: key);
+  const AnimatedDot({Key key, this.startingPhase, this.dotSize, this.color}) : super(key: key);
 
   @override
   _AnimatedDotState createState() => _AnimatedDotState();
 }
 
-class _AnimatedDotState extends State<AnimatedDot>
-    with SingleTickerProviderStateMixin {
+class _AnimatedDotState extends State<AnimatedDot> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<Color> _animation;
 
   @override
   void initState() {
     super.initState();
-    _controller =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
     _playAnimation();
 

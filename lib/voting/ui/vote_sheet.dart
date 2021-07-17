@@ -43,10 +43,9 @@ class _VoteSheetState extends State<VoteSheet> {
         snappings: [56, double.infinity],
         positioning: SnapPositioning.pixelOffset,
       ),
-      body: Container(color: Colors.white, child: widget.body),
+      body: widget.body,
       builder: (context, state) {
-        final activeVoting =
-            Provider.of<ActiveVoting>(context, listen: false).activeVoting;
+        final activeVoting = Provider.of<ActiveVoting>(context, listen: false).activeVoting;
         if (activeVoting == null) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -94,16 +93,10 @@ class _Header extends StatelessWidget {
             width: double.infinity,
             alignment: Alignment.center,
             child: Text(
-              customTitle ??
-                  (isExpanded
-                      ? translations.activeVoting
-                      : translations.goToVoting),
+              customTitle ?? (isExpanded ? translations.activeVoting : translations.goToVoting),
               textAlign: TextAlign.center,
               style: customTitle != null
-                  ? Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(color: Colors.white)
+                  ? Theme.of(context).textTheme.headline6.copyWith(color: Colors.white)
                   : Theme.of(context).textTheme.headline5.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

@@ -58,8 +58,7 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 8.0, bottom: 16.0),
-                        child: Text(translations.loginDisclaimer,
-                            textAlign: TextAlign.center),
+                        child: Text(translations.loginDisclaimer, textAlign: TextAlign.center),
                       ),
                       InputForm(
                         loginController: _loginController,
@@ -71,14 +70,10 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
                         onSubmit: () => _onLogin(context),
                         bottomSection: _loginStatus != LoginStatus.successful
                             ? Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 8.0, top: 16.0),
+                                padding: const EdgeInsets.only(bottom: 8.0, top: 16.0),
                                 child: Text(
                                   _getLoginErrorInfo(translations),
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .subtitle2
-                                      .copyWith(
+                                  style: Theme.of(context).primaryTextTheme.subtitle2.copyWith(
                                         color: Colors.red,
                                       ),
                                 ),
@@ -91,8 +86,7 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
               ),
             ),
             Container(
-              constraints:
-                  BoxConstraints(maxWidth: Config.maxElementInAppWidth),
+              constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth),
               alignment: Alignment.center,
               child: CommonGradientButton(
                 title: translations.login,
@@ -122,12 +116,10 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader {
     final String login = _loginController.text;
     final String password = _passwordController.text;
 
-    final loginStatus =
-        await performFuture(() => _userRepository.login(login, password));
+    final loginStatus = await performFuture(() => _userRepository.login(login, password));
     if (loginStatus == LoginStatus.successful) {
       navigateToHomePage(context);
-      await Provider.of<ActiveVoting>(context, listen: false)
-          .updateActiveVoting();
+      await Provider.of<ActiveVoting>(context, listen: false).updateActiveVoting();
     } else {
       setState(() {
         _loginStatus = loginStatus;
@@ -202,10 +194,7 @@ class _InputFormState extends State<InputForm> {
                 labelText: translations.password,
                 suffix: IconButton(
                   icon: Icon(
-                    _isPasswordObscured
-                        ? Icons.visibility_off
-                        : Icons.visibility,
-                    color: Colors.black,
+                    _isPasswordObscured ? Icons.visibility_off : Icons.visibility,
                   ),
                   onPressed: () {
                     setState(() {

@@ -39,8 +39,7 @@ class TranslationStringsEn extends Translations {
       "Are you sure you want to vote for $votedAnswersAmount / $allQuestionsAmount options ?";
 
   @override
-  String singleVoteInfo(String voteType) =>
-      "Are you sure you want to vote: $voteType ?";
+  String singleVoteInfo(String voteType) => "Are you sure you want to vote: $voteType ?";
 
   @override
   String get voteAccept => "Accept";
@@ -56,8 +55,7 @@ class TranslationStringsEn extends Translations {
       "Use the credentials received at the begining of the voting session to log in.";
 
   @override
-  String get loginIncorrectUsernameOrPassword =>
-      "Incorrect username or password";
+  String get loginIncorrectUsernameOrPassword => "Incorrect username or password";
 
   @override
   String get loginIncorrectNoSession =>
@@ -91,4 +89,13 @@ class TranslationStringsEn extends Translations {
   @override
   String get noCurrentActiveVotingDisclaimer =>
       "Curently there is no active voting or you have already voted";
+
+  @override
+  String get darkTheme => "Dark";
+
+  @override
+  String get lightTheme => "Light";
+
+  @override
+  String get theme => "Theme";
 }

@@ -2,15 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shake/shake.dart';
-import 'package:votingmobile/common/backend/locale_repository.dart';
 import 'package:votingmobile/common/config/config.dart';
 import 'package:votingmobile/common/loader/screen_loader.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 import 'package:votingmobile/common/navigation/common_navigator.dart';
+import 'package:votingmobile/common/settings/locale_change_notifier.dart';
+import 'package:votingmobile/common/settings/theme_change_notifier.dart';
 import 'package:votingmobile/common/ui/common_gradient_button.dart';
 import 'package:votingmobile/common/ui/common_route.dart';
-import 'package:votingmobile/common/ui/home_page.dart';
 import 'package:votingmobile/common/ui/settings/rolling_switch.dart';
 import 'package:votingmobile/localization/translations.dart';
 import 'package:votingmobile/localization/translations_delegate.dart';
@@ -26,10 +27,8 @@ class _SettingsPageState extends State<SettingsPage> with ScreenLoader {
   static const String _easterEgg = "assets/images/easter_egg.jpg";
   static const Duration _fadeDuration = Duration(milliseconds: 500);
 
-  static const Map<bool, Locale> _valueToLocaleMap = {
-    true: englishLocale,
-    false: polishLocale
-  };
+  static const Map<bool, Locale> _valueToLocaleMap = {true: englishLocale, false: polishLocale};
+  static const Map<bool, ThemeMode> _valueToThemeMap = {true: ThemeMode.light, false: ThemeMode.dark};
   final userRepository = locator.get<UserRepository>();
   bool initialized = false;
   ShakeDetector _shakeDetector;
@@ -86,10 +85,10 @@ class _SettingsPageState extends State<SettingsPage> with ScreenLoader {
           children: [
             Column(
               mainAxisSize: MainAxisSize.max,
-              children: <Widget>[
-                Divider(),
-                _buildLocaleSettings(context),
-                Divider(),
+              children: [
+                _buildLocaleSettings(),
+                Divider(height: 50.0),
+                _buildThemeSettings(),
               ],
             ),
             Align(
@@ -112,7 +111,7 @@ class _SettingsPageState extends State<SettingsPage> with ScreenLoader {
   }
 
   Widget _buildEasterEgg() {
-    return Padding( 
+    return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: GestureDetector(
         onDoubleTap: () {
@@ -135,40 +134,60 @@ class _SettingsPageState extends State<SettingsPage> with ScreenLoader {
     );
   }
 
-  Widget _buildLocaleSettings(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Text(
-          Translations.of(context).language,
-          style: Theme.of(context).textTheme.headline5,
-        ),
-        RollingSwitch(
-          value:
-              locator.get<LocaleRepository>().selectedLocale == englishLocale,
-          textOn: 'English',
-          textOff: 'Polski',
-          colorOn: Colors.blueAccent[700],
-          colorOff: Colors.redAccent[700],
-          iconOnPath: "assets/images/gb.png",
-          iconOffPath: "assets/images/pl.png",
-          textSize: 16.0,
-          onChanged: (bool state) {
-            if (!initialized) {
-              initialized = true;
-              // Skip initial change (due to animation)
-            } else {
-              onLocaleChanged(_valueToLocaleMap[state]);
-            }
-          },
-        ),
-      ],
+  Widget _buildLocaleSettings() {
+    return Consumer<LocaleChangeNotifier>(
+      builder: (_, model, __) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            Translations.of(context).language,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          RollingSwitch(
+            value: model.selectedLocale == englishLocale,
+            textOn: 'English',
+            textOff: 'Polski',
+            colorOn: Colors.blueAccent[700],
+            colorOff: Colors.redAccent[700],
+            iconOnPath: "assets/images/gb.png",
+            iconOffPath: "assets/images/pl.png",
+            textSize: 16.0,
+            onChanged: (bool state) async {
+              await model.changeLocale(_valueToLocaleMap[state]);
+            },
+          ),
+        ],
+      ),
     );
   }
 
-  void onLocaleChanged(Locale newLocale) async {
-    await locator.get<LocaleRepository>().setLocale(newLocale);
-    HomePage.setLocale(context, newLocale);
+  Widget _buildThemeSettings() {
+    final translations = Translations.of(context);
+    return Consumer<ThemeChangeNotifier>(
+      builder: (_, model, __) => Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            translations.theme,
+            style: Theme.of(context).textTheme.headline5,
+          ),
+          RollingSwitch(
+            value: model.selectedTheme == ThemeMode.light,
+            textOn: translations.lightTheme,
+            textOff: translations.darkTheme,
+            colorOn: Colors.yellow[300],
+            colorOff: Colors.black,
+            iconOnPath: "assets/images/sun.png",
+            iconOffPath: "assets/images/moon.png",
+            textSize: 16.0,
+            onChanged: (bool state) async {
+              await model.changeTheme(_valueToThemeMap[state]);
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

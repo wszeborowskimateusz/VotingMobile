@@ -6,10 +6,8 @@ part of 'voting_cardinality.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-const VotingCardinality _$singleChoice =
-    const VotingCardinality._('SINGLE_CHOICE');
-const VotingCardinality _$multipleChoice =
-    const VotingCardinality._('MULTIPLE_CHOICE');
+const VotingCardinality _$singleChoice = const VotingCardinality._('SINGLE_CHOICE');
+const VotingCardinality _$multipleChoice = const VotingCardinality._('MULTIPLE_CHOICE');
 
 VotingCardinality _$valueOf(String name) {
   switch (name) {
