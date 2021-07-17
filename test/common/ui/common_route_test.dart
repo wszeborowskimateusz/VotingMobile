@@ -10,8 +10,7 @@ const String _routeTitle = "route title";
 
 void main() {
   testWidgets("Common route should be displayed", (WidgetTester tester) async {
-    final Widget testableWidget =
-        makeTestableWidgetWithActiveVoting(CommonRoute(
+    final Widget testableWidget = makeTestableWidgetWithActiveVoting(CommonRoute(
       title: _routeTitle,
       child: Container(key: _key),
     ));

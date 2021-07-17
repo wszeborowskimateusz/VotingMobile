@@ -11,13 +11,11 @@ class UserAuthenticationApiMock extends Mock implements UserAuthenticationApi {}
 class CommonHttpClientMock extends Mock implements CommonHttpClient {}
 
 void main() {
-  final UserAuthenticationApi userAuthenticationApi =
-      UserAuthenticationApiMock();
+  final UserAuthenticationApi userAuthenticationApi = UserAuthenticationApiMock();
   final CommonHttpClient commonHttpClient = CommonHttpClientMock();
 
   setUpAll(() {
-    locator.registerLazySingleton<UserAuthenticationApi>(
-        () => userAuthenticationApi);
+    locator.registerLazySingleton<UserAuthenticationApi>(() => userAuthenticationApi);
     locator.registerLazySingleton<CommonHttpClient>(() => commonHttpClient);
   });
 
@@ -74,9 +72,7 @@ void main() {
     expect(result, LoginStatus.wrongUsernameOrPassword);
   });
 
-  test(
-      "logout should call httpClient and userAuthenticationApi when user is logged in",
-      () async {
+  test("logout should call httpClient and userAuthenticationApi when user is logged in", () async {
     final UserRepository repository = UserRepository();
 
     when(commonHttpClient.token).thenReturn("some token");
@@ -87,8 +83,7 @@ void main() {
     verify(userAuthenticationApi.logout()).called(1);
   });
 
-  test(
-      "logout should not call httpClient and userAuthenticationApi when user is not logged in",
+  test("logout should not call httpClient and userAuthenticationApi when user is not logged in",
       () async {
     final UserRepository repository = UserRepository();
 

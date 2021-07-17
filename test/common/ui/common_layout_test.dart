@@ -14,8 +14,7 @@ const Key _key = Key("gradient button");
 
 void main() {
   testWidgets("Common layout should be displayed", (WidgetTester tester) async {
-    final Widget testableWidget =
-        makeTestableWidgetWithActiveVoting(CommonLayout(
+    final Widget testableWidget = makeTestableWidgetWithActiveVoting(CommonLayout(
       body: Container(key: _key),
       displayLeftBackIcon: true,
     ));
@@ -28,10 +27,8 @@ void main() {
     expect(find.byIcon(Icons.arrow_back), findsOneWidget);
   });
 
-  testWidgets("Common layout should display custom icons",
-      (WidgetTester tester) async {
-    final Widget testableWidget =
-        makeTestableWidgetWithActiveVoting(CommonLayout(
+  testWidgets("Common layout should display custom icons", (WidgetTester tester) async {
+    final Widget testableWidget = makeTestableWidgetWithActiveVoting(CommonLayout(
       body: Container(key: _key),
       leftIcon: Icon(Icons.ac_unit),
       rightIcon: Icon(Icons.ac_unit_outlined),
@@ -45,8 +42,7 @@ void main() {
     expect(find.byIcon(Icons.ac_unit_outlined), findsOneWidget);
   });
 
-  testWidgets(
-      "Common layout should display vote sheet when active voting is avaliable",
+  testWidgets("Common layout should display vote sheet when active voting is avaliable",
       (WidgetTester tester) async {
     final mockedActiveVoting = ActiveVotingMock();
     when(mockedActiveVoting.activeVoting).thenReturn(Voting(

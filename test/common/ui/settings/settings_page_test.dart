@@ -26,8 +26,7 @@ void main() {
   testWidgets("Settings page should be displayed", (WidgetTester tester) async {
     when(userRepository.isLoggedIn).thenReturn(false);
 
-    final Widget testableWidget =
-        makeTestableWidgetWithActiveVoting(SettingsPage());
+    final Widget testableWidget = makeTestableWidgetWithActiveVoting(SettingsPage());
 
     await tester.pumpWidget(testableWidget);
     await tester.pumpAndSettle();
@@ -40,8 +39,7 @@ void main() {
       (WidgetTester tester) async {
     when(userRepository.isLoggedIn).thenReturn(true);
 
-    final Widget testableWidget =
-        makeTestableWidgetWithActiveVoting(SettingsPage());
+    final Widget testableWidget = makeTestableWidgetWithActiveVoting(SettingsPage());
 
     await tester.pumpWidget(testableWidget);
     await tester.pumpAndSettle(Duration(seconds: 3));

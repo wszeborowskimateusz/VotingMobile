@@ -14,8 +14,7 @@ import 'package:votingmobile/voting/ui/voting_results_box.dart';
 import '../../make_testable_widget.dart';
 
 void main() {
-  testWidgets("MultipleChoiceVotingResultsBox should be displayed",
-      (WidgetTester tester) async {
+  testWidgets("MultipleChoiceVotingResultsBox should be displayed", (WidgetTester tester) async {
     final voting = Voting(
         id: 1,
         cardinality: VotingCardinality.MULTIPLE_CHOICE,
@@ -43,8 +42,7 @@ void main() {
             wasSuccessful: false,
           ),
         });
-    final Widget testableWidget =
-        makeTestableWidgetWithActiveVoting(MultipleChoiceVotingResultsBox(
+    final Widget testableWidget = makeTestableWidgetWithActiveVoting(MultipleChoiceVotingResultsBox(
       voting: voting,
     ));
 

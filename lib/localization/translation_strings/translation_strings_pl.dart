@@ -12,7 +12,7 @@ class TranslationStringsPl extends Translations {
 
   @override
   String get vote => "Zagłosuj";
-  
+
   @override
   String get next => "Następny";
 
@@ -39,8 +39,7 @@ class TranslationStringsPl extends Translations {
       "Czy na pewno chcesz zagłosować na $votedAnswersAmount / $allQuestionsAmount opcji ?";
 
   @override
-  String singleVoteInfo(String voteType) =>
-      "Czy na pewno chcesz zagłosować: $voteType ?";
+  String singleVoteInfo(String voteType) => "Czy na pewno chcesz zagłosować: $voteType ?";
 
   @override
   String get voteAccept => "Zaakceptuj";
@@ -56,10 +55,8 @@ class TranslationStringsPl extends Translations {
       "Użyj nazwy użytkownika i hasła otrzymanego na początku posiedzenia.";
 
   @override
-  String get loginIncorrectUsernameOrPassword =>
-      "Nieprawidłowa nazwa użytkownika lub hasło";
+  String get loginIncorrectUsernameOrPassword => "Nieprawidłowa nazwa użytkownika lub hasło";
 
-      
   @override
   String get loginIncorrectNoSession =>
       "Nie trwa obecnie żadne posiedzenie. Zaczekaj aż przewodniczący rozpocznie posiedzenie.";

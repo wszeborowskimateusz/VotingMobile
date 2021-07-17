@@ -23,8 +23,7 @@ VotingStatus _$valueOf(String name) {
   }
 }
 
-final BuiltSet<VotingStatus> _$values =
-    new BuiltSet<VotingStatus>(const <VotingStatus>[
+final BuiltSet<VotingStatus> _$values = new BuiltSet<VotingStatus>(const <VotingStatus>[
   _$finished,
   _$notStarted,
   _$duringVoting,

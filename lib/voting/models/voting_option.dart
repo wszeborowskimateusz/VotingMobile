@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'voting_option.g.dart';
 
 @JsonSerializable(createToJson: false)
-class VotingOption extends Equatable{
+class VotingOption extends Equatable {
   final int id;
   final String name;
 

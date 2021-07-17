@@ -29,9 +29,8 @@ class TranslationsDelegate extends LocalizationsDelegate<Translations> {
   const TranslationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => supportedLocales
-      .map((Locale locale) => locale.languageCode)
-      .contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      supportedLocales.map((Locale locale) => locale.languageCode).contains(locale.languageCode);
 
   @override
   Future<Translations> load(Locale locale) {

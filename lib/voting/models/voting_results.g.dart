@@ -16,12 +16,10 @@ VotingResults _$VotingResultsFromJson(Map<String, dynamic> json) {
   );
 }
 
-VotingResultsForMultipleChoice _$VotingResultsForMultipleChoiceFromJson(
-    Map<String, dynamic> json) {
+VotingResultsForMultipleChoice _$VotingResultsForMultipleChoiceFromJson(Map<String, dynamic> json) {
   return VotingResultsForMultipleChoice(
     results: (json['results'] as Map<String, dynamic>)?.map(
-      (k, e) =>
-          MapEntry(int.parse(k), e == null ? null : VotingResults.fromJson(e)),
+      (k, e) => MapEntry(int.parse(k), e == null ? null : VotingResults.fromJson(e)),
     ),
   );
 }

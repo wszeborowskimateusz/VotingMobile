@@ -20,8 +20,7 @@ class UserRepository {
       return LoginStatus.successful;
     }).catchError((error) {
       if (error is HttpStatusException) {
-        if (error.statusCode == 404 &&
-            error.body == 'IN_PROGRESS/SUSPENDED') {
+        if (error.statusCode == 404 && error.body == 'IN_PROGRESS/SUSPENDED') {
           return LoginStatus.noSession;
         }
 

@@ -12,12 +12,10 @@ class VotingsRepositoryMock extends Mock implements VotingsRepository {}
 
 void main() {
   setUpAll(() {
-    locator.registerLazySingleton<VotingsRepository>(
-        () => VotingsRepositoryMock());
+    locator.registerLazySingleton<VotingsRepository>(() => VotingsRepositoryMock());
   });
 
-  testWidgets("VotePageSingleChoice should be displayed",
-      (WidgetTester tester) async {
+  testWidgets("VotePageSingleChoice should be displayed", (WidgetTester tester) async {
     final Widget testableWidget = makeTestableWidgetWithActiveVoting(
       VotePageSingleChoice(),
     );

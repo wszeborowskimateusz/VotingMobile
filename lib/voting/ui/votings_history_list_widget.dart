@@ -13,8 +13,7 @@ class VotingsHistoryListWidget extends StatefulWidget {
   VotingsHistoryListWidget();
 
   @override
-  _VotingsHistoryListWidgetState createState() =>
-      _VotingsHistoryListWidgetState();
+  _VotingsHistoryListWidgetState createState() => _VotingsHistoryListWidgetState();
 }
 
 class _VotingsHistoryListWidgetState extends State<VotingsHistoryListWidget> {
@@ -39,8 +38,7 @@ class _VotingsHistoryListWidgetState extends State<VotingsHistoryListWidget> {
             }
 
             final historyVotings = snapshot.hasError ? [] : snapshot.data;
-            return activeVotingModel.activeVoting == null &&
-                    historyVotings.isEmpty
+            return activeVotingModel.activeVoting == null && historyVotings.isEmpty
                 ? NoActiveVotingNoVotingsHistory()
                 : historyVotings.isEmpty
                     ? _NoVotingsHistory()
@@ -90,8 +88,7 @@ class _VotingsHistoryListWidgetState extends State<VotingsHistoryListWidget> {
     setState(() {
       _isRefreshing = true;
     });
-    await Provider.of<ActiveVoting>(context, listen: false)
-        .updateActiveVoting();
+    await Provider.of<ActiveVoting>(context, listen: false).updateActiveVoting();
     setState(() {
       _isRefreshing = false;
     });
@@ -137,10 +134,7 @@ class _PageTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       Translations.of(context).votingsHistory,
-      style: Theme.of(context)
-          .textTheme
-          .headline4
-          .copyWith(fontWeight: FontWeight.bold),
+      style: Theme.of(context).textTheme.headline4.copyWith(fontWeight: FontWeight.bold),
     );
   }
 }

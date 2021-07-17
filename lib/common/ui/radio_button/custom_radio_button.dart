@@ -5,12 +5,10 @@ class CustomRadioGroupWidget<T> extends StatefulWidget {
   final ValueChanged<T> onChanged;
   final List<RadioModel<T>> radioList;
 
-  const CustomRadioGroupWidget({Key key, this.radioList, this.onChanged})
-      : super(key: key);
+  const CustomRadioGroupWidget({Key key, this.radioList, this.onChanged}) : super(key: key);
 
   @override
-  _CustomRadioGroupWidgetState<T> createState() =>
-      _CustomRadioGroupWidgetState<T>();
+  _CustomRadioGroupWidgetState<T> createState() => _CustomRadioGroupWidgetState<T>();
 }
 
 class _CustomRadioGroupWidgetState<T> extends State<CustomRadioGroupWidget<T>> {
@@ -37,8 +35,7 @@ class _CustomRadioGroupWidgetState<T> extends State<CustomRadioGroupWidget<T>> {
                 _selectedValue = null;
                 _publishSelection(_selectedValue);
               } else {
-                widget.radioList
-                    .forEach((element) => element.isSelected = false);
+                widget.radioList.forEach((element) => element.isSelected = false);
                 widget.radioList[index].isSelected = true;
                 _selectedValue = widget.radioList[index].value;
                 _publishSelection(_selectedValue);
@@ -67,8 +64,7 @@ class RoundRadioItem<T> extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        margin: const EdgeInsets.only(
-            left: 25.0, right: 25.0, top: 8.0, bottom: 8.0),
+        margin: const EdgeInsets.only(left: 25.0, right: 25.0, top: 8.0, bottom: 8.0),
         height: 60.0,
         width: double.infinity,
         child: Center(
@@ -105,11 +101,9 @@ class RoundRadioItem<T> extends StatelessWidget {
             )
           ],
           color: _item.isSelected ? _item.selectedColor : Colors.white,
-          border: Border.all(
-              width: 1.0,
-              color: _item.isSelected ? _item.selectedColor : Colors.white),
-          borderRadius:
-              const BorderRadius.all(const Radius.elliptical(100.0, 100.0)),
+          border:
+              Border.all(width: 1.0, color: _item.isSelected ? _item.selectedColor : Colors.white),
+          borderRadius: const BorderRadius.all(const Radius.elliptical(100.0, 100.0)),
         ),
       ),
     );

@@ -34,8 +34,7 @@ class RollingSwitch extends StatefulWidget {
   _RollingSwitchState createState() => _RollingSwitchState();
 }
 
-class _RollingSwitchState extends State<RollingSwitch>
-    with SingleTickerProviderStateMixin {
+class _RollingSwitchState extends State<RollingSwitch> with SingleTickerProviderStateMixin {
   AnimationController animationController;
   Animation<double> animation;
   double value = 0.0;
@@ -52,12 +51,8 @@ class _RollingSwitchState extends State<RollingSwitch>
   void initState() {
     super.initState();
     animationController = AnimationController(
-        vsync: this,
-        lowerBound: 0.0,
-        upperBound: 1.0,
-        duration: widget.animationDuration);
-    animation =
-        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
+        vsync: this, lowerBound: 0.0, upperBound: 1.0, duration: widget.animationDuration);
+    animation = CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
     animationController.addListener(() {
       setState(() {
         value = animation.value;
@@ -78,8 +73,7 @@ class _RollingSwitchState extends State<RollingSwitch>
       child: Container(
         padding: EdgeInsets.all(5),
         width: 130,
-        decoration: BoxDecoration(
-            color: transitionColor, borderRadius: BorderRadius.circular(50)),
+        decoration: BoxDecoration(color: transitionColor, borderRadius: BorderRadius.circular(50)),
         child: Stack(
           children: <Widget>[
             Transform.translate(
@@ -126,8 +120,7 @@ class _RollingSwitchState extends State<RollingSwitch>
                   height: 40,
                   width: 40,
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Colors.white),
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                   child: Stack(
                     children: <Widget>[
                       Center(
@@ -164,9 +157,7 @@ class _RollingSwitchState extends State<RollingSwitch>
   _determine({bool changeState = false}) {
     setState(() {
       if (changeState) turnState = !turnState;
-      (turnState)
-          ? animationController.forward()
-          : animationController.reverse();
+      (turnState) ? animationController.forward() : animationController.reverse();
 
       widget.onChanged(turnState);
     });

@@ -47,9 +47,7 @@ class VotingResultsBox extends StatelessWidget {
                 Container(
                     height: 5,
                     width: 25,
-                    color: votingResults.wasSuccessful
-                        ? Colors.green
-                        : Colors.red),
+                    color: votingResults.wasSuccessful ? Colors.green : Colors.red),
                 _VotingNumericResults(votingResults: votingResults),
               ],
             ),
@@ -77,8 +75,7 @@ class _VotingNumericResults extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         _buildResultInfo("assets/images/successful.png", votingResults.inFavor),
-        _buildResultInfo(
-            "assets/images/unsuccessful.png", votingResults.against),
+        _buildResultInfo("assets/images/unsuccessful.png", votingResults.against),
         _buildResultInfo("assets/images/hold.png", votingResults.hold),
       ],
     );

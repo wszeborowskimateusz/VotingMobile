@@ -25,10 +25,7 @@ class CommonVotePage extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             child: Text(
               activeVoting.activeVoting?.name ?? "",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline5
-                  .copyWith(fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.headline5.copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           ),

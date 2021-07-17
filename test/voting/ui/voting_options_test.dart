@@ -21,8 +21,7 @@ void main() {
     await tester.pumpWidget(testableWidget);
     await tester.pump(Duration(seconds: 3));
 
-    expect(find.byType(typeOf<CustomRadioGroupWidget<VoteType>>()),
-        findsOneWidget);
+    expect(find.byType(typeOf<CustomRadioGroupWidget<VoteType>>()), findsOneWidget);
     expect(find.text("option"), findsOneWidget);
   });
 }

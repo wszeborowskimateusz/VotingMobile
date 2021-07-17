@@ -6,13 +6,11 @@ import 'package:votingmobile/voting/ui/voting_results_box.dart';
 import '../../make_testable_widget.dart';
 
 void main() {
-  testWidgets("VotingResultsBox should be displayed",
-      (WidgetTester tester) async {
+  testWidgets("VotingResultsBox should be displayed", (WidgetTester tester) async {
     final Widget testableWidget = makeTestableWidgetWithActiveVoting(
       VotingResultsBox(
         votingName: "some voting",
-        votingResults:
-            VotingResults(against: 1, hold: 2, inFavor: 3, wasSuccessful: true),
+        votingResults: VotingResults(against: 1, hold: 2, inFavor: 3, wasSuccessful: true),
       ),
     );
 

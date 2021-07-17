@@ -12,8 +12,7 @@ final testStrings = TranslationStringsEn();
 
 class ActiveVotingMock extends Mock implements ActiveVoting {}
 
-Widget makeTestableWidgetWithActiveVoting(Widget widget,
-    {ActiveVoting mockedActiveVoting}) {
+Widget makeTestableWidgetWithActiveVoting(Widget widget, {ActiveVoting mockedActiveVoting}) {
   return makeTestableWidget(
     ChangeNotifierProvider<ActiveVoting>(
       create: (context) => mockedActiveVoting ?? ActiveVotingMock(),

@@ -23,8 +23,7 @@ VotingMajority _$valueOf(String name) {
   }
 }
 
-final BuiltSet<VotingMajority> _$values =
-    new BuiltSet<VotingMajority>(const <VotingMajority>[
+final BuiltSet<VotingMajority> _$values = new BuiltSet<VotingMajority>(const <VotingMajority>[
   _$relative,
   _$absolute,
   _$twoThirds,

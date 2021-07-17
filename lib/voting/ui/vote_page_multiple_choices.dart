@@ -17,14 +17,12 @@ import 'package:votingmobile/voting/ui/voting_options.dart';
 
 class VotePageMultipleChoices extends StatefulWidget {
   @override
-  _VotePageMultipleChoicesState createState() =>
-      _VotePageMultipleChoicesState();
+  _VotePageMultipleChoicesState createState() => _VotePageMultipleChoicesState();
 }
 
 enum _BottomVoteButton { Next, Vote }
 
-class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
-    with ScreenLoader {
+class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> with ScreenLoader {
   final VotingsRepository votingsRepository = locator.get();
   final CarouselController _carouselController = CarouselController();
   List<UserVote> _selectedMultipleOptions;
@@ -38,11 +36,10 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
     _selectedMultipleOptions = Provider.of<ActiveVoting>(context, listen: false)
             .activeVoting
             ?.options
-            ?.map((VotingOption option) =>
-                UserVote(optionId: option.id, vote: VoteType.NO_VOTE))
+            ?.map((VotingOption option) => UserVote(optionId: option.id, vote: VoteType.NO_VOTE))
             ?.toList() ??
         [];
-    if([0, 1].contains(_selectedMultipleOptions.length)) {
+    if ([0, 1].contains(_selectedMultipleOptions.length)) {
       _bottomButtonOption = _BottomVoteButton.Vote;
       _wasLastPageReached = true;
     }
@@ -51,36 +48,32 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
   @override
   Widget build(BuildContext context) {
     return Consumer<ActiveVoting>(
-      builder: (context, activeVoting, child) =>
-          activeVoting.activeVoting == null
-              ? Center(child: CircularProgressIndicator())
-              : CommonVotePage(
-                  customVoteButton: _bottomButtonOption == _BottomVoteButton.Next
-                      ? Translations.of(context).next
-                      : Translations.of(context).vote,
-                  bottomButtonOnPressed: _onVoteButtonPressed,
-                  votingOptions: Column(
-                    children: <Widget>[
-                      buildCarouselSlider(activeVoting, context),
-                      Text(
-                        "${_current + 1} / ${activeVoting.activeVoting.options.length}",
-                        style: Theme.of(context).textTheme.headline5,
-                      ),
-                      DotsIndicator<VotingOption>(
-                        options: activeVoting.activeVoting.options,
-                        current: _current,
-                        dotSize: MediaQuery.of(context).size.width > 600
-                            ? 30.0
-                            : 12.0,
-                      ),
-                    ],
+      builder: (context, activeVoting, child) => activeVoting.activeVoting == null
+          ? Center(child: CircularProgressIndicator())
+          : CommonVotePage(
+              customVoteButton: _bottomButtonOption == _BottomVoteButton.Next
+                  ? Translations.of(context).next
+                  : Translations.of(context).vote,
+              bottomButtonOnPressed: _onVoteButtonPressed,
+              votingOptions: Column(
+                children: <Widget>[
+                  buildCarouselSlider(activeVoting, context),
+                  Text(
+                    "${_current + 1} / ${activeVoting.activeVoting.options.length}",
+                    style: Theme.of(context).textTheme.headline5,
                   ),
-                ),
+                  DotsIndicator<VotingOption>(
+                    options: activeVoting.activeVoting.options,
+                    current: _current,
+                    dotSize: MediaQuery.of(context).size.width > 600 ? 30.0 : 12.0,
+                  ),
+                ],
+              ),
+            ),
     );
   }
 
-  CarouselSlider buildCarouselSlider(
-      ActiveVoting activeVoting, BuildContext context) {
+  CarouselSlider buildCarouselSlider(ActiveVoting activeVoting, BuildContext context) {
     final translations = Translations.of(context);
     return CarouselSlider.builder(
       itemCount: activeVoting.activeVoting.options.length,
@@ -93,8 +86,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
             inFavorTranslation: translations.voteInFavor,
             againstTranslation: translations.voteAgainst,
             holdTranslation: translations.voteHold,
-            onValueChanged: (value) =>
-                _onVoteValueChanged(index, value, option.id),
+            onValueChanged: (value) => _onVoteValueChanged(index, value, option.id),
             optionName: option.name,
           ),
         );
@@ -136,20 +128,18 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices>
     if (_bottomButtonOption == _BottomVoteButton.Next) {
       final int nextVoteIndex = _current + 1;
       if (nextVoteIndex < _selectedMultipleOptions.length) {
-        _carouselController.animateToPage(nextVoteIndex,
-            duration: Duration(milliseconds: 500));
+        _carouselController.animateToPage(nextVoteIndex, duration: Duration(milliseconds: 500));
       }
     } else {
       final activeVoting = Provider.of<ActiveVoting>(context, listen: false);
       showConfirmPopup(
         context: context,
-        title: Translations.of(context).multipleVoteInfo(
-            _getVottedAmount, activeVoting.activeVoting.options.length),
+        title: Translations.of(context)
+            .multipleVoteInfo(_getVottedAmount, activeVoting.activeVoting.options.length),
         onConfirm: (innerContext) async {
           // Remove the dialog
           Navigator.pop(innerContext);
-          await performFuture(() =>
-              activeVoting.vote(UserVotes(votes: _selectedMultipleOptions)));
+          await performFuture(() => activeVoting.vote(UserVotes(votes: _selectedMultipleOptions)));
           navigateToHomePage(context);
         },
       );

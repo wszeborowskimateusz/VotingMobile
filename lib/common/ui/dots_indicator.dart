@@ -17,8 +17,7 @@ class DotsIndicator<T> extends StatefulWidget {
   _DotsIndicatorState<T> createState() => _DotsIndicatorState<T>();
 }
 
-class _DotsIndicatorState<T> extends State<DotsIndicator<T>>
-    with AutomaticKeepAliveClientMixin {
+class _DotsIndicatorState<T> extends State<DotsIndicator<T>> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     super.build(context);

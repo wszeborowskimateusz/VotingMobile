@@ -15,16 +15,12 @@ Future<void> registerDependencies(Config config) async {
 
   final httpClient = CommonHttpClient();
   await httpClient.init();
-  final localeRepository = LocaleRepository();
-  await localeRepository.init();
 
   locator.registerLazySingleton<CommonHttpClient>(() => httpClient);
   locator.registerLazySingleton<VotingsApi>(() => VotingsApi());
-  locator.registerLazySingleton<UserAuthenticationApi>(
-      () => UserAuthenticationApi());
+  locator.registerLazySingleton<UserAuthenticationApi>(() => UserAuthenticationApi());
   locator.registerLazySingleton<UserRepository>(() => UserRepository());
   locator.registerLazySingleton<VotingsRepository>(() => VotingsRepository());
-  locator.registerLazySingleton<LocaleRepository>(() => localeRepository);
-  locator.registerLazySingleton<TranslationsDelegate>(
-      () => TranslationsDelegate());
+  locator.registerLazySingleton<LocaleRepository>(() => LocaleRepository());
+  locator.registerLazySingleton<TranslationsDelegate>(() => TranslationsDelegate());
 }

@@ -16,8 +16,7 @@ class VotePageSingleChoice extends StatefulWidget {
   _VotePageSingleChoiceState createState() => _VotePageSingleChoiceState();
 }
 
-class _VotePageSingleChoiceState extends State<VotePageSingleChoice>
-    with ScreenLoader {
+class _VotePageSingleChoiceState extends State<VotePageSingleChoice> with ScreenLoader {
   VoteType _selectedSingleOption = VoteType.NO_VOTE;
 
   @override
@@ -40,8 +39,8 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice>
       context: context,
       title: _selectedSingleOption == VoteType.NO_VOTE
           ? translations.emptyVote
-          : translations.singleVoteInfo(
-              translations.getTranslationForVoteType(_selectedSingleOption)),
+          : translations
+              .singleVoteInfo(translations.getTranslationForVoteType(_selectedSingleOption)),
       onConfirm: (innerContext) async {
         final activeVoting = Provider.of<ActiveVoting>(context, listen: false);
 
@@ -56,8 +55,8 @@ class _VotePageSingleChoiceState extends State<VotePageSingleChoice>
           return;
         }
 
-        await performFuture(() => activeVoting
-            .vote(UserVotes(votes: [UserVote(vote: _selectedSingleOption)])));
+        await performFuture(
+            () => activeVoting.vote(UserVotes(votes: [UserVote(vote: _selectedSingleOption)])));
         navigateToHomePage(context);
       },
     );
