@@ -13,18 +13,17 @@ RUN git clone --branch 2.8.1 https://github.com/flutter/flutter.git /usr/local/f
 RUN /usr/local/flutter/bin/flutter doctor -v
 ENV PATH="/usr/local/flutter/bin:/usr/local/flutter/bin/cache/dart-sdk/bin:${PATH}"
 
+# # Copy files to container and build
+RUN mkdir /usr/local/voting_mobile
+COPY . /usr/local/voting_mobile
+WORKDIR /usr/local/voting_mobile
 # Enable flutter web
 RUN flutter pub get
-
-# # Copy files to container and build
-RUN mkdir /usr/local/VotingMobile
-COPY . /usr/local/VotingMobile
-WORKDIR /usr/local/VotingMobile
 RUN /usr/local/flutter/bin/flutter build web -t lib/main.local.dart
 
 # # Stage 2 - Create the run-time image
 FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /usr/local/VotingMobile/build/web /usr/share/nginx/html
+COPY --from=build-stage /usr/local/voting_mobile/build/web /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 EXPOSE 80
 EXPOSE 443
