@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:votingmobile/common/backend/theme_repository.dart';
 import 'package:votingmobile/common/locator/locator.dart';
 
