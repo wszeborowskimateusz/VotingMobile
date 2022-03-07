@@ -66,6 +66,9 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> with 
                     options: activeVoting.activeVoting.options,
                     current: _current,
                     dotSize: MediaQuery.of(context).size.width > 600 ? 30.0 : 12.0,
+                    onDotTap: (index) {
+                      _carouselController.animateToPage(index, duration: Duration(milliseconds: 500));
+                    },
                   ),
                 ],
               ),
@@ -116,13 +119,11 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> with 
 
   void _onVoteValueChanged(int index, VoteType value, int optionId) {
     setState(() {
-      _selectedMultipleOptions[index] =
-          UserVote(optionId: optionId, vote: value ?? VoteType.NO_VOTE);
+      _selectedMultipleOptions[index] = UserVote(optionId: optionId, vote: value ?? VoteType.NO_VOTE);
     });
   }
 
-  int get _getVottedAmount =>
-      _selectedMultipleOptions.where((x) => x.vote != VoteType.NO_VOTE).length;
+  int get _getVottedAmount => _selectedMultipleOptions.where((x) => x.vote != VoteType.NO_VOTE).length;
 
   void _onVoteButtonPressed() {
     if (_bottomButtonOption == _BottomVoteButton.Next) {
@@ -134,8 +135,7 @@ class _VotePageMultipleChoicesState extends State<VotePageMultipleChoices> with 
       final activeVoting = Provider.of<ActiveVoting>(context, listen: false);
       showConfirmPopup(
         context: context,
-        title: Translations.of(context)
-            .multipleVoteInfo(_getVottedAmount, activeVoting.activeVoting.options.length),
+        title: Translations.of(context).multipleVoteInfo(_getVottedAmount, activeVoting.activeVoting.options.length),
         onConfirm: (innerContext) async {
           // Remove the dialog
           Navigator.pop(innerContext);

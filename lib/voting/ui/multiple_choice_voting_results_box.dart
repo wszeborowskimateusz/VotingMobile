@@ -1,9 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:votingmobile/common/config/config.dart';
+import 'package:votingmobile/common/ui/dots_indicator.dart';
 import 'package:votingmobile/voting/models/voting.dart';
 import 'package:votingmobile/voting/models/voting_option.dart';
-import 'package:votingmobile/common/ui/dots_indicator.dart';
 import 'package:votingmobile/voting/ui/voting_results_box.dart';
 
 class MultipleChoiceVotingResultsBox extends StatefulWidget {
@@ -17,6 +17,7 @@ class MultipleChoiceVotingResultsBox extends StatefulWidget {
 
 class _MultipleChoiceVotingResultsBoxState extends State<MultipleChoiceVotingResultsBox> {
   int _current = 0;
+  final CarouselController _carouselController = CarouselController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,7 @@ class _MultipleChoiceVotingResultsBoxState extends State<MultipleChoiceVotingRes
         Container(
           constraints: BoxConstraints(maxWidth: Config.maxElementInAppWidth - 200),
           child: CarouselSlider.builder(
+            carouselController: _carouselController,
             itemCount: widget.voting.options.length,
             itemBuilder: (context, index, _) {
               final VotingOption option = widget.voting.options[index];
@@ -58,7 +60,11 @@ class _MultipleChoiceVotingResultsBoxState extends State<MultipleChoiceVotingRes
                 }),
           ),
         ),
-        DotsIndicator<VotingOption>(options: widget.voting.options, current: _current),
+        DotsIndicator<VotingOption>(
+          options: widget.voting.options,
+          current: _current,
+          onDotTap: (index) => _carouselController.animateToPage(index),
+        ),
       ],
     );
   }
